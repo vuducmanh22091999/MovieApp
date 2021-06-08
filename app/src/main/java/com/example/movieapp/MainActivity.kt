@@ -1,11 +1,18 @@
 package com.example.movieapp
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.content.Intent
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+class MainActivity : BaseActivity() {
+    override fun getLayoutID() : Int {
+        return R.layout.activity_main
+    }
+
+    override fun doViewCreated() {
+        test.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
