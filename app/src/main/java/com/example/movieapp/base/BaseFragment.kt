@@ -1,10 +1,11 @@
-package com.example.movieapp
+package com.example.movieapp.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.movieapp.base.BaseActivity
 
 abstract class BaseFragment : Fragment() {
     abstract fun getLayoutID(): Int
@@ -23,15 +24,9 @@ abstract class BaseFragment : Fragment() {
         doViewCreated()
     }
 
-    fun addFragment(fragment: Fragment, id: Int, start: Int, end: Int, popStart: Int, popEnd: Int) {
+    fun addFragment(fragment: Fragment, id: Int) {
         if (activity is BaseActivity) {
-            (activity as BaseActivity).addFragment(fragment, id, start, end, popStart, popEnd)
-        }
-    }
-
-    fun back() {
-        if (activity is BaseActivity) {
-            (activity as BaseActivity).back()
+            (activity as BaseActivity).addFragment(fragment, id)
         }
     }
 }
