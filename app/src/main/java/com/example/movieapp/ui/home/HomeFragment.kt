@@ -44,7 +44,7 @@ class HomeFragment : BaseFragment() {
         frgHome_rcvPosterMovie.adapter = popularMovieAdapter
 
         val linearLayoutManagerVertical =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         frgHome_rcvTrendingMovie.setHasFixedSize(true)
         frgHome_rcvTrendingMovie.layoutManager = linearLayoutManagerVertical
         frgHome_rcvTrendingMovie.adapter = trendingMovieAdapter

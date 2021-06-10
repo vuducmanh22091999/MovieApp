@@ -30,21 +30,20 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:text="@string/title_name_movie"
         android:textSize="@dimen/_14sdp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/cardView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/itemTrendingMovie_tvTitleHourMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         android:text="@string/title_name_movie"
         android:textSize="@dimen/_12sdp"
         android:textColor="@color/grey700"
         app:layout_constraintTop_toBottomOf="@id/itemTrendingMovie_tvTitleNameMovie"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
