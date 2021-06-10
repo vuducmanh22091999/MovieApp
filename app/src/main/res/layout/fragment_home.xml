@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_main">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12sdp">
+
+        <TextView
+            android:id="@+id/frgHome_tvTitleHello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="@string/title_hello"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/frgHome_tvTitleUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:text="@string/title_name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="@id/frgHome_tvTitleHello"
+            app:layout_constraintStart_toEndOf="@id/frgHome_tvTitleHello"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            app:layout_constraintTop_toTopOf="@id/frgHome_tvTitleHello"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_account"/>
+
+        <TextView
+            android:id="@+id/frgHome_tvTitleWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_welcome"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11sdp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_tvTitleHello"
+            app:layout_constraintStart_toStartOf="@id/frgHome_tvTitleHello"/>
+
+        <TextView
+            android:id="@+id/frgHome_tvTitlePopularMovie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:text="@string/title_popular_movie"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_tvTitleWelcome"
+            app:layout_constraintStart_toStartOf="@id/frgHome_tvTitleWelcome"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/frgHome_rcvPosterMovie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_tvTitlePopularMovie"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/frgHome_tvTitleTrendingMovie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:text="@string/title_trending_movie"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_rcvPosterMovie"
+            app:layout_constraintStart_toStartOf="@id/frgHome_rcvPosterMovie"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/frgHome_rcvTrendingMovie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_tvTitleTrendingMovie"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
