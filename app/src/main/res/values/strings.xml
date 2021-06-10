@@ -11,4 +11,5 @@
     <string name="title_trending_movie">Trending Movie</string>
     <string name="title_name_movie">Name Movie</string>
     <string name="title_hour_movie">1h90p</string>
+    <string name="title_search_movie_actor">Search movie or actors…</string>
 </resources>
