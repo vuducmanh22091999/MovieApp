@@ -6,6 +6,7 @@ import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.popular.PopularMovieModel
 import com.example.movieapp.data.model.trending.TrendingMovieModel
+import com.example.movieapp.ui.detail.movie.DetailMovieFragment
 import com.example.movieapp.ui.home.adapter.PopularMovieAdapter
 import com.example.movieapp.ui.home.adapter.TrendingMovieAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -28,7 +29,7 @@ class HomeFragment : BaseFragment() {
 
     private fun initAdapter() {
         popularMovieAdapter = PopularMovieAdapter(listPopular.toList()) { index, _ ->
-            Toast.makeText(context, listPopular[index].urlPoster, Toast.LENGTH_SHORT).show()
+            addFragment(DetailMovieFragment(), R.id.frameLayout)
         }
 
         trendingMovieAdapter = TrendingMovieAdapter(listTrending.toList()) { index, _ ->

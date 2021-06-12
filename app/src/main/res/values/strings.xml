@@ -11,4 +11,22 @@
     <string name="title_trending_movie">Trending Movie</string>
     <string name="title_name_movie">Name Movie</string>
     <string name="title_hour_movie">1h90p</string>
+    <string name="title_genres">Genres:</string>
+    <string name="title_popularity">Popularity</string>
+    <string name="title_production_countries">Production Countries:</string>
+    <string name="title_content_production_countries">United States of America</string>
+    <string name="title_tag_line">Tag line</string>
+    <string name="title_release_date">Release date</string>
+    <string name="title_content_tag_line">Descend into fear</string>
+    <string name="title_content_release_date">2020–07–09</string>
+    <string name="title_content_popularity">471.097</string>
+    <string name="title_overview">Overview:</string>
+    <string name="title_content_overview">An adventure-loving couple convince their friends to explore a remote, uncharted cave system in the forests of Northern Australia. With a tropical storm approaching, they abseil into the mouth of the cave, but when the caves start to flood, tensions rise as oxygen levels fall and the friends find themselves trapped. Unknown to them, the storm has also brought in a pack of dangerous and hungry crocodiles.</string>
+    <string name="title_content_genres">Horror\nThriller\nAdventure\nMystery</string>
+    <string name="title_vote_average">Vote average</string>
+    <string name="title_content_vote_average">5.1</string>
+    <string name="title_vote_count">Vote count</string>
+    <string name="title_content_vote_count">224</string>
+    <string name="title_spoken_language">Spoken language:</string>
+    <string name="title_content_spoken_language">English\nEspañol\nPусский\nFrançais</string>
 </resources>
