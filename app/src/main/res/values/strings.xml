@@ -29,4 +29,5 @@
     <string name="title_content_vote_count">224</string>
     <string name="title_spoken_language">Spoken language:</string>
     <string name="title_content_spoken_language">English\nEspañol\nPусский\nFrançais</string>
+    <string name="title_search_movie_actor">Search movie or actors…</string>
 </resources>
