@@ -9,11 +9,14 @@ import com.example.movieapp.data.model.trending.TrendingMovieModel
 import com.example.movieapp.ui.detail.movie.DetailMovieFragment
 import com.example.movieapp.ui.home.adapter.PopularMovieAdapter
 import com.example.movieapp.ui.home.adapter.TrendingMovieAdapter
+import com.example.movieapp.utils.API_KEY
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment() {
     lateinit var popularMovieAdapter: PopularMovieAdapter
     lateinit var trendingMovieAdapter: TrendingMovieAdapter
+    private val homeViewModel: HomeViewModel by viewModel()
     private var listPopular: ArrayList<PopularMovieModel> = arrayListOf()
     private var listTrending: ArrayList<TrendingMovieModel> = arrayListOf()
 
@@ -25,10 +28,17 @@ class HomeFragment : BaseFragment() {
         initData()
         initAdapter()
         initRecyclerView()
+        observerViewModel()
+    }
+
+    private fun observerViewModel() {
+        homeViewModel.popularMovie.observe(this@HomeFragment, {
+            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun initAdapter() {
-        popularMovieAdapter = PopularMovieAdapter(listPopular.toList()) { index, _ ->
+        popularMovieAdapter = PopularMovieAdapter(listPopular.toList()) { _, _ ->
             addFragment(DetailMovieFragment(), R.id.frameLayout)
         }
 
@@ -52,16 +62,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun initData() {
-        listPopular.add(PopularMovieModel(R.drawable.img_deadpool))
-        listPopular.add(PopularMovieModel(R.drawable.img_deadpool))
-        listPopular.add(PopularMovieModel(R.drawable.img_deadpool))
-        listPopular.add(PopularMovieModel(R.drawable.img_deadpool))
-        listPopular.add(PopularMovieModel(R.drawable.img_deadpool))
-        listPopular.add(PopularMovieModel(R.drawable.img_deadpool))
-        listPopular.add(PopularMovieModel(R.drawable.img_deadpool))
-        listPopular.add(PopularMovieModel(R.drawable.img_deadpool))
-        listPopular.add(PopularMovieModel(R.drawable.img_deadpool))
-        listPopular.add(PopularMovieModel(R.drawable.img_deadpool))
+        homeViewModel.getPopularMovie(API_KEY)
 
         listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
         listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
