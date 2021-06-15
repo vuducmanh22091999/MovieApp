@@ -31,4 +31,10 @@
     <string name="title_content_spoken_language">English\nEspañol\nPусский\nFrançais</string>
     <string name="title_search_movie_actor">Search movie or actors…</string>
     <string name="title_content_language_movie">English</string>
+    <string name="title_login_with_facebook">Login with Facebook</string>
+    <string name="title_login_with_google">Login with Google</string>
+    <string name="title_logout">Logout</string>
+    <string name="title_email">email@gmail.com</string>
+    <string name="title_about">About</string>
+    <string name="title_help">Help</string>
 </resources>
