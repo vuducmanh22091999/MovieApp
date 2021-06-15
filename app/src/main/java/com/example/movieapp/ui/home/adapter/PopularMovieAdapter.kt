@@ -12,9 +12,9 @@ import kotlinx.android.synthetic.main.item_poster_movie.view.*
 class PopularMovieAdapter(private val listPoster: List<PopularMovieModel>, private val onClick: (Int, String) -> Unit) : RecyclerView.Adapter<PopularMovieAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun dataBindHolder(popularMovieModel: PopularMovieModel) {
-            Glide.with(itemView.context).load(popularMovieModel.urlPoster).placeholder(R.drawable.img_placeholder).into(itemView.itemPosterMovie_imgPoster)
+            Glide.with(itemView.context).load(popularMovieModel.posterPath).placeholder(R.drawable.img_placeholder).into(itemView.itemPosterMovie_imgPoster)
             itemView.itemPosterMovie_imgPoster.setOnClickListener {
-                onClick(adapterPosition, popularMovieModel.urlPoster.toString())
+                onClick(adapterPosition, popularMovieModel.posterPath.toString())
             }
         }
     }

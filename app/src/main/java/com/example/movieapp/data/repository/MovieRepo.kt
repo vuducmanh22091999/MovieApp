@@ -1,0 +1,7 @@
+package com.example.movieapp.data.repository
+
+import com.example.movieapp.data.remote.MovieAppServices
+
+class MovieRepo(private val movieAppServices: MovieAppServices) {
+    suspend fun getPopularMovie(apiKey: String) = movieAppServices.getListPopular(apiKey)
+}
