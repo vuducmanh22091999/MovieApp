@@ -7,8 +7,9 @@
     <string name="title_hello">Hello</string>
     <string name="title_name">User name</string>
     <string name="title_welcome">Lets explore your favorites movie</string>
-    <string name="title_popular_movie">Popular Movie</string>
-    <string name="title_trending_movie">Trending Movie</string>
+    <string name="title_popular_movie">Popular</string>
+    <string name="title_trending_movie">Trending</string>
+    <string name="title_top_rate_movie">Top Rate</string>
     <string name="title_name_movie">Name Movie</string>
     <string name="title_hour_movie">1h90p</string>
     <string name="title_genres">Genres:</string>

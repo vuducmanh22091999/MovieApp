@@ -7,32 +7,35 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.model.popular.MovieModel
+import com.example.movieapp.data.model.trending.TrendingMovieModel
 import com.example.movieapp.utils.BASE_URL_IMG
-import kotlinx.android.synthetic.main.item_poster_movie.view.*
+import kotlinx.android.synthetic.main.item_top_rate_movie.view.*
 
-class PopularMovieAdapter(
-    private val listPoster: List<MovieModel>,
+class TopRateMovieAdapter(
+    private val listTopRate: List<MovieModel>,
     private val onClick: (Int, String) -> Unit
-) : RecyclerView.Adapter<PopularMovieAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<TopRateMovieAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun dataBindHolder(movieModel: MovieModel) {
             Glide.with(itemView.context).load(BASE_URL_IMG + movieModel.posterPath)
-                .placeholder(R.drawable.img_placeholder).into(itemView.itemPosterMovie_imgPoster)
-            itemView.itemPosterMovie_imgPoster.setOnClickListener {
-                onClick(adapterPosition, movieModel.posterPath)
+                .placeholder(R.drawable.img_placeholder).into(itemView.itemTopRateMovie_imgPoster)
+            itemView.itemTopRateMovie_tvTitleNameMovie.text = movieModel.title
+            itemView.itemTopRateMovie_tvTitleScoreRateMovie.text = movieModel.voteAverage
+            itemView.setOnClickListener {
+                onClick(absoluteAdapterPosition, movieModel.title)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.item_poster_movie, parent, false)
+        val view = layoutInflater.inflate(R.layout.item_top_rate_movie, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.dataBindHolder(listPoster[position])
+        holder.dataBindHolder(listTopRate[position])
     }
 
-    override fun getItemCount(): Int = listPoster.size
+    override fun getItemCount(): Int = listTopRate.size
 }

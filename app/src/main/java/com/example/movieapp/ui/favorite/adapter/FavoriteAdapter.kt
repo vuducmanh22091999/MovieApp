@@ -7,10 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.model.favorite.FavoriteMovieModel
-import kotlinx.android.synthetic.main.item_favorite_movie.*
 import kotlinx.android.synthetic.main.item_favorite_movie.view.*
-import kotlinx.android.synthetic.main.item_trending_movie.view.itemTrendingMovie_imgPoster
-import kotlinx.android.synthetic.main.item_trending_movie.view.itemTrendingMovie_tvTitleNameMovie
 
 class FavoriteAdapter(
     private val listFavorite: List<FavoriteMovieModel>,

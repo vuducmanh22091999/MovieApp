@@ -1,24 +1,26 @@
 package com.example.movieapp.ui.home
 
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
-import com.example.movieapp.data.model.popular.PopularMovieModel
+import com.example.movieapp.data.model.popular.ListMovieModel
 import com.example.movieapp.data.model.trending.TrendingMovieModel
 import com.example.movieapp.ui.detail.movie.DetailMovieFragment
 import com.example.movieapp.ui.home.adapter.PopularMovieAdapter
-import com.example.movieapp.ui.home.adapter.TrendingMovieAdapter
+import com.example.movieapp.ui.home.adapter.TopRateMovieAdapter
 import com.example.movieapp.utils.API_KEY
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment() {
     lateinit var popularMovieAdapter: PopularMovieAdapter
-    lateinit var trendingMovieAdapter: TrendingMovieAdapter
+    lateinit var topRateMovieAdapter: TopRateMovieAdapter
     private val homeViewModel: HomeViewModel by viewModel()
-    private var listPopular: ArrayList<PopularMovieModel> = arrayListOf()
-    private var listTrending: ArrayList<TrendingMovieModel> = arrayListOf()
+
+    var listPopularMovieModel = ListMovieModel()
+    var listTopRateModel = ListMovieModel()
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_home
@@ -26,53 +28,46 @@ class HomeFragment : BaseFragment() {
 
     override fun doViewCreated() {
         initData()
-        initAdapter()
-        initRecyclerView()
         observerViewModel()
     }
 
     private fun observerViewModel() {
         homeViewModel.popularMovie.observe(this@HomeFragment, {
-            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+            initRecyclerViewPopularMovie(it)
+        })
+
+        homeViewModel.topRateMovie.observe(this@HomeFragment, {
+            initRecyclerViewTopRateMovie(it)
+            Log.d("TEST", it.results.toString())
         })
     }
 
-    private fun initAdapter() {
-        popularMovieAdapter = PopularMovieAdapter(listPopular.toList()) { _, _ ->
+    private fun initRecyclerViewPopularMovie(listMoviePopularModel: ListMovieModel) {
+        this.listPopularMovieModel.results.addAll(listMoviePopularModel.results)
+        popularMovieAdapter = PopularMovieAdapter(this.listPopularMovieModel.results.toList()) { _, _ ->
             addFragment(DetailMovieFragment(), R.id.frameLayout)
         }
-
-        trendingMovieAdapter = TrendingMovieAdapter(listTrending.toList()) { index, _ ->
-            Toast.makeText(context, listTrending[index].nameMovie, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun initRecyclerView() {
         val linearLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         frgHome_rcvPosterMovie.setHasFixedSize(true)
         frgHome_rcvPosterMovie.layoutManager = linearLayoutManager
         frgHome_rcvPosterMovie.adapter = popularMovieAdapter
+    }
 
+    private fun initRecyclerViewTopRateMovie(listMovieTopRateModel: ListMovieModel) {
+        this.listTopRateModel.results.addAll(listMovieTopRateModel.results)
+        topRateMovieAdapter = TopRateMovieAdapter(this.listTopRateModel.results.toList()) { index, _ ->
+            Toast.makeText(context, this.listTopRateModel.results[index].title, Toast.LENGTH_SHORT).show()
+        }
         val linearLayoutManagerVertical =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        frgHome_rcvTrendingMovie.setHasFixedSize(true)
-        frgHome_rcvTrendingMovie.layoutManager = linearLayoutManagerVertical
-        frgHome_rcvTrendingMovie.adapter = trendingMovieAdapter
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        frgHome_rcvTopRateMovie.setHasFixedSize(true)
+        frgHome_rcvTopRateMovie.layoutManager = linearLayoutManagerVertical
+        frgHome_rcvTopRateMovie.adapter = topRateMovieAdapter
     }
 
     private fun initData() {
         homeViewModel.getPopularMovie(API_KEY)
-
-        listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
-        listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
-        listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
-        listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
-        listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
-        listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
-        listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
-        listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
-        listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
-        listTrending.add(TrendingMovieModel(R.drawable.img_deadpool, "ABC", "1h90p"))
+        homeViewModel.getTopRateMovie(API_KEY)
     }
 }
