@@ -6,15 +6,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
-import com.example.movieapp.data.model.popular.PopularMovieModel
+import com.example.movieapp.data.model.movie.MovieModel
+import com.example.movieapp.utils.BASE_URL_IMG
 import kotlinx.android.synthetic.main.item_poster_movie.view.*
 
-class PopularMovieAdapter(private val listPoster: List<PopularMovieModel>, private val onClick: (Int, String) -> Unit) : RecyclerView.Adapter<PopularMovieAdapter.ViewHolder>() {
+class PopularMovieAdapter(
+    private val listPoster: List<MovieModel>,
+    private val onClick: (Int, String) -> Unit
+) : RecyclerView.Adapter<PopularMovieAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun dataBindHolder(popularMovieModel: PopularMovieModel) {
-            Glide.with(itemView.context).load(popularMovieModel.posterPath).placeholder(R.drawable.img_placeholder).into(itemView.itemPosterMovie_imgPoster)
+        fun dataBindHolder(movieModel: MovieModel) {
+            Glide.with(itemView.context).load(BASE_URL_IMG + movieModel.posterPath)
+                .placeholder(R.drawable.img_placeholder).into(itemView.itemPosterMovie_imgPoster)
             itemView.itemPosterMovie_imgPoster.setOnClickListener {
-                onClick(adapterPosition, popularMovieModel.posterPath.toString())
+                onClick(adapterPosition, movieModel.posterPath)
             }
         }
     }
