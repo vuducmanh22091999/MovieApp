@@ -31,6 +31,11 @@ class HomeFragment : BaseFragment() {
         observerViewModel()
     }
 
+    private fun initData() {
+        homeViewModel.getPopularMovie(API_KEY)
+        homeViewModel.getTopRateMovie(API_KEY)
+    }
+
     private fun observerViewModel() {
         homeViewModel.popularMovie.observe(this@HomeFragment, {
             initRecyclerViewPopularMovie(it)
@@ -73,10 +78,5 @@ class HomeFragment : BaseFragment() {
         frgHome_rcvTopRateMovie.setHasFixedSize(true)
         frgHome_rcvTopRateMovie.layoutManager = linearLayoutManagerVertical
         frgHome_rcvTopRateMovie.adapter = topRateMovieAdapter
-    }
-
-    private fun initData() {
-        homeViewModel.getPopularMovie(API_KEY)
-        homeViewModel.getTopRateMovie(API_KEY)
     }
 }
