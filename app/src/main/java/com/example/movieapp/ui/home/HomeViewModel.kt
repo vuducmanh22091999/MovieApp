@@ -3,7 +3,7 @@ package com.example.movieapp.ui.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movieapp.data.model.popular.ListMovieModel
+import com.example.movieapp.data.model.movie.ListMovieModel
 import com.example.movieapp.data.repository.MovieRepo
 import kotlinx.coroutines.launch
 

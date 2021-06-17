@@ -1,16 +1,16 @@
 package com.example.movieapp.ui.home
 
-import android.util.Log
+import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
-import com.example.movieapp.data.model.popular.ListMovieModel
-import com.example.movieapp.data.model.trending.TrendingMovieModel
+import com.example.movieapp.data.model.movie.ListMovieModel
 import com.example.movieapp.ui.detail.movie.DetailMovieFragment
 import com.example.movieapp.ui.home.adapter.PopularMovieAdapter
 import com.example.movieapp.ui.home.adapter.TopRateMovieAdapter
 import com.example.movieapp.utils.API_KEY
+import com.example.movieapp.utils.ID_POPULAR_MOVIE
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -38,15 +38,19 @@ class HomeFragment : BaseFragment() {
 
         homeViewModel.topRateMovie.observe(this@HomeFragment, {
             initRecyclerViewTopRateMovie(it)
-            Log.d("TEST", it.results.toString())
         })
     }
 
     private fun initRecyclerViewPopularMovie(listMoviePopularModel: ListMovieModel) {
         this.listPopularMovieModel.results.addAll(listMoviePopularModel.results)
-        popularMovieAdapter = PopularMovieAdapter(this.listPopularMovieModel.results.toList()) { _, _ ->
-            addFragment(DetailMovieFragment(), R.id.frameLayout)
-        }
+        popularMovieAdapter =
+            PopularMovieAdapter(this.listPopularMovieModel.results.toList()) { index, _ ->
+                val detailMovieFragment = DetailMovieFragment()
+                val bundle = Bundle()
+                bundle.putSerializable(ID_POPULAR_MOVIE, this.listPopularMovieModel.results[index].id)
+                detailMovieFragment.arguments = bundle
+                addFragment(detailMovieFragment, R.id.frameLayout)
+            }
         val linearLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         frgHome_rcvPosterMovie.setHasFixedSize(true)
@@ -56,9 +60,14 @@ class HomeFragment : BaseFragment() {
 
     private fun initRecyclerViewTopRateMovie(listMovieTopRateModel: ListMovieModel) {
         this.listTopRateModel.results.addAll(listMovieTopRateModel.results)
-        topRateMovieAdapter = TopRateMovieAdapter(this.listTopRateModel.results.toList()) { index, _ ->
-            Toast.makeText(context, this.listTopRateModel.results[index].title, Toast.LENGTH_SHORT).show()
-        }
+        topRateMovieAdapter =
+            TopRateMovieAdapter(this.listTopRateModel.results.toList()) { index, _ ->
+                Toast.makeText(
+                    context,
+                    this.listTopRateModel.results[index].title,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         val linearLayoutManagerVertical =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         frgHome_rcvTopRateMovie.setHasFixedSize(true)

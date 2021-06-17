@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
-import com.example.movieapp.data.model.popular.MovieModel
+import com.example.movieapp.data.model.movie.MovieModel
 import com.example.movieapp.utils.BASE_URL_IMG
 import kotlinx.android.synthetic.main.item_poster_movie.view.*
 

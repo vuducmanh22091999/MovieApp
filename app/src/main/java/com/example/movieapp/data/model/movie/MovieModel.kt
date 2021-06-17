@@ -1,4 +1,4 @@
-package com.example.movieapp.data.model.popular
+package com.example.movieapp.data.model.movie
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
