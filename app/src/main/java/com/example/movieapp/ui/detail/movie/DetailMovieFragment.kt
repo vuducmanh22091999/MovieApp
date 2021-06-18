@@ -1,8 +1,5 @@
 package com.example.movieapp.ui.detail.movie
 
-import android.annotation.SuppressLint
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
@@ -10,22 +7,25 @@ import com.example.movieapp.data.model.detail_movie.DetailMovieModel
 import com.example.movieapp.utils.API_KEY
 import com.example.movieapp.utils.BASE_URL_IMG
 import com.example.movieapp.utils.ID_POPULAR_MOVIE
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.android.synthetic.main.fragment_detail_movie.*
 import kotlinx.android.synthetic.main.item_poster_movie.*
 import kotlinx.android.synthetic.main.item_poster_movie.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class DetailMovieFragment : BaseFragment() {
     private val detailMovieViewModel: DetailMovieViewModel by viewModel()
-    var idPopular = 0
-    var test = MutableLiveData<DetailMovieModel>()
-    var detailMovieModel = DetailMovieModel()
+    private var idPopular = 0
+    private var detailMovieModel = DetailMovieModel()
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_detail_movie
     }
 
     override fun doViewCreated() {
+        lifecycle.addObserver(frgDetailMovie_youtubePlayerView)
         initData()
         observerViewModel()
     }
@@ -33,6 +33,7 @@ class DetailMovieFragment : BaseFragment() {
     private fun initData() {
         idPopular = arguments?.getSerializable(ID_POPULAR_MOVIE).toString().toInt()
         detailMovieViewModel.getDetailMovie(idPopular, API_KEY)
+        detailMovieViewModel.getVideoMovie(idPopular, API_KEY)
     }
 
     private fun observerViewModel() {
@@ -40,9 +41,18 @@ class DetailMovieFragment : BaseFragment() {
             detailMovieModel = it
             setData()
         })
+
+        detailMovieViewModel.videoMovie.observe(this@DetailMovieFragment, {
+            frgDetailMovie_youtubePlayerView.addYouTubePlayerListener(object :
+                AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    val videoId = it.results[0].key
+                    youTubePlayer.loadVideo(videoId, 0f)
+                }
+            })
+        })
     }
 
-    @SuppressLint("SetTextI18n")
     private fun setData() {
         var genres = ""
         var productionCountries = ""
@@ -72,11 +82,5 @@ class DetailMovieFragment : BaseFragment() {
             }
             frgDetailMovie_tvTitleSpokenLanguagesMovie.text = spokenLanguages
         }
-    }
-
-    private fun urlVideo() {
-        val string = "fNQawiJ6FR8"
-        frgDetailMovie_videoView.setVideoPath("https://www.youtube.com/watch?v=$string")
-        frgDetailMovie_videoView.start()
     }
 }

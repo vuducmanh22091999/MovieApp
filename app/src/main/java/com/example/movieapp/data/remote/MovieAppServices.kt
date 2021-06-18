@@ -1,6 +1,7 @@
 package com.example.movieapp.data.remote
 
 import com.example.movieapp.data.model.detail_movie.DetailMovieModel
+import com.example.movieapp.data.model.detail_movie.ListVideoMovieModel
 import com.example.movieapp.data.model.movie.ListMovieModel
 import retrofit2.Response
 import retrofit2.http.*
@@ -17,4 +18,10 @@ interface MovieAppServices {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Response<DetailMovieModel>
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getVideoMovie(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<ListVideoMovieModel>
 }

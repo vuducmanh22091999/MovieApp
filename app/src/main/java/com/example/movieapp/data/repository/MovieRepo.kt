@@ -8,4 +8,6 @@ class MovieRepo(private val movieAppServices: MovieAppServices) {
     suspend fun getTopRateMovie(apiKey: String) = movieAppServices.getListTopRate(apiKey)
 
     suspend fun getDetailMovie(movieId: Int, apiKey: String) = movieAppServices.getDetailMovie(movieId, apiKey)
+
+    suspend fun getVideoMovie(movieId: Int, apiKey: String) = movieAppServices.getVideoMovie(movieId, apiKey)
 }

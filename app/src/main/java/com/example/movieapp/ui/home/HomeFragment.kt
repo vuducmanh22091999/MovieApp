@@ -67,11 +67,11 @@ class HomeFragment : BaseFragment() {
         this.listTopRateModel.results.addAll(listMovieTopRateModel.results)
         topRateMovieAdapter =
             TopRateMovieAdapter(this.listTopRateModel.results.toList()) { index, _ ->
-                Toast.makeText(
-                    context,
-                    this.listTopRateModel.results[index].title,
-                    Toast.LENGTH_SHORT
-                ).show()
+                val detailMovieFragment = DetailMovieFragment()
+                val bundle = Bundle()
+                bundle.putSerializable(ID_POPULAR_MOVIE, this.listTopRateModel.results[index].id)
+                detailMovieFragment.arguments = bundle
+                addFragment(detailMovieFragment, R.id.frameLayout)
             }
         val linearLayoutManagerVertical =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
