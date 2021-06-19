@@ -16,14 +16,16 @@ class TopRateMovieAdapter(
 ) : RecyclerView.Adapter<TopRateMovieAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun dataBindHolder(movieModel: MovieModel) {
-            Glide.with(itemView.context).load(BASE_URL_IMG + movieModel.posterPath)
-                .placeholder(R.drawable.img_placeholder).into(itemView.itemTopRateMovie_imgPoster)
+            itemView.context?.let {
+                Glide.with(itemView.context).load(BASE_URL_IMG + movieModel.posterPath)
+                    .placeholder(R.drawable.img_placeholder).into(itemView.itemTopRateMovie_imgPoster)
+            }
             itemView.itemTopRateMovie_tvTitleNameMovie.text = movieModel.title
             itemView.itemTopRateMovie_tvTitleScoreRateMovie.text = movieModel.voteAverage
             itemView.itemTopRateMovie_tvOverviewMovie.text = movieModel.overview
             itemView.itemTopRateMovie_tvReleasedDateMovie.text = movieModel.releaseDate
             itemView.setOnClickListener {
-                onClick(absoluteAdapterPosition, movieModel.title)
+                onClick(adapterPosition, movieModel.title)
             }
         }
     }

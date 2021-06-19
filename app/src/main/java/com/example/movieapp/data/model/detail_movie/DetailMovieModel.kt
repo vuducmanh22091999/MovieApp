@@ -4,14 +4,14 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class DetailMovieModel(
-    val adult : Boolean = false,
+    val adult: Boolean = false,
     @SerializedName("backdrop_path")
-    val backdropPath : String = "",
+    val backdropPath: String = "",
     @SerializedName("belongs_to_collection")
-    val belongsToCollection : BelongsToCollectionModel,
-    val budget : Long = 0,
-    val genres : ArrayList<GenresModel> = arrayListOf(),
-    val homepage : String = "",
+    val belongsToCollection: BelongsToCollectionModel = BelongsToCollectionModel(),
+    val budget: Long = 0,
+    val genres: ArrayList<GenresModel> = arrayListOf(),
+    val homepage: String = "",
     val id: Int = 0,
     @SerializedName("imdb_id")
     val imdbId: String = "",
@@ -41,4 +41,4 @@ data class DetailMovieModel(
     val voteAverage: String = "",
     @SerializedName("vote_count")
     val voteCount: String = "",
-):Serializable
+) : Serializable
