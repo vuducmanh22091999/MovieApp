@@ -88,4 +88,7 @@ dependencies {
 
     //coil
     implementation("io.coil-kt:coil:1.2.2")
+
+    //read more
+    implementation 'com.borjabravo:readmoretextview:2.1.0'
 }

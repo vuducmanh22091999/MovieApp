@@ -1,6 +1,6 @@
 package com.example.movieapp.di
 
-import com.example.movieapp.ui.detail.actor.DetailCastViewModel
+import com.example.movieapp.ui.detail.cast.DetailCastViewModel
 import com.example.movieapp.ui.detail.movie.DetailMovieViewModel
 import com.example.movieapp.ui.home.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel

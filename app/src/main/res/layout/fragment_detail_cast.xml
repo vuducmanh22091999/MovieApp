@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_main">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/frgDetailCast_imgAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_500sdp"
+            android:scaleType="center"
+            android:src="@drawable/img_placeholder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/frgDetailCast_tvNameCast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_16sdp"
+            android:text="@string/title_cast"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgDetailCast_imgAvatar" />
+
+        <TextView
+            android:id="@+id/frgDetailCast_tvBirthdayCast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/title_cast"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/frgDetailCast_tvPlaceOfBirthCast"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgDetailCast_tvNameCast" />
+
+        <TextView
+            android:id="@+id/frgDetailCast_tvPlaceOfBirthCast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/title_cast"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/frgDetailCast_tvBirthdayCast"
+            app:layout_constraintTop_toTopOf="@+id/frgDetailCast_tvBirthdayCast" />
+
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:id="@+id/frgDetailCast_tvBiography"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgDetailCast_tvPlaceOfBirthCast"
+            app:trimCollapsedText="@string/title_show_more"
+            app:trimExpandedText="@string/title_show_less"
+            app:trimLines="3"
+            app:trimMode="trimModeLength"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -15,10 +14,8 @@ import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.cast.ListCastMovieModel
 import com.example.movieapp.data.model.detail_movie.DetailMovieModel
-import com.example.movieapp.data.model.movie.ListMovieModel
-import com.example.movieapp.ui.detail.actor.DetailCastFragment
+import com.example.movieapp.ui.detail.cast.DetailCastFragment
 import com.example.movieapp.ui.detail.adapter.CastAdapter
-import com.example.movieapp.ui.home.adapter.PopularMovieAdapter
 import com.example.movieapp.utils.API_KEY
 import com.example.movieapp.utils.BASE_URL_IMG
 import com.example.movieapp.utils.ID_CAST
