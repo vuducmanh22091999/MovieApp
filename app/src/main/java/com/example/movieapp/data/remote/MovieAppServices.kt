@@ -1,5 +1,7 @@
 package com.example.movieapp.data.remote
 
+import com.example.movieapp.data.model.cast.DetailCastModel
+import com.example.movieapp.data.model.cast.ListCastMovieModel
 import com.example.movieapp.data.model.detail_movie.DetailMovieModel
 import com.example.movieapp.data.model.detail_movie.ListVideoMovieModel
 import com.example.movieapp.data.model.movie.ListMovieModel
@@ -24,4 +26,16 @@ interface MovieAppServices {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Response<ListVideoMovieModel>
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getCastMovie(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<ListCastMovieModel>
+
+    @GET("person/{person_id}")
+    suspend fun getDetailCast(
+        @Path("person_id") personId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<DetailCastModel>
 }

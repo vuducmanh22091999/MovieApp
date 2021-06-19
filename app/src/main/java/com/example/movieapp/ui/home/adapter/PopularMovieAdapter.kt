@@ -16,8 +16,10 @@ class PopularMovieAdapter(
 ) : RecyclerView.Adapter<PopularMovieAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun dataBindHolder(movieModel: MovieModel) {
-            Glide.with(itemView.context).load(BASE_URL_IMG + movieModel.posterPath)
-                .placeholder(R.drawable.img_placeholder).into(itemView.itemPosterMovie_imgPoster)
+            itemView.context?.let {
+                Glide.with(itemView.context).load(BASE_URL_IMG + movieModel.posterPath)
+                    .placeholder(R.drawable.img_placeholder).into(itemView.itemPosterMovie_imgPoster)
+            }
             itemView.itemPosterMovie_imgPoster.setOnClickListener {
                 onClick(adapterPosition, movieModel.posterPath)
             }

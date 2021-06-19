@@ -9,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 val appModule = module {
     single { providerGson() }
@@ -28,6 +29,8 @@ fun providerApp(retrofit: Retrofit): MovieAppServices =
 
 fun providerHttp(): OkHttpClient {
     val okHttpBuilder = OkHttpClient.Builder()
+    okHttpBuilder.readTimeout(60, TimeUnit.SECONDS)
+    okHttpBuilder.connectTimeout(60, TimeUnit.SECONDS)
     val logging = HttpLoggingInterceptor()
     logging.level = HttpLoggingInterceptor.Level.BODY
     okHttpBuilder.addInterceptor(logging)
