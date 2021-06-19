@@ -40,4 +40,6 @@
     <string name="title_help">Help</string>
     <string name="title_trailer">Trailer</string>
     <string name="title_cast">Cast</string>
+    <string name="title_show_more">Show more</string>
+    <string name="title_show_less">Show less</string>
 </resources>

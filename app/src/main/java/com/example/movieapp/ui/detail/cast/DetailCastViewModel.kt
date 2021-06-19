@@ -1,4 +1,4 @@
-package com.example.movieapp.ui.detail.actor
+package com.example.movieapp.ui.detail.cast
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
