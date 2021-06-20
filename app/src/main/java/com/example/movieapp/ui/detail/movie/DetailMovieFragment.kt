@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -16,12 +15,14 @@ import com.example.movieapp.data.model.cast.ListCastMovieModel
 import com.example.movieapp.data.model.detail_movie.DetailMovieModel
 import com.example.movieapp.ui.detail.cast.DetailCastFragment
 import com.example.movieapp.ui.detail.adapter.CastAdapter
+import com.example.movieapp.ui.main.MainActivity
 import com.example.movieapp.utils.API_KEY
 import com.example.movieapp.utils.BASE_URL_IMG
 import com.example.movieapp.utils.ID_CAST
 import com.example.movieapp.utils.ID_MOVIE
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_video.*
 import kotlinx.android.synthetic.main.fragment_detail_movie.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -44,11 +45,16 @@ class DetailMovieFragment : BaseFragment() {
     }
 
     override fun doViewCreated() {
+        handleBottom()
         initData()
         initDialog()
         lifecycle.addObserver(dialog.dialogVideo_youtubePlayerView)
         observerViewModel()
         showDetailVideo()
+    }
+
+    private fun handleBottom() {
+        (activity as MainActivity).hideBottom()
     }
 
     private fun initData() {
@@ -134,7 +140,6 @@ class DetailMovieFragment : BaseFragment() {
                 spokenLanguages += "${it.spokenLanguages[i].name}\n"
             }
             frgDetailMovie_tvTitleSpokenLanguagesMovie.text = spokenLanguages
-            Log.d("TEST", it.id.toString())
         }
     }
 
@@ -155,5 +160,10 @@ class DetailMovieFragment : BaseFragment() {
             openDialog()
             dialog.show()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (activity as MainActivity).bottomNavigation.visibility = View.VISIBLE
     }
 }

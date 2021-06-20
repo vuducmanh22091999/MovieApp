@@ -9,6 +9,7 @@
         android:id="@+id/itemCast_imgAvatar"
         android:layout_width="@dimen/_90sdp"
         android:layout_height="@dimen/_90sdp"
+        android:paddingHorizontal="@dimen/_2sdp"
         android:src="@drawable/img_placeholder" />
 
     <TextView

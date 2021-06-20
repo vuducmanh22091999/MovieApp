@@ -1,13 +1,15 @@
 package com.example.movieapp.ui.detail.cast
 
-import android.widget.Toast
+import android.view.View
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.cast.DetailCastModel
+import com.example.movieapp.ui.main.MainActivity
 import com.example.movieapp.utils.API_KEY
 import com.example.movieapp.utils.BASE_URL_IMG
 import com.example.movieapp.utils.ID_CAST
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_detail_cast.*
 import kotlinx.android.synthetic.main.item_cast.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,8 +23,13 @@ class DetailCastFragment: BaseFragment() {
     }
 
     override fun doViewCreated() {
+        handleBottom()
         initData()
         observerViewModel()
+    }
+
+    private fun handleBottom() {
+        (activity as MainActivity).hideBottom()
     }
 
     private fun initData() {
@@ -48,5 +55,10 @@ class DetailCastFragment: BaseFragment() {
             frgDetailCast_tvPlaceOfBirthCast.text = detailCastModel.placeOfBirth
             frgDetailCast_tvBiography.text = detailCastModel.biography
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (activity as MainActivity).bottomNavigation.visibility = View.GONE
     }
 }

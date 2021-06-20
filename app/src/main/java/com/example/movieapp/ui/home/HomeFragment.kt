@@ -8,6 +8,7 @@ import com.example.movieapp.data.model.movie.ListMovieModel
 import com.example.movieapp.ui.detail.movie.DetailMovieFragment
 import com.example.movieapp.ui.home.adapter.PopularMovieAdapter
 import com.example.movieapp.ui.home.adapter.TopRateMovieAdapter
+import com.example.movieapp.ui.main.MainActivity
 import com.example.movieapp.utils.API_KEY
 import com.example.movieapp.utils.ID_MOVIE
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -26,8 +27,13 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun doViewCreated() {
+        handleBottom()
         initData()
         observerViewModel()
+    }
+
+    private fun handleBottom() {
+        (activity as MainActivity).showBottom()
     }
 
     private fun initData() {

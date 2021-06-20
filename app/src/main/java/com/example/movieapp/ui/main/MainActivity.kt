@@ -1,5 +1,6 @@
 package com.example.movieapp.ui.main
 
+import android.view.View
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseActivity
 import com.example.movieapp.ui.account.AccountFragment
@@ -10,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity() {
-    override fun getLayoutID() : Int {
+    override fun getLayoutID(): Int {
         return R.layout.activity_main
     }
 
@@ -29,5 +30,13 @@ class MainActivity : BaseActivity() {
             }
             true
         }
+    }
+
+    fun showBottom() {
+        bottomNavigation.visibility = View.VISIBLE
+    }
+
+    fun hideBottom() {
+        bottomNavigation.visibility = View.GONE
     }
 }
