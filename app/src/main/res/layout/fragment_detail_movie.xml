@@ -72,7 +72,7 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:paddingVertical="@dimen/_8sdp"
             android:text="@string/title_name_movie"
-            android:textColor="@color/yellow"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold"
             android:maxLines="2"
@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_content_release_date"
-            android:textColor="@color/white"
+            android:textColor="@color/white80"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintStart_toStartOf="@id/frgDetailMovie_tvTitleNameMovie"
             app:layout_constraintTop_toTopOf="@+id/frgDetailMovie_tvTrailer" />
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
             android:text="@string/title_content_vote_average"
-            android:textColor="@color/white"
+            android:textColor="@color/yellow"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintTop_toBottomOf="@id/frgDetailMovie_tvTitleReleaseDateMovie"
             app:layout_constraintStart_toStartOf="@id/frgDetailMovie_tvTitleReleaseDateMovie"/>
@@ -107,6 +107,7 @@
             android:layout_height="wrap_content"
             android:text="@string/rate_10"
             android:textSize="@dimen/_10sdp"
+            android:visibility="gone"
             android:textColor="@color/white"
             app:layout_constraintStart_toEndOf="@id/frgDetailMovie_tvTitleVoteAverageMovie"
             app:layout_constraintBottom_toBottomOf="@id/frgDetailMovie_tvTitleVoteAverageMovie"/>
@@ -255,6 +256,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
+            android:paddingHorizontal="@dimen/_8sdp"
             android:text="@string/title_content_genres"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp"
