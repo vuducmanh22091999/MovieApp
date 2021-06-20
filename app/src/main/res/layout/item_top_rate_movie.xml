@@ -73,6 +73,7 @@
         android:textSize="@dimen/_12sdp"
         app:layout_constraintBottom_toTopOf="@id/itemTopRateMovie_lnDetails"
         app:layout_constraintEnd_toEndOf="@id/itemTopRateMovie_lnDetails"
-        app:layout_constraintTop_toTopOf="@id/itemTopRateMovie_lnDetails" />
+        app:layout_constraintTop_toTopOf="@id/itemTopRateMovie_lnDetails"
+        app:drawableStartCompat="@drawable/ic_star" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

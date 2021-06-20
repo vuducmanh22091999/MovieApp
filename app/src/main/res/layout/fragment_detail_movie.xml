@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_main">
@@ -66,17 +67,49 @@
 
         <TextView
             android:id="@+id/frgDetailMovie_tvTitleNameMovie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:text="@string/title_name_movie"
+            android:textColor="@color/yellow"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/frgDetailMovie_img"
+            app:layout_constraintTop_toTopOf="@+id/frgDetailMovie_img" />
+
+        <TextView
+            android:id="@+id/frgDetailMovie_tvTitleReleaseDateMovie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_content_release_date"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="@id/frgDetailMovie_tvTitleNameMovie"
+            app:layout_constraintTop_toTopOf="@+id/frgDetailMovie_tvTrailer" />
+
+        <TextView
+            android:id="@+id/frgDetailMovie_tvTitleVoteAverageMovie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
-            android:paddingVertical="@dimen/_8sdp"
-            android:text="@string/title_name_movie"
+            android:text="@string/title_content_vote_average"
             android:textColor="@color/white"
-            android:textSize="@dimen/_14sdp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frgDetailMovie_imgPosterMovie" />
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@id/frgDetailMovie_tvTitleReleaseDateMovie"
+            app:layout_constraintStart_toStartOf="@id/frgDetailMovie_tvTitleReleaseDateMovie"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rate_10"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toEndOf="@id/frgDetailMovie_tvTitleVoteAverageMovie"
+            app:layout_constraintBottom_toBottomOf="@id/frgDetailMovie_tvTitleVoteAverageMovie"/>
 
         <LinearLayout
             android:id="@+id/frgDetailMovie_linearHorizontal"
@@ -85,6 +118,7 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:orientation="horizontal"
             android:weightSum="4"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/frgDetailMovie_tvTitleNameMovie">
@@ -104,15 +138,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp" />
 
-                <TextView
-                    android:id="@+id/frgDetailMovie_tvTitleReleaseDateMovie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:text="@string/title_content_release_date"
-                    android:textColor="@color/grey700"
-                    android:textSize="@dimen/_10sdp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -129,16 +155,6 @@
                     android:text="@string/title_vote_average"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp" />
-
-                <TextView
-                    android:id="@+id/frgDetailMovie_tvTitleVoteAverageMovie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:text="@string/title_content_vote_average"
-                    android:textColor="@color/grey700"
-                    android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
             <LinearLayout
@@ -207,7 +223,7 @@
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgDetailMovie_linearHorizontal" />
+            app:layout_constraintTop_toBottomOf="@id/frgDetailMovie_imgPosterMovie" />
 
         <TextView
             android:id="@+id/frgDetailMovie_tvTitleOverviewMovie"
@@ -255,7 +271,7 @@
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgDetailMovie_tvTitleGenresMovie" />
+            app:layout_constraintTop_toBottomOf="@+id/frgDetailMovie_tvTitleGenresMovie" />
 
         <TextView
             android:id="@+id/frgDetailMovie_tvTitleProductionCountriesMovie"
