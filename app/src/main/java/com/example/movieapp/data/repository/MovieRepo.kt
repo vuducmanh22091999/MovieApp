@@ -14,4 +14,6 @@ class MovieRepo(private val movieAppServices: MovieAppServices) {
     suspend fun getCastMovie(movieId: Int, apiKey: String) = movieAppServices.getCastMovie(movieId, apiKey)
 
     suspend fun getDetailCast(personId: Int, apiKey: String) = movieAppServices.getDetailCast(personId, apiKey)
+
+    suspend fun searchMovie(query: String, apiKey: String) = movieAppServices.searchMovie(query, apiKey)
 }

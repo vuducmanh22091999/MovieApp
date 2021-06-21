@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.movieapp.base.BaseActivity
+import com.example.movieapp.ui.main.MainActivity
 
 abstract class BaseFragment : Fragment() {
     abstract fun getLayoutID(): Int
@@ -27,6 +28,12 @@ abstract class BaseFragment : Fragment() {
     fun addFragment(fragment: Fragment, id: Int) {
         if (activity is BaseActivity) {
             (activity as BaseActivity).addFragment(fragment, id)
+        }
+    }
+
+    fun hideKeyboard() {
+        if (activity is MainActivity) {
+            (activity as MainActivity).hideKeyboard()
         }
     }
 }
