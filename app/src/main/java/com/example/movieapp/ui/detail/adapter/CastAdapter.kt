@@ -18,7 +18,7 @@ class CastAdapter(
         fun dataBindHolder(castMovieModel: CastMovieModel) {
             itemView.context?.let {
                 Glide.with(itemView.context).load(BASE_URL_IMG + castMovieModel.profilePath)
-                    .placeholder(R.drawable.img_placeholder)
+                    .placeholder(R.drawable.img_user)
                     .into(itemView.itemCast_imgAvatar)
             }
 

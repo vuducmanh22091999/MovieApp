@@ -1,5 +1,6 @@
 package com.example.movieapp.ui.detail.movie
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -109,6 +110,7 @@ class DetailMovieFragment : BaseFragment() {
         frgDetailMovie_rcvCast.adapter = castAdapter
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setData() {
         var genres = ""
         var productionCountries = ""
@@ -123,7 +125,7 @@ class DetailMovieFragment : BaseFragment() {
             }
             frgDetailMovie_tvTitleNameMovie.text = it.title
             frgDetailMovie_tvTitleReleaseDateMovie.text = it.releaseDate
-            frgDetailMovie_tvTitleVoteAverageMovie.text = it.voteAverage
+            frgDetailMovie_tvTitleVoteAverageMovie.text = it.voteAverage + "/10"
             frgDetailMovie_tvTitleVoteCountMovie.text = it.voteCount
             frgDetailMovie_tvTitlePopularityMovie.text = it.popularity.toString()
             frgDetailMovie_tvTitleOverviewMovie.text = it.overview
