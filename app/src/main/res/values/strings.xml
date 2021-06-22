@@ -45,4 +45,6 @@
     <string name="rate_10">/10</string>
     <string name="do_not_blank">Do not blank!!!</string>
     <string name="enter_more_than_3_character">Enter more than 3 character</string>
+    <string name="title_search_movie">Search movie…</string>
+    <string name="title_search_actor">Search actor…</string>
 </resources>

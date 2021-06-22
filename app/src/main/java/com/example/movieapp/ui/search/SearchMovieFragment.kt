@@ -1,29 +1,31 @@
 package com.example.movieapp.ui.search
 
+import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
-import android.os.Handler
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.movie.ListMovieModel
+import com.example.movieapp.ui.detail.movie.DetailMovieFragment
 import com.example.movieapp.ui.search.adapter.SearchMovieAdapter
 import com.example.movieapp.utils.API_KEY
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_search.*
+import com.example.movieapp.utils.ID_MOVIE
+import kotlinx.android.synthetic.main.fragment_search_movie.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
-class SearchFragment : BaseFragment() {
+class SearchMovieFragment : BaseFragment() {
     private val viewModel: SearchViewModel by viewModel()
     private lateinit var searchMovieAdapter: SearchMovieAdapter
     private var listMovieModel = ListMovieModel()
     private lateinit var timer: Timer
 
     override fun getLayoutID(): Int {
-        return R.layout.fragment_search
+        return R.layout.fragment_search_movie
     }
 
     override fun doViewCreated() {
@@ -33,20 +35,20 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun searchMovie() {
-        frgSearch_imgSearch.setOnClickListener {
+        frgSearchMovie_imgSearch.setOnClickListener {
             when {
-                frgSearch_etSearch.text.toString().isEmpty() -> Toast.makeText(
+                frgSearchMovie_etSearch.text.toString().isEmpty() -> Toast.makeText(
                     context,
                     getString(R.string.do_not_blank),
                     Toast.LENGTH_SHORT
                 ).show()
-                frgSearch_etSearch.text.toString().length < 3 -> Toast.makeText(
+                frgSearchMovie_etSearch.text.toString().length < 3 -> Toast.makeText(
                     context,
                     getString(R.string.enter_more_than_3_character),
                     Toast.LENGTH_SHORT
                 ).show()
                 else -> {
-                    viewModel.searchMovie(frgSearch_etSearch.text.toString(), API_KEY)
+                    viewModel.searchMovie(frgSearchMovie_etSearch.text.toString(), API_KEY)
                     hideKeyboard()
                 }
             }
@@ -54,7 +56,7 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun handleRcvWhenDelete() {
-        frgSearch_etSearch.addTextChangedListener(object : TextWatcher {
+        frgSearchMovie_etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -66,7 +68,7 @@ class SearchFragment : BaseFragment() {
                         override fun run() {
                             Handler(Looper.getMainLooper()).post {
                                 if (s.toString().isNotEmpty()) {
-                                    viewModel.searchMovie(frgSearch_etSearch.text.toString(), API_KEY)
+                                    viewModel.searchMovie(frgSearchMovie_etSearch.text.toString(), API_KEY)
                                     searchMovieAdapter.filterMovie(listMovieModel.results)
                                 }
                             }
@@ -84,7 +86,7 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun observerViewModel() {
-        viewModel.resultSearch.observe(this@SearchFragment, {
+        viewModel.resultSearchMovie.observe(this@SearchMovieFragment, {
             initRecyclerViewSearchMovie(it)
         })
     }
@@ -99,16 +101,16 @@ class SearchFragment : BaseFragment() {
         }
         searchMovieAdapter =
             SearchMovieAdapter(this.listMovieModel.results.toList()) { index, _ ->
-                Toast.makeText(
-                    context,
-                    listMoviePopularModel.results[index].title,
-                    Toast.LENGTH_SHORT
-                ).show()
+                val detailMovieFragment = DetailMovieFragment()
+                val bundle = Bundle()
+                bundle.putSerializable(ID_MOVIE, this.listMovieModel.results[index].id)
+                detailMovieFragment.arguments = bundle
+                addFragment(detailMovieFragment, R.id.frameLayout)
             }
         val linearLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        frgSearch_rcvResultSearch.setHasFixedSize(true)
-        frgSearch_rcvResultSearch.layoutManager = linearLayoutManager
-        frgSearch_rcvResultSearch.adapter = searchMovieAdapter
+        frgSearchMovie_rcvResultSearch.setHasFixedSize(true)
+        frgSearchMovie_rcvResultSearch.layoutManager = linearLayoutManager
+        frgSearchMovie_rcvResultSearch.adapter = searchMovieAdapter
     }
 }

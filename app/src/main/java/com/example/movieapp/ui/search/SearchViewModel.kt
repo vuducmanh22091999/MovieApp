@@ -8,13 +8,13 @@ import com.example.movieapp.data.repository.MovieRepo
 import kotlinx.coroutines.launch
 
 class SearchViewModel(private val movieRepo: MovieRepo) : ViewModel() {
-    var resultSearch = MutableLiveData<ListMovieModel>()
+    var resultSearchMovie = MutableLiveData<ListMovieModel>()
 
     fun searchMovie(query: String, apiKey: String) {
         viewModelScope.launch {
             val response = movieRepo.searchMovie(query, apiKey)
             if (response.isSuccessful && response.body() != null) {
-                resultSearch.postValue(response.body())
+                resultSearchMovie.postValue(response.body())
             }
         }
     }
