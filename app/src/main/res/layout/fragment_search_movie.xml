@@ -6,7 +6,7 @@
     android:background="@color/color_main">
 
     <TextView
-        android:id="@+id/frgSearch_tvTitleSearch"
+        android:id="@+id/frgSearchMovie_tvTitleSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_12sdp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/frgSearch_etSearch"
+        android:id="@+id/frgSearchMovie_etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
@@ -26,32 +26,34 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:background="@drawable/shape_radius_4sdp_blue700"
         android:completionThreshold="1"
-        android:hint="@string/title_search_movie_actor"
+        android:hint="@string/title_search_movie"
         android:padding="16dp"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/white80"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frgSearch_tvTitleSearch" />
+        app:layout_constraintTop_toBottomOf="@id/frgSearchMovie_tvTitleSearch" />
 
     <ImageView
-        android:id="@+id/frgSearch_imgCancel"
+        android:id="@+id/frgSearchMovie_imgSearch"
         android:layout_width="@dimen/_16sdp"
         android:layout_height="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
-        android:src="@drawable/ic_cancel"
-        app:layout_constraintBottom_toBottomOf="@id/frgSearch_etSearch"
-        app:layout_constraintEnd_toEndOf="@id/frgSearch_etSearch"
-        app:layout_constraintTop_toTopOf="@id/frgSearch_etSearch" />
+        android:src="@drawable/ic_search"
+        app:layout_constraintBottom_toBottomOf="@id/frgSearchMovie_etSearch"
+        app:layout_constraintEnd_toEndOf="@id/frgSearchMovie_etSearch"
+        app:layout_constraintTop_toTopOf="@id/frgSearchMovie_etSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/frgSearchMovie_rcvResultSearch"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frgSearch_etSearch" />
+        app:layout_constraintTop_toBottomOf="@id/frgSearchMovie_etSearch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

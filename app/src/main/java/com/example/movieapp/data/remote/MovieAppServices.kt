@@ -38,4 +38,10 @@ interface MovieAppServices {
         @Path("person_id") personId: Int,
         @Query("api_key") apiKey: String
     ): Response<DetailCastModel>
+
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("query") query: String,
+        @Query("api_key") apiKey: String
+    ): Response<ListMovieModel>
 }
