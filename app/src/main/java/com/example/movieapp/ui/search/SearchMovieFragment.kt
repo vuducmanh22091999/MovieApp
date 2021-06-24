@@ -14,6 +14,7 @@ import com.example.movieapp.ui.detail.movie.DetailMovieFragment
 import com.example.movieapp.ui.search.adapter.SearchMovieAdapter
 import com.example.movieapp.utils.API_KEY
 import com.example.movieapp.utils.ID_MOVIE
+import com.example.movieapp.utils.LOADING_LENGTH
 import kotlinx.android.synthetic.main.fragment_search_movie.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -48,6 +49,9 @@ class SearchMovieFragment : BaseFragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 else -> {
+//                    Handler().postDelayed({
+                        showLoading()
+//                    }, LOADING_LENGTH)
                     viewModel.searchMovie(frgSearchMovie_etSearch.text.toString(), API_KEY)
                     hideKeyboard()
                 }
@@ -88,6 +92,7 @@ class SearchMovieFragment : BaseFragment() {
     private fun observerViewModel() {
         viewModel.resultSearchMovie.observe(this@SearchMovieFragment, {
             initRecyclerViewSearchMovie(it)
+            hideLoading()
         })
     }
 

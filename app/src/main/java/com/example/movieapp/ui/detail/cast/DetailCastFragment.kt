@@ -33,6 +33,7 @@ class DetailCastFragment: BaseFragment() {
     }
 
     private fun initData() {
+        showLoading()
         personId = arguments?.getSerializable(ID_CAST).toString().toInt()
         detailCastViewModel.getCastMovie(personId, API_KEY)
     }
@@ -40,6 +41,7 @@ class DetailCastFragment: BaseFragment() {
     private fun observerViewModel() {
         detailCastViewModel.castModel.observe(this@DetailCastFragment, {
             setData(it)
+            hideLoading()
         })
     }
 

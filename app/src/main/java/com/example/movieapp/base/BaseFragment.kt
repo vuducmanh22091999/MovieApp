@@ -36,4 +36,16 @@ abstract class BaseFragment : Fragment() {
             (activity as MainActivity).hideKeyboard()
         }
     }
+
+    fun showLoading() {
+        if (activity is MainActivity) {
+            (activity as MainActivity).showLoading()
+        }
+    }
+
+    fun hideLoading() {
+        if (activity is MainActivity) {
+            (activity as MainActivity).hideLoading()
+        }
+    }
 }
