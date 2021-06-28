@@ -17,4 +17,7 @@
     <color name="pink">#FFE8175E</color>
     <color name="dark_blue">#FF1D1E33</color>
     <color name="yellow">#FFBF00</color>
+    <color name="background_login_facebook">#3B599B</color>
+    <color name="background_login_google">#F44336</color>
+
 </resources>

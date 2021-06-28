@@ -2,8 +2,10 @@ package com.example.movieapp.ui.home
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
+import com.example.movieapp.data.local.AppPreferences
 import com.example.movieapp.data.model.movie.ListMovieModel
 import com.example.movieapp.ui.detail.movie.DetailMovieFragment
 import com.example.movieapp.ui.home.adapter.PopularMovieAdapter
@@ -18,6 +20,7 @@ class HomeFragment : BaseFragment() {
     private lateinit var popularMovieAdapter: PopularMovieAdapter
     private lateinit var topRateMovieAdapter: TopRateMovieAdapter
     private val homeViewModel: HomeViewModel by viewModel()
+    private lateinit var appPreferences: AppPreferences
 
     private var listPopularMovieModel = ListMovieModel()
     private var listTopRateModel = ListMovieModel()
@@ -27,13 +30,29 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun doViewCreated() {
+        appPreferences = context?.let { AppPreferences(it) }!!
         handleBottom()
         initData()
+        setInfo()
         observerViewModel()
     }
 
     private fun handleBottom() {
         (activity as MainActivity).showBottom()
+    }
+
+    private fun setInfo() {
+        frgHome_tvTitleUserName.text = appPreferences.getLoginUserName()
+//        if (getIDUserFacebook().isNotEmpty()) {
+//            context?.let {
+//                Glide.with(it).load(urlAvatar()).placeholder(R.drawable.ic_account).into(imgChat)
+//            }
+//        } else {
+        context?.let {
+            Glide.with(it).load(appPreferences.getLoginAvatar())
+                .placeholder(R.drawable.ic_account).into(frgHome_imgAvatar)
+        }
+//        }
     }
 
     private fun initData() {

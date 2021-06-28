@@ -13,6 +13,7 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieApp">
+        <activity android:name=".ui.login.LoginActivity" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait">
