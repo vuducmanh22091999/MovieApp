@@ -59,6 +59,7 @@ class DetailMovieFragment : BaseFragment() {
     }
 
     private fun initData() {
+        showLoading()
         idPopular = arguments?.getSerializable(ID_MOVIE).toString().toInt()
         detailMovieViewModel.getDetailMovie(idPopular, API_KEY)
         detailMovieViewModel.getVideoMovie(idPopular, API_KEY)
@@ -79,6 +80,7 @@ class DetailMovieFragment : BaseFragment() {
         detailMovieViewModel.detailMovie.observe(this@DetailMovieFragment, {
             detailMovieModel = it
             setData()
+            hideLoading()
         })
 
         detailMovieViewModel.videoMovie.observe(this@DetailMovieFragment, {

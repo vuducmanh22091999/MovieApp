@@ -37,6 +37,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun initData() {
+        showLoading()
         homeViewModel.getPopularMovie(API_KEY)
         homeViewModel.getTopRateMovie(API_KEY)
     }
@@ -48,6 +49,7 @@ class HomeFragment : BaseFragment() {
 
         homeViewModel.topRateMovie.observe(this@HomeFragment, {
             initRecyclerViewTopRateMovie(it)
+            hideLoading()
         })
     }
 
