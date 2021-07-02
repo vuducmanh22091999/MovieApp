@@ -7,6 +7,9 @@ import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.local.AppPreferences
 import com.example.movieapp.ui.login.LoginActivity
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_account.*
@@ -26,10 +29,33 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
     private fun setInfo() {
         frgAccount_tvNameUser.text = appPreferences.getLoginUserName()
         frgAccount_tvEmailUser.text = appPreferences.getLoginEmail()
-        context?.let {
-            Glide.with(it).load(appPreferences.getLoginAvatar())
-                .placeholder(R.drawable.ic_account).into(frgAccount_imgAvatar)
+        if (getIDUserFacebook().isNotEmpty()) {
+            context?.let {
+                Glide.with(it).load(urlAvatar()).placeholder(R.drawable.ic_account).into(frgAccount_imgAvatar)
+            }
+        } else {
+            context?.let {
+                Glide.with(it).load(appPreferences.getLoginAvatar())
+                    .placeholder(R.drawable.ic_account).into(frgAccount_imgAvatar)
+            }
         }
+    }
+
+    private fun getIDUserFacebook(): String {
+        var facebookUserId = ""
+        val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            for (profile in user.providerData) {
+                if (FacebookAuthProvider.PROVIDER_ID == profile.providerId) {
+                    facebookUserId = profile.uid
+                }
+            }
+        }
+        return facebookUserId
+    }
+
+    private fun urlAvatar(): String {
+        return "https://graph.facebook.com/${getIDUserFacebook()}/picture?type=large"
     }
 
     private fun initListener() {
