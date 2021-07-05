@@ -16,14 +16,25 @@ import kotlinx.android.synthetic.main.fragment_account.*
 
 class AccountFragment : BaseFragment(), View.OnClickListener {
     private lateinit var appPreferences: AppPreferences
+    private lateinit var auth: FirebaseAuth
     override fun getLayoutID(): Int {
         return R.layout.fragment_account
     }
 
     override fun doViewCreated() {
+        auth = Firebase.auth
         appPreferences = context?.let { AppPreferences(it) }!!
+        checkLogin()
         initListener()
         setInfo()
+    }
+
+    private fun checkLogin() {
+        val user = auth.currentUser
+        if (user == null) {
+            val intentNewScreen = Intent(context, LoginActivity::class.java)
+            startActivity(intentNewScreen)
+        }
     }
 
     private fun setInfo() {
