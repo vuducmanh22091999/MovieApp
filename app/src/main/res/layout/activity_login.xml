@@ -8,12 +8,11 @@
     tools:context=".ui.login.LoginActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_250sdp"
         android:layout_marginTop="@dimen/_120sdp"
         android:src="@drawable/ic_logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,8 +30,8 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_gravity="center"
             android:padding="@dimen/_4sdp"
             android:src="@drawable/ic_facebook" />
@@ -62,8 +61,8 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_gravity="center"
             android:padding="@dimen/_4sdp"
             android:src="@drawable/ic_google" />
