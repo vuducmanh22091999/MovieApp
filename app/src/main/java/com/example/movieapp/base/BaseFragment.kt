@@ -25,9 +25,9 @@ abstract class BaseFragment : Fragment() {
         doViewCreated()
     }
 
-    fun addFragment(fragment: Fragment, id: Int) {
+    fun addFragment(fragment: Fragment, id: Int, tag: String? = null) {
         if (activity is BaseActivity) {
-            (activity as BaseActivity).addFragment(fragment, id)
+            (activity as BaseActivity).addFragment(fragment, id, tag)
         }
     }
 

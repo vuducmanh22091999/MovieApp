@@ -30,10 +30,9 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_gravity="center"
-            android:padding="@dimen/_4sdp"
             android:src="@drawable/ic_facebook" />
 
         <TextView
@@ -61,10 +60,9 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_gravity="center"
-            android:padding="@dimen/_4sdp"
             android:src="@drawable/ic_google" />
 
         <TextView

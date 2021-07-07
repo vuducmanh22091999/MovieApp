@@ -1,6 +1,7 @@
 package com.example.movieapp.ui.home
 
 import android.os.Bundle
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
@@ -34,27 +35,23 @@ class HomeFragment : BaseFragment() {
 
     override fun doViewCreated() {
         appPreferences = context?.let { AppPreferences(it) }!!
-        handleBottom()
         initData()
         setInfo()
         observerViewModel()
-    }
-
-    private fun handleBottom() {
-        (activity as MainActivity).showBottom()
     }
 
     private fun setInfo() {
         frgHome_tvTitleUserName.text = appPreferences.getLoginUserName()
         if (getIDUserFacebook().isNotEmpty()) {
             context?.let {
-                Glide.with(it).load(urlAvatar()).placeholder(R.drawable.ic_account).into(frgHome_imgAvatar)
+                Glide.with(it).load(urlAvatar()).placeholder(R.drawable.ic_account)
+                    .into(frgHome_imgAvatar)
             }
         } else {
-        context?.let {
-            Glide.with(it).load(appPreferences.getLoginAvatar())
-                .placeholder(R.drawable.ic_account).into(frgHome_imgAvatar)
-        }
+            context?.let {
+                Glide.with(it).load(appPreferences.getLoginAvatar())
+                    .placeholder(R.drawable.ic_account).into(frgHome_imgAvatar)
+            }
         }
     }
 
@@ -100,7 +97,7 @@ class HomeFragment : BaseFragment() {
                 val bundle = Bundle()
                 bundle.putSerializable(ID_MOVIE, this.listPopularMovieModel.results[index].id)
                 detailMovieFragment.arguments = bundle
-                addFragment(detailMovieFragment, R.id.frameLayout)
+                addFragment(detailMovieFragment, R.id.frameLayout, DetailMovieFragment::class.java.simpleName)
             }
         val linearLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
