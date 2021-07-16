@@ -1,29 +1,46 @@
 package com.example.movieapp.ui.favorite
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
+import com.example.movieapp.data.local.AppPreferences
 import com.example.movieapp.data.model.favorite.FavoriteMovieModel
 import com.example.movieapp.ui.favorite.adapter.FavoriteAdapter
+import com.example.movieapp.ui.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_favorites.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.frgHome_rcvPosterMovie
-import kotlinx.android.synthetic.main.item_favorite_movie.*
-import kotlinx.android.synthetic.main.item_favorite_movie.view.*
 
 class FavoriteFragment : BaseFragment() {
     lateinit var favoriteAdapter: FavoriteAdapter
     private val listFavorite = ArrayList<FavoriteMovieModel>()
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var appPreferences: AppPreferences
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_favorites
     }
 
     override fun doViewCreated() {
+        auth = Firebase.auth
+        appPreferences = context?.let { AppPreferences(it) }!!
+
+        checkLogin()
         initData()
         initAdapter()
         initRecyclerView()
+    }
+
+    private fun checkLogin() {
+        val user = auth.currentUser
+        if (user == null) {
+            val intentNewScreen = Intent(context, LoginActivity::class.java)
+            startActivity(intentNewScreen)
+        }
     }
 
     private fun initData() {

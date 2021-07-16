@@ -24,10 +24,10 @@ abstract class BaseActivity: AppCompatActivity() {
         doViewCreated()
     }
 
-    fun addFragment(fragment: Fragment, id: Int) {
+    fun addFragment(fragment: Fragment, id: Int, tag: String? = null) {
         supportFragmentManager.beginTransaction()
                 .add(id, fragment, fragment::class.java.simpleName)
-                .addToBackStack(null)
+                .addToBackStack(tag)
                 .commit()
     }
 
