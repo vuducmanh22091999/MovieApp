@@ -7,27 +7,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.model.favorite.FavoriteMovieModel
+import com.example.movieapp.data.model.movie.MovieModel
+import com.example.movieapp.utils.BASE_URL_IMG
 import kotlinx.android.synthetic.main.item_favorite_movie.view.*
 
 class FavoriteAdapter(
-    private val listFavorite: List<FavoriteMovieModel>,
+    private val listFavorite: List<MovieModel>,
     private val onClick: (Int, String) -> Unit,
-    private val onClickFavorite: (Int, String) -> Unit
 ) : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun dataBindHolder(favoriteMovieModel: FavoriteMovieModel) {
-            Glide.with(itemView.context).load(favoriteMovieModel.urlMovie)
+        fun dataBindHolder(movieModel: MovieModel) {
+            Glide.with(itemView.context).load(BASE_URL_IMG + movieModel.posterPath)
                 .placeholder(R.drawable.img_placeholder).into(itemView.itemTrendingMovie_imgPoster)
-            itemView.itemTrendingMovie_tvTitleNameMovie.text = favoriteMovieModel.nameMovie
-            itemView.itemTrendingMovie_tvTitleOriginalLanguageMovie.text = favoriteMovieModel.originalLanguageMovie
+            itemView.itemTrendingMovie_tvTitleNameMovie.text = movieModel.title
+            itemView.itemTrendingMovie_tvTitleOriginalLanguageMovie.text = movieModel.originalLanguage
             itemView.setOnClickListener {
-                onClick(absoluteAdapterPosition, favoriteMovieModel.nameMovie)
-            }
-
-            itemView.itemFavoriteMovie_imgFavorite.setOnClickListener {
-                listFavorite[absoluteAdapterPosition].statusFavorite = !listFavorite[absoluteAdapterPosition].statusFavorite
-                itemView.itemFavoriteMovie_imgFavorite.isSelected = !listFavorite[absoluteAdapterPosition].statusFavorite
-                onClickFavorite(absoluteAdapterPosition, listFavorite[absoluteAdapterPosition].statusFavorite.toString())
+                onClick(absoluteAdapterPosition, movieModel.title)
             }
         }
     }

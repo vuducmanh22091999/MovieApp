@@ -14,28 +14,31 @@ import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.cast.ListCastMovieModel
 import com.example.movieapp.data.model.detail_movie.DetailMovieModel
+import com.example.movieapp.data.model.favorite.BodyModel
+import com.example.movieapp.data.model.movie.ListMovieModel
 import com.example.movieapp.ui.detail.cast.DetailCastFragment
 import com.example.movieapp.ui.detail.adapter.CastAdapter
+import com.example.movieapp.ui.favorite.FavoriteViewModel
 import com.example.movieapp.ui.main.MainActivity
-import com.example.movieapp.utils.API_KEY
-import com.example.movieapp.utils.BASE_URL_IMG
-import com.example.movieapp.utils.ID_CAST
-import com.example.movieapp.utils.ID_MOVIE
+import com.example.movieapp.utils.*
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_video.*
 import kotlinx.android.synthetic.main.fragment_detail_movie.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.item_favorite_movie.view.*
 import kotlinx.android.synthetic.main.item_poster_movie.*
 import kotlinx.android.synthetic.main.item_poster_movie.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class DetailMovieFragment : BaseFragment() {
+class DetailMovieFragment : BaseFragment(), View.OnClickListener {
     private val detailMovieViewModel: DetailMovieViewModel by viewModel()
+    private val favoriteViewModel: FavoriteViewModel by viewModel()
     private var idPopular = 0
     private var detailMovieModel = DetailMovieModel()
+    private var favoriteMovieModel = ListMovieModel()
     private var videoMovie = ""
     private lateinit var castAdapter: CastAdapter
     private lateinit var dialog: Dialog
@@ -47,11 +50,47 @@ class DetailMovieFragment : BaseFragment() {
 
     override fun doViewCreated() {
         handleBottom()
+        initListener()
         initData()
         initDialog()
         lifecycle.addObserver(dialog.dialogVideo_youtubePlayerView)
         observerViewModel()
         showDetailVideo()
+    }
+
+    private fun initListener() {
+        frgDetailMovie_imgFavorite.setOnClickListener(this)
+    }
+
+    private fun checkFavorite() {
+        favoriteMovieModel.results.forEach {
+            if (detailMovieModel.id == it.id) {
+                detailMovieModel.statusFavorite = true
+                frgDetailMovie_imgFavorite.isSelected = true
+            }
+
+        }
+    }
+
+    private fun clickFavorite() {
+        detailMovieModel.statusFavorite = !detailMovieModel.statusFavorite
+        frgDetailMovie_imgFavorite.isSelected = detailMovieModel.statusFavorite
+
+        if (detailMovieModel.statusFavorite) {
+            favoriteViewModel.createFavoriteMovie(
+                API_KEY,
+                SESSION_ID,
+                BodyModel(MOVIE, idPopular, true)
+            )
+        }
+
+        else {
+            favoriteViewModel.createFavoriteMovie(
+                API_KEY,
+                SESSION_ID,
+                BodyModel(MOVIE, idPopular, false)
+            )
+        }
     }
 
     private fun handleBottom() {
@@ -64,6 +103,7 @@ class DetailMovieFragment : BaseFragment() {
         detailMovieViewModel.getDetailMovie(idPopular, API_KEY)
         detailMovieViewModel.getVideoMovie(idPopular, API_KEY)
         detailMovieViewModel.getCastMovie(idPopular, API_KEY)
+        favoriteViewModel.getFavoriteMovie(API_KEY, SESSION_ID)
     }
 
     private fun initDialog() {
@@ -83,6 +123,11 @@ class DetailMovieFragment : BaseFragment() {
             hideLoading()
         })
 
+        favoriteViewModel.favoriteMovie.observe(this@DetailMovieFragment, {
+            favoriteMovieModel = it
+            checkFavorite()
+        })
+
         detailMovieViewModel.videoMovie.observe(this@DetailMovieFragment, {
             if (it.results.isEmpty()) {
                 frgDetailMovie_tvTrailer.visibility = View.INVISIBLE
@@ -98,7 +143,11 @@ class DetailMovieFragment : BaseFragment() {
     private fun initRecyclerViewCastMovie(listCastMovieModel: ListCastMovieModel) {
         this.listCastMovieModel.cast.addAll(listCastMovieModel.cast)
         castAdapter = CastAdapter(listCastMovieModel.cast.toList()) { index, string ->
-            Toast.makeText(context, this.listCastMovieModel.cast[index].id.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                this.listCastMovieModel.cast[index].id.toString(),
+                Toast.LENGTH_SHORT
+            ).show()
             val detailCastFragment = DetailCastFragment()
             val bundle = Bundle()
             bundle.putSerializable(ID_CAST, this.listCastMovieModel.cast[index].id)
@@ -169,5 +218,11 @@ class DetailMovieFragment : BaseFragment() {
     override fun onDestroy() {
         super.onDestroy()
         (activity as MainActivity).bottomNavigation.visibility = View.VISIBLE
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.frgDetailMovie_imgFavorite -> clickFavorite()
+        }
     }
 }
