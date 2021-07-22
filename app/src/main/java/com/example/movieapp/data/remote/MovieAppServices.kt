@@ -4,6 +4,8 @@ import com.example.movieapp.data.model.cast.DetailCastModel
 import com.example.movieapp.data.model.cast.ListCastMovieModel
 import com.example.movieapp.data.model.detail_movie.DetailMovieModel
 import com.example.movieapp.data.model.detail_movie.ListVideoMovieModel
+import com.example.movieapp.data.model.favorite.BodyModel
+import com.example.movieapp.data.model.favorite.ResponsesModel
 import com.example.movieapp.data.model.movie.ListMovieModel
 import retrofit2.Response
 import retrofit2.http.*
@@ -43,5 +45,18 @@ interface MovieAppServices {
     suspend fun searchMovie(
         @Query("query") query: String,
         @Query("api_key") apiKey: String
+    ): Response<ListMovieModel>
+
+    @POST("account/{account_id}/favorite")
+    suspend fun createFavoriteMovie(
+        @Query("api_key") apiKey: String,
+        @Query("session_id") sessionId: String,
+        @Body body: BodyModel
+    ): Response<ResponsesModel>
+
+    @GET("account/{account_id}/favorite/movies")
+    suspend fun getFavoriteMovie(
+        @Query("api_key") apiKey: String,
+        @Query("session_id") sessionId: String,
     ): Response<ListMovieModel>
 }

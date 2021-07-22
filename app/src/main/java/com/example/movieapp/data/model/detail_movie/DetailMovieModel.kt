@@ -41,4 +41,5 @@ data class DetailMovieModel(
     val voteAverage: String = "",
     @SerializedName("vote_count")
     val voteCount: String = "",
+    var statusFavorite : Boolean = false
 ) : Serializable
