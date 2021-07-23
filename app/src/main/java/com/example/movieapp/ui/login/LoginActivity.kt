@@ -90,9 +90,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     val email = user?.email ?: ""
                     val photoUrl = user?.photoUrl ?: ""
 
-                    appPreferences.setLoginUserName(userName)
-                    appPreferences.setLoginEmail(email)
-                    appPreferences.setLoginAvatar(photoUrl.toString())
+//                    appPreferences.setLoginUserName(userName)
+//                    appPreferences.setLoginEmail(email)
+//                    appPreferences.setLoginAvatar(photoUrl.toString())
 
                     switchMainScreen()
                 } else {
@@ -115,9 +115,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     val userName = user?.displayName ?: ""
                     val photoUrl = user?.photoUrl ?: ""
 
-                    appPreferences.setLoginEmail(email)
-                    appPreferences.setLoginUserName(userName)
-                    appPreferences.setLoginAvatar(photoUrl.toString())
+//                    appPreferences.setLoginEmail(email)
+//                    appPreferences.setLoginUserName(userName)
+//                    appPreferences.setLoginAvatar(photoUrl.toString())
 
                     switchMainScreen()
                 }
@@ -142,8 +142,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
     private fun switchMainScreen() {
         showLoading()
-        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-        startActivity(intent)
         finish()
     }
 

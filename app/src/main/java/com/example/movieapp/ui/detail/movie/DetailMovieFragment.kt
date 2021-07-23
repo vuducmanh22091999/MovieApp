@@ -2,6 +2,7 @@ package com.example.movieapp.ui.detail.movie
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
+import com.example.movieapp.data.local.AppPreferences
 import com.example.movieapp.data.model.cast.ListCastMovieModel
 import com.example.movieapp.data.model.detail_movie.DetailMovieModel
 import com.example.movieapp.data.model.favorite.BodyModel
@@ -19,11 +21,16 @@ import com.example.movieapp.data.model.movie.ListMovieModel
 import com.example.movieapp.ui.detail.cast.DetailCastFragment
 import com.example.movieapp.ui.detail.adapter.CastAdapter
 import com.example.movieapp.ui.favorite.FavoriteViewModel
+import com.example.movieapp.ui.login.LoginActivity
 import com.example.movieapp.ui.main.MainActivity
 import com.example.movieapp.utils.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dialog_question_login.*
 import kotlinx.android.synthetic.main.dialog_video.*
 import kotlinx.android.synthetic.main.fragment_detail_movie.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -44,11 +51,17 @@ class DetailMovieFragment : BaseFragment(), View.OnClickListener {
     private lateinit var dialog: Dialog
     private var listCastMovieModel = ListCastMovieModel()
 
+    private lateinit var auth: FirebaseAuth
+    private lateinit var appPreferences: AppPreferences
+    private lateinit var dialogLogin: Dialog
+
     override fun getLayoutID(): Int {
         return R.layout.fragment_detail_movie
     }
 
     override fun doViewCreated() {
+        auth = Firebase.auth
+        appPreferences = context?.let { AppPreferences(it) }!!
         handleBottom()
         initListener()
         initData()
@@ -62,6 +75,23 @@ class DetailMovieFragment : BaseFragment(), View.OnClickListener {
         frgDetailMovie_imgFavorite.setOnClickListener(this)
     }
 
+    private fun openDialogLogin() {
+        dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog_question_login)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialog.dialogQuestionLogin_tvDelete.setOnClickListener {
+            val intentNewScreen = Intent(context, LoginActivity::class.java)
+            startActivity(intentNewScreen)
+            dialog.dismiss()
+        }
+
+        dialog.dialogQuestionLogin_tvCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
     private fun checkFavorite() {
         favoriteMovieModel.results.forEach {
             if (detailMovieModel.id == it.id) {
@@ -73,23 +103,28 @@ class DetailMovieFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun clickFavorite() {
-        detailMovieModel.statusFavorite = !detailMovieModel.statusFavorite
-        frgDetailMovie_imgFavorite.isSelected = detailMovieModel.statusFavorite
-
-        if (detailMovieModel.statusFavorite) {
-            favoriteViewModel.createFavoriteMovie(
-                API_KEY,
-                SESSION_ID,
-                BodyModel(MOVIE, idPopular, true)
-            )
-        }
-
+        val user = auth.currentUser
+        if (user == null)
+            openDialogLogin()
         else {
-            favoriteViewModel.createFavoriteMovie(
-                API_KEY,
-                SESSION_ID,
-                BodyModel(MOVIE, idPopular, false)
-            )
+            detailMovieModel.statusFavorite = !detailMovieModel.statusFavorite
+            frgDetailMovie_imgFavorite.isSelected = detailMovieModel.statusFavorite
+
+            if (detailMovieModel.statusFavorite) {
+                favoriteViewModel.createFavoriteMovie(
+                    API_KEY,
+                    SESSION_ID,
+                    BodyModel(MOVIE, idPopular, true)
+                )
+            }
+
+            else {
+                favoriteViewModel.createFavoriteMovie(
+                    API_KEY,
+                    SESSION_ID,
+                    BodyModel(MOVIE, idPopular, false)
+                )
+            }
         }
     }
 

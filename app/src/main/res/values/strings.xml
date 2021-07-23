@@ -53,5 +53,8 @@
     <string name="title_or">or</string>
     <string name="web_client_id">715995189099-a3me31gsb4jjdlg3bamdpj3hoogq98sn.apps.googleusercontent.com</string>
     <string name="facebook_app_id">797476330958485</string> <string name="fb_login_protocol_scheme">fb797476330958485</string>
+    <string name="title_question_login">Do you want login?</string>
+    <string name="title_no">No</string>
+    <string name="title_yes">Yes</string>
 
 </resources>

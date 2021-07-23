@@ -32,7 +32,6 @@ class FavoriteFragment : BaseFragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var appPreferences: AppPreferences
-    private var idMovie = 0
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_favorites
@@ -42,7 +41,7 @@ class FavoriteFragment : BaseFragment() {
         auth = Firebase.auth
         appPreferences = context?.let { AppPreferences(it) }!!
 
-        checkLogin()
+//        checkLogin()
         observerViewModel()
     }
 
