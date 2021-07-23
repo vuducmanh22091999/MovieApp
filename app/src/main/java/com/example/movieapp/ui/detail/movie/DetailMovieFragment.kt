@@ -143,11 +143,6 @@ class DetailMovieFragment : BaseFragment(), View.OnClickListener {
     private fun initRecyclerViewCastMovie(listCastMovieModel: ListCastMovieModel) {
         this.listCastMovieModel.cast.addAll(listCastMovieModel.cast)
         castAdapter = CastAdapter(listCastMovieModel.cast.toList()) { index, string ->
-            Toast.makeText(
-                context,
-                this.listCastMovieModel.cast[index].id.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
             val detailCastFragment = DetailCastFragment()
             val bundle = Bundle()
             bundle.putSerializable(ID_CAST, this.listCastMovieModel.cast[index].id)
@@ -181,9 +176,9 @@ class DetailMovieFragment : BaseFragment(), View.OnClickListener {
             frgDetailMovie_tvTitlePopularityMovie.text = it.popularity.toString()
             frgDetailMovie_tvTitleOverviewMovie.text = it.overview
             for (i in 0 until it.genres.size) {
-                genres += "${it.genres[i].name}\n"
+                genres += "${it.genres[i].name} - "
             }
-            frgDetailMovie_tvTitleGenresMovie.text = genres
+            frgDetailMovie_tvTitleGenresMovie.text = genres.substring(0, genres.length - 2)
             for (i in 0 until it.productionCountries.size) {
                 productionCountries += "${it.productionCountries[i].name}\n"
             }

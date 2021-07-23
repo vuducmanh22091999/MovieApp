@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/frgDetailCast_imgAvatar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_400sdp"
+            android:layout_height="@dimen/_300sdp"
             android:scaleType="center"
             android:src="@drawable/img_placeholder"
             app:layout_constraintEnd_toEndOf="parent"
