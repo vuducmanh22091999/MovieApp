@@ -17,6 +17,9 @@ import kotlinx.android.synthetic.main.fragment_account.*
 class AccountFragment : BaseFragment(), View.OnClickListener {
     private lateinit var appPreferences: AppPreferences
     private lateinit var auth: FirebaseAuth
+
+
+
     override fun getLayoutID(): Int {
         return R.layout.fragment_account
     }
@@ -24,9 +27,9 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
     override fun doViewCreated() {
         auth = Firebase.auth
         appPreferences = context?.let { AppPreferences(it) }!!
-        checkLogin()
+//        checkLogin()
         initListener()
-        setInfo()
+//        setInfo()
     }
 
     private fun checkLogin() {
@@ -84,5 +87,10 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
         when (v.id) {
             R.id.frgAccount_tvLogout -> logOut()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setInfo()
     }
 }

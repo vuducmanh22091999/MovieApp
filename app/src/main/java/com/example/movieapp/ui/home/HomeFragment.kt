@@ -1,6 +1,7 @@
 package com.example.movieapp.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -36,7 +37,6 @@ class HomeFragment : BaseFragment() {
     override fun doViewCreated() {
         appPreferences = context?.let { AppPreferences(it) }!!
         initData()
-        setInfo()
         observerViewModel()
     }
 
@@ -97,7 +97,11 @@ class HomeFragment : BaseFragment() {
                 val bundle = Bundle()
                 bundle.putSerializable(ID_MOVIE, this.listPopularMovieModel.results[index].id)
                 detailMovieFragment.arguments = bundle
-                addFragment(detailMovieFragment, R.id.frameLayout, DetailMovieFragment::class.java.simpleName)
+                addFragment(
+                    detailMovieFragment,
+                    R.id.frameLayout,
+                    DetailMovieFragment::class.java.simpleName
+                )
             }
         val linearLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -121,5 +125,10 @@ class HomeFragment : BaseFragment() {
         frgHome_rcvTopRateMovie.setHasFixedSize(true)
         frgHome_rcvTopRateMovie.layoutManager = linearLayoutManagerVertical
         frgHome_rcvTopRateMovie.adapter = topRateMovieAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setInfo()
     }
 }
