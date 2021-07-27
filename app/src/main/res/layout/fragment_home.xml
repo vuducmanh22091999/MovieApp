@@ -36,11 +36,11 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/frgHome_imgAvatar"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             app:layout_constraintTop_toTopOf="@id/frgHome_tvTitleHello"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_account"/>
+            android:src="@drawable/ic_user"/>
 
         <TextView
             android:id="@+id/frgHome_tvTitleWelcome"
