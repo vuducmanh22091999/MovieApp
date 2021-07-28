@@ -79,8 +79,10 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
     private fun logOut() {
         Firebase.auth.signOut()
         val intent = Intent(activity, LoginActivity::class.java)
+        appPreferences.setLoginEmail("")
+        appPreferences.setLoginUserName("")
+        appPreferences.setLoginAvatar("")
         startActivity(intent)
-        activity?.finish()
     }
 
     override fun onClick(v: View) {
