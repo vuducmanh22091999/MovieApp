@@ -22,6 +22,7 @@
         android:layout_height="@dimen/_20sdp"
         android:layout_marginStart="@dimen/_20sdp"
         android:src="@drawable/ic_edit"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/frgAccount_tvNameUser"
         app:layout_constraintStart_toEndOf="@+id/frgAccount_tvNameUser"
         app:layout_constraintTop_toTopOf="@+id/frgAccount_tvNameUser" />
@@ -64,31 +65,35 @@
         android:text="@string/title_help"
         android:textColor="@color/white"
         android:textSize="@dimen/_16sdp"
+        android:visibility="gone"
+        app:drawableEndCompat="@drawable/ic_right_arrow"
+        app:drawableStartCompat="@drawable/ic_help"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/frgAccount_imgAvatar"
-        tools:ignore="RtlSymmetry"
-        app:drawableStartCompat="@drawable/ic_help"
-        app:drawableEndCompat="@drawable/ic_right_arrow" />
+        tools:ignore="RtlSymmetry" />
 
     <TextView
         android:id="@+id/frgAccount_tvTitleAbout"
         android:layout_width="0dp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_32sdp"
         android:drawablePadding="@dimen/_10sdp"
         android:gravity="center|start|center_horizontal"
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
         android:text="@string/title_about"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvTitleHelp"
-        tools:ignore="RtlSymmetry"
-        app:drawableStartCompat="@drawable/ic_about"
-        app:drawableEndCompat="@drawable/ic_right_arrow" />
+        tools:ignore="RtlSymmetry" />
+
+
+    <!--    app:drawableStartCompat="@drawable/ic_about"-->
+    <!--    app:drawableEndCompat="@drawable/ic_right_arrow"-->
 
     <TextView
         android:id="@+id/frgAccount_tvLogout"

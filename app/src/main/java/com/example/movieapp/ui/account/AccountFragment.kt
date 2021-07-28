@@ -1,8 +1,10 @@
 package com.example.movieapp.ui.account
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
 import com.bumptech.glide.Glide
+import com.example.movieapp.BuildConfig
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.local.AppPreferences
@@ -29,6 +31,7 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
         appPreferences = context?.let { AppPreferences(it) }!!
 //        checkLogin()
         initListener()
+        setInfoApp()
 //        setInfo()
     }
 
@@ -40,7 +43,15 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private fun setInfo() {
+    @SuppressLint("SetTextI18n")
+    private fun setInfoApp() {
+        val versionName = BuildConfig.VERSION_NAME
+        val versionCode = BuildConfig.VERSION_CODE
+        frgAccount_tvTitleAbout.text = "Version Name = $versionName\n" +
+                                        "Version Code = $versionCode"
+    }
+
+    private fun setInfoUser() {
         frgAccount_tvNameUser.text = appPreferences.getLoginUserName()
         frgAccount_tvEmailUser.text = appPreferences.getLoginEmail()
         if (getIDUserFacebook().isNotEmpty()) {
@@ -93,6 +104,6 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        setInfo()
+        setInfoUser()
     }
 }
