@@ -1,12 +1,14 @@
 package com.example.movieapp.ui.login
 
 import android.content.Intent
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseActivity
 import com.example.movieapp.data.local.AppPreferences
+import com.example.movieapp.ui.main.AdminActivity
 import com.example.movieapp.ui.main.MainActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
@@ -19,6 +21,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
@@ -37,7 +41,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun doViewCreated() {
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
         callBackManager = CallbackManager.Factory.create()
         appPreferences = AppPreferences(this@LoginActivity)
         initListener()
@@ -45,8 +49,71 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun initListener() {
-        linearLoginWithFacebook.setOnClickListener(this)
-        linearLoginWithGoogle.setOnClickListener(this)
+        actLogin_tvLogin.setOnClickListener(this)
+        actLogin_tvRegister.setOnClickListener(this)
+        actLogin_tvHaveAccount.setOnClickListener(this)
+    }
+
+    private fun login() {
+        loginWithEmailPassword(actLogin_etEmail.text.toString(), actLogin_etPassword.text.toString())
+    }
+
+    private fun loginWithEmailPassword(email: String, password: String) {
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password))
+            Toast.makeText(this, "Don't blank!!", Toast.LENGTH_SHORT).show()
+        else {
+            showLoading()
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, OnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        appPreferences.setIsLogin(true)
+                        appPreferences.setLoginEmail(email)
+                        if (email.contains("admin")) {
+                            val intent = Intent(this, AdminActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        }
+                        hideLoading()
+                    } else {
+                        Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
+                        hideLoading()
+                    }
+                })
+        }
+    }
+
+    private fun register() {
+        registerWithEmailPassword(
+            actLogin_etEmail.text.toString(),
+            actLogin_etPassword.text.toString()
+        )
+    }
+
+    private fun registerWithEmailPassword(email: String, password: String) {
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password))
+            Toast.makeText(this, "Don't blank!!", Toast.LENGTH_SHORT).show()
+        else {
+            showLoading()
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, OnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Register success", Toast.LENGTH_SHORT).show()
+                        onBackPressed()
+                        hideLoading()
+                    }
+                })
+            actLogin_etEmail.setText("")
+            actLogin_etPassword.setText("")
+        }
+    }
+
+    private fun showRegister() {
+        actLogin_tvRegister.visibility = View.VISIBLE
+        actLogin_tvLogin.visibility = View.GONE
+        actLogin_tvHaveAccount.visibility = View.GONE
+        actLogin_tvRegister.isEnabled = true
     }
 
     private fun loginWithGoogle() {
@@ -81,9 +148,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun handleFacebookAccessToken(token: AccessToken) {
-        val credential =FacebookAuthProvider.getCredential(token.token)
+        val credential = FacebookAuthProvider.getCredential(token.token)
         auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) {  task ->
+            .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     val userName = user?.displayName ?: ""
@@ -129,10 +196,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                val account =task.getResult(ApiException::class.java)!!
+                val account = task.getResult(ApiException::class.java)!!
                 Log.d("Login Google", "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
-            } catch (e:ApiException) {
+            } catch (e: ApiException) {
                 Log.w("Login Google", "Google sign in failed", e)
             }
         }
@@ -147,8 +214,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.linearLoginWithGoogle -> loginWithGoogle()
-            R.id.linearLoginWithFacebook -> loginWithFacebook()
+            R.id.actLogin_tvLogin -> login()
+            R.id.actLogin_tvRegister -> register()
+            R.id.actLogin_tvHaveAccount -> showRegister()
         }
     }
 
