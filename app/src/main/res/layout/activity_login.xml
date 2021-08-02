@@ -8,72 +8,88 @@
     tools:context=".ui.login.LoginActivity">
 
     <ImageView
+        android:id="@+id/actLogin_imgLogo"
         android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_250sdp"
-        android:layout_marginTop="@dimen/_120sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:src="@drawable/ic_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLoginWithFacebook"
+    <EditText
+        android:id="@+id/actLogin_etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_radius_facebook"
-        android:orientation="horizontal"
-        android:padding="@dimen/_4sdp"
         android:layout_marginHorizontal="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLoginWithGoogle"
+        android:background="@color/white"
+        android:hint="@string/title_insert_email"
+        android:inputType="textEmailAddress"
+        android:padding="@dimen/_16sdp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey700"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actLogin_imgLogo" />
 
-        <ImageView
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_facebook" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_4sdp"
-            android:text="@string/title_facebook"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_20sdp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLoginWithGoogle"
+    <EditText
+        android:id="@+id/actLogin_etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_radius_google"
-        android:orientation="horizontal"
-        android:padding="@dimen/_4sdp"
         android:layout_marginHorizontal="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@color/white"
+        android:hint="@string/title_insert_password"
+        android:inputType="textPassword"
+        android:padding="@dimen/_16sdp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey700"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actLogin_etEmail"
+        tools:ignore="TextViewEdits" />
 
-        <ImageView
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_google" />
+    <TextView
+        android:id="@+id/actLogin_tvLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@color/white"
+        android:padding="@dimen/_16sdp"
+        android:text="@string/title_login"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actLogin_etPassword" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/_4sdp"
-            android:text="@string/title_google"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_20sdp" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/actLogin_tvHaveAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/title_question_account"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actLogin_tvLogin" />
+
+    <TextView
+        android:id="@+id/actLogin_tvRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@color/white"
+        android:enabled="false"
+        android:padding="@dimen/_16sdp"
+        android:text="@string/title_register"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16sdp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actLogin_tvHaveAccount" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
