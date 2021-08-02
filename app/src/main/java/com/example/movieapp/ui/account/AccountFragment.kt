@@ -8,6 +8,7 @@ import com.example.movieapp.BuildConfig
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.local.AppPreferences
+import com.example.movieapp.ui.edit.EditProfileFragment
 import com.example.movieapp.ui.login.LoginActivity
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -85,6 +86,7 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
 
     private fun initListener() {
         frgAccount_tvLogout.setOnClickListener(this)
+        frgAccount_imgEdit.setOnClickListener(this)
     }
 
     private fun logOut() {
@@ -96,9 +98,14 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
         startActivity(intent)
     }
 
+    private fun moveEditScreen() {
+        addFragment(EditProfileFragment(), R.id.frameLayout, EditProfileFragment::class.java.simpleName)
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
             R.id.frgAccount_tvLogout -> logOut()
+            R.id.frgAccount_imgEdit -> moveEditScreen()
         }
     }
 

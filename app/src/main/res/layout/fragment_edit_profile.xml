@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_main">
+
+    <ImageView
+        android:id="@+id/frgAccount_imgSave"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:src="@drawable/ic_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/frgAccount_imgAvatar"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:src="@drawable/img_deadpool"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgAccount_imgSave" />
+
+    <EditText
+        android:id="@+id/frgAccount_tvNameUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:paddingVertical="@dimen/_8sdp"
+        android:text="@string/title_account"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frgAccount_imgAvatar" />
+
+    <EditText
+        android:id="@+id/frgAccount_tvEmailUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_8sdp"
+        android:text="@string/title_email"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:textAlignment="center"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="@+id/frgAccount_tvNameUser"
+        app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvNameUser" />
+
+    <EditText
+        android:id="@+id/frgAccount_tvPhoneUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_8sdp"
+        android:text="@string/title_phone"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:textAlignment="center"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="@+id/frgAccount_tvEmailUser"
+        app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvEmailUser" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
