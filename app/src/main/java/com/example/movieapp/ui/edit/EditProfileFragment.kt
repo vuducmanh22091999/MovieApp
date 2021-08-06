@@ -4,35 +4,27 @@ import android.app.Activity.RESULT_OK
 import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
+import android.os.Handler
 import android.view.View
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.ui.main.MainActivity
-import com.example.movieapp.utils.ACCOUNT
-import com.example.movieapp.utils.ADMIN
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import java.io.IOException
 import kotlin.collections.HashMap
-import android.util.Log
-import com.example.movieapp.utils.PHONE_NUMBER
-import com.example.movieapp.utils.USER_NAME
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import android.webkit.MimeTypeMap
-import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.Task
-import com.google.firebase.storage.StorageTask
-import com.google.firebase.storage.UploadTask
+import com.example.movieapp.utils.*
+import com.google.firebase.storage.*
 import com.squareup.picasso.Picasso
 
 
 class EditProfileFragment : BaseFragment(), View.OnClickListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
-    private lateinit var storage : StorageReference
+    private lateinit var storage: StorageReference
     private val REQUEST_CODE_IMAGE = 1
     private var uri: Uri? = null
     private val infoUser = HashMap<String, Any>()
@@ -85,27 +77,25 @@ class EditProfileFragment : BaseFragment(), View.OnClickListener {
             )
             uploadTask = fileReference.putFile(uri!!)
             uploadTask.addOnSuccessListener {
-                val urlTask = uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> {
-                    if (!it.isSuccessful) {
-                        it.exception?.let {
-                            throw it
-                        }
+                val urlTask = uploadTask.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        throw task.exception!!
                     }
-                    return@Continuation fileReference.downloadUrl
-                })
-             }.addOnCompleteListener { task ->
+                    fileReference.downloadUrl
+                }.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        val downloadUri = task.result
                         infoUser["urlAvatar"] = task.result.toString()
-                        val test = task.result?.storage?.downloadUrl.toString()
-                        Log.d("test-aa", task.result.toString())
-                        Log.d("test-aa", test)
                         auth.currentUser?.uid?.let {
                             databaseReference.child(it).updateChildren(infoUser)
                         }
                     }
                 }
+            }
         }
-        back()
+//        Handler().postDelayed({
+            back()
+//        }, 5000)
     }
 
     private fun openGallery() {
