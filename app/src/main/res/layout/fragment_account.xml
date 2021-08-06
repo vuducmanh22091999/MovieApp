@@ -28,30 +28,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/frgAccount_tvNameUser"
+        android:id="@+id/frgAccount_tvEmailUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
         android:paddingVertical="@dimen/_8sdp"
-        android:text="@string/title_account"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/title_email"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        android:textStyle="bold"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frgAccount_imgAvatar" />
 
     <TextView
-        android:id="@+id/frgAccount_tvEmailUser"
+        android:id="@+id/frgAccount_tvNameUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="@dimen/_8sdp"
-        android:text="@string/title_email"
+        android:text="@string/title_account"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="@+id/frgAccount_tvNameUser"
-        app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvNameUser" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvEmailUser" />
 
     <TextView
         android:id="@+id/frgAccount_tvPhoneUser"
@@ -62,8 +61,8 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="@+id/frgAccount_tvEmailUser"
-        app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvEmailUser" />
+        app:layout_constraintStart_toStartOf="@+id/frgAccount_tvNameUser"
+        app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvNameUser" />
 
     <TextView
         android:id="@+id/frgAccount_tvTitleHelp"

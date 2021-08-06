@@ -63,4 +63,7 @@
     <string name="title_login">Login</string>
     <string name="title_register">Register</string>
     <string name="title_phone">0123456789</string>
+    <string name="title_input_your_name">Input your name…</string>
+    <string name="title_input_phone_number">Input your phone number…</string>
+    <string name="title_change_your_avatar">Change your avatar</string>
 </resources>

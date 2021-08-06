@@ -9,10 +9,6 @@ import com.example.movieapp.ui.login.LoginActivity
 import com.example.movieapp.ui.main.AdminActivity
 import com.example.movieapp.ui.main.MainActivity
 import com.example.movieapp.utils.SPLASH_DISPLAY_LENGTH
-import com.facebook.CallbackManager
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class SplashActivity : BaseActivity() {
     private lateinit var appPreferences: AppPreferences
@@ -29,7 +25,7 @@ class SplashActivity : BaseActivity() {
         if (appPreferences.getIsLogin() == true) {
             if (appPreferences.getLoginEmail()?.contains("admin") == true) {
                 Handler().postDelayed({
-                    val intentNewScreen = Intent(this@SplashActivity, AdminActivity::class.java)
+                    val intentNewScreen = Intent(this@SplashActivity, MainActivity::class.java)
                     startActivity(intentNewScreen)
                     finish()
                 }, SPLASH_DISPLAY_LENGTH)

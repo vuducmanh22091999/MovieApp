@@ -11,3 +11,10 @@ const val MOVIE = "movie"
 
 const val ID_MOVIE = "id_movie"
 const val ID_CAST = "id_cast"
+
+
+const val ADMIN = "admin"
+const val USER = "user"
+const val ACCOUNT = "account"
+const val USER_NAME = "user_name"
+const val PHONE_NUMBER = "phone_number"
