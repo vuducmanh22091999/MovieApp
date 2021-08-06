@@ -19,7 +19,7 @@ class HomeViewModel(private val movieRepo: MovieRepo): ViewModel() {
             }
         }
     }
-
+   
     fun getTopRateMovie(apiKey: String) {
         viewModelScope.launch {
             val response = movieRepo.getTopRateMovie(apiKey)

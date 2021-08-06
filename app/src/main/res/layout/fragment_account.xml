@@ -14,43 +14,54 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:src="@drawable/img_deadpool"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgAccount_imgEdit" />
 
     <ImageView
         android:id="@+id/frgAccount_imgEdit"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
-        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
         android:src="@drawable/ic_edit"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/frgAccount_tvNameUser"
-        app:layout_constraintStart_toEndOf="@+id/frgAccount_tvNameUser"
-        app:layout_constraintTop_toTopOf="@+id/frgAccount_tvNameUser" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/frgAccount_tvEmailUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/title_email"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frgAccount_imgAvatar" />
 
     <TextView
         android:id="@+id/frgAccount_tvNameUser"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_16sdp"
         android:paddingVertical="@dimen/_8sdp"
         android:text="@string/title_account"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/frgAccount_imgAvatar"
-        app:layout_constraintTop_toTopOf="@+id/frgAccount_imgAvatar" />
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvEmailUser" />
 
     <TextView
-        android:id="@+id/frgAccount_tvEmailUser"
-        android:layout_width="wrap_content"
+        android:id="@+id/frgAccount_tvPhoneUser"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
         android:paddingVertical="@dimen/_8sdp"
-        android:text="@string/title_email"
+        android:text="@string/title_phone"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toEndOf="@id/frgAccount_imgAvatar"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="@+id/frgAccount_tvNameUser"
         app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvNameUser" />
 
     <TextView
@@ -86,6 +97,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/_16sdp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvTitleHelp"
