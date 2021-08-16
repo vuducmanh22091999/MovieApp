@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "715995189099",
-    "project_id": "movieapp-b407b",
-    "storage_bucket": "movieapp-b407b.appspot.com"
+    "project_number": "774545589379",
+    "firebase_url": "https://shoesstoreapp-64f8d-default-rtdb.firebaseio.com",
+    "project_id": "shoesstoreapp-64f8d",
+    "storage_bucket": "shoesstoreapp-64f8d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:715995189099:android:0e9eaaebd95f658966462e",
+        "mobilesdk_app_id": "1:774545589379:android:7996df63039a12c94e87b6",
         "android_client_info": {
           "package_name": "com.example.movieapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "715995189099-a3me31gsb4jjdlg3bamdpj3hoogq98sn.apps.googleusercontent.com",
+          "client_id": "774545589379-8rnbilnlc1lo86t8pcnmqkc6b9cvaiv4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA1TUN2h1hQy8q76bawXimYS8Zs2M2Hkl8"
+          "current_key": "AIzaSyDuoOPZCxPJSSBmsxwQIbq-7uhhmfw8Ae0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "715995189099-a3me31gsb4jjdlg3bamdpj3hoogq98sn.apps.googleusercontent.com",
+              "client_id": "774545589379-8rnbilnlc1lo86t8pcnmqkc6b9cvaiv4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -25,7 +25,7 @@ import com.example.movieapp.ui.login.LoginActivity
 import com.example.movieapp.ui.main.MainActivity
 import com.example.movieapp.utils.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
+//import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -60,7 +60,7 @@ class DetailMovieFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun doViewCreated() {
-        auth = Firebase.auth
+//        auth = Firebase.auth
         appPreferences = context?.let { AppPreferences(it) }!!
         handleBottom()
         initListener()

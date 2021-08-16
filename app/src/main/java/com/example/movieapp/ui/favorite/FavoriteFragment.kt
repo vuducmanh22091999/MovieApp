@@ -19,7 +19,6 @@ import com.example.movieapp.utils.API_KEY
 import com.example.movieapp.utils.ID_MOVIE
 import com.example.movieapp.utils.SESSION_ID
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -38,7 +37,6 @@ class FavoriteFragment : BaseFragment() {
     }
 
     override fun doViewCreated() {
-        auth = Firebase.auth
         appPreferences = context?.let { AppPreferences(it) }!!
 
 //        checkLogin()

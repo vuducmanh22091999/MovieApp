@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_main">
+
+    <ImageView
+        android:id="@+id/frgEditProfile_imgSave"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:src="@drawable/ic_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/frgEditProfile_imgAvatar"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:src="@drawable/img_deadpool"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgEditProfile_imgSave" />
+
+    <TextView
+        android:id="@+id/frgEditProfile_tvChangeYourAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:padding="@dimen/_8sdp"
+        android:text="@string/title_change_your_avatar"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/frgEditProfile_imgAvatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/frgEditProfile_etNameUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/title_input_your_name"
+        android:paddingVertical="@dimen/_8sdp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/grey700"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frgEditProfile_tvChangeYourAvatar" />
+
+    <EditText
+        android:id="@+id/frgEditProfile_etEmailUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/title_email"
+        android:paddingVertical="@dimen/_8sdp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/frgEditProfile_etNameUser"
+        app:layout_constraintTop_toBottomOf="@+id/frgEditProfile_etNameUser" />
+
+    <EditText
+        android:id="@+id/frgEditProfile_etPhoneUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/title_input_phone_number"
+        android:inputType="phone"
+        android:paddingVertical="@dimen/_8sdp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/grey700"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@+id/frgEditProfile_etEmailUser"
+        app:layout_constraintTop_toBottomOf="@+id/frgEditProfile_etEmailUser" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

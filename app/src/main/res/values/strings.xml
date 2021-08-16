@@ -63,4 +63,27 @@
     <string name="title_login">Login</string>
     <string name="title_register">Register</string>
     <string name="title_phone">0123456789</string>
+    <string name="title_input_your_name">Input your name…</string>
+    <string name="title_input_phone_number">Input your phone number…</string>
+    <string name="title_change_your_avatar">Change your avatar</string>
+    <string name="title_add">Add</string>
+    <string name="title_update">Update</string>
+    <string name="title_delete">Delete</string>
+
+    <string-array name="product">
+        <item>Nike</item>
+        <item>Adidas</item>
+        <item>Vans</item>
+        <item>Converse</item>
+        <item>Puma</item>
+        <item>Jordan</item>
+    </string-array>
+
+    <string name="title_adidas">Adidas</string>
+    <string name="title_nike">Nike</string>
+    <string name="title_vans">Vans</string>
+    <string name="title_converse">Converse</string>
+    <string name="title_puma">Puma</string>
+    <string name="title_jordan">Jordan</string>
+
 </resources>

@@ -17,7 +17,6 @@ import com.example.movieapp.ui.login.LoginActivity
 import com.example.movieapp.ui.search.SearchMovieFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_question_login.*
@@ -75,23 +74,16 @@ class MainActivity : BaseActivity() {
                     currentFragment = homeFragment
                     return@setOnNavigationItemSelectedListener true
                 }
-                R.id.favouritesFragment -> {
-                    if (user == null)
-                        openDialog()
-                    else {
-                        if (currentFragment === favoriteFragment)
-                            fragmentManager.beginTransaction().show(favoriteFragment).commit()
-                        else
-                            fragmentManager.beginTransaction().hide(currentFragment)
-                                .show(favoriteFragment).commit()
-                        currentFragment = favoriteFragment
-                        return@setOnNavigationItemSelectedListener true
-                    }
-                }
+//                R.id.favouritesFragment -> {
+//                        if (currentFragment === favoriteFragment)
+//                            fragmentManager.beginTransaction().show(favoriteFragment).commit()
+//                        else
+//                            fragmentManager.beginTransaction().hide(currentFragment)
+//                                .show(favoriteFragment).commit()
+//                        currentFragment = favoriteFragment
+//                        return@setOnNavigationItemSelectedListener true
+//                }
                 R.id.accountFragment -> {
-                    if (user == null)
-                        openDialog()
-                    else {
                         if (currentFragment === accountFragment)
                             fragmentManager.beginTransaction().show(accountFragment).commit()
                         else
@@ -99,17 +91,16 @@ class MainActivity : BaseActivity() {
                                 .show(accountFragment).commit()
                         currentFragment = accountFragment
                         return@setOnNavigationItemSelectedListener true
-                    }
                 }
-                R.id.searchFragment -> {
-                    if (currentFragment === searchFragment)
-                        fragmentManager.beginTransaction().show(searchFragment).commit()
-                    else
-                        fragmentManager.beginTransaction().hide(currentFragment)
-                            .show(searchFragment).commit()
-                    currentFragment = searchFragment
-                    return@setOnNavigationItemSelectedListener true
-                }
+//                R.id.searchFragment -> {
+//                    if (currentFragment === searchFragment)
+//                        fragmentManager.beginTransaction().show(searchFragment).commit()
+//                    else
+//                        fragmentManager.beginTransaction().hide(currentFragment)
+//                            .show(searchFragment).commit()
+//                    currentFragment = searchFragment
+//                    return@setOnNavigationItemSelectedListener true
+//                }
             }
             true
         }
@@ -171,12 +162,12 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        appPreferences = AppPreferences(this)
-        auth = Firebase.auth
-        user = auth.currentUser
-        user?.displayName?.let { appPreferences.setLoginUserName(it) }
-        user?.email?.let { appPreferences.setLoginEmail(it) }
-        user?.let { appPreferences.setLoginAvatar(it.photoUrl.toString()) }
+//        appPreferences = AppPreferences(this)
+//        auth = Firebase.auth
+//        user = auth.currentUser
+//        user?.displayName?.let { appPreferences.setLoginUserName(it) }
+//        user?.email?.let { appPreferences.setLoginEmail(it) }
+//        user?.let { appPreferences.setLoginAvatar(it.photoUrl.toString()) }
 
 //        Log.d("TESTABC", user?.displayName.toString())
     }

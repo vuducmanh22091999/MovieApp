@@ -48,4 +48,10 @@ abstract class BaseFragment : Fragment() {
             (activity as MainActivity).hideLoading()
         }
     }
+
+    fun back() {
+        if (activity is MainActivity) {
+            (activity as MainActivity).onBackPressed()
+        }
+    }
 }
