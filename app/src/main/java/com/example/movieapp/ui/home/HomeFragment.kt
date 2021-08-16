@@ -37,23 +37,23 @@ class HomeFragment : BaseFragment() {
     override fun doViewCreated() {
         appPreferences = context?.let { AppPreferences(it) }!!
         initData()
-        observerViewModel()
+//        observerViewModel()
     }
 
-    private fun setInfo() {
-        frgHome_tvTitleUserName.text = appPreferences.getLoginUserName()
-        if (getIDUserFacebook().isNotEmpty()) {
-            context?.let {
-                Glide.with(it).load(urlAvatar()).placeholder(R.drawable.ic_account)
-                    .into(frgHome_imgAvatar)
-            }
-        } else {
-            context?.let {
-                Glide.with(it).load(appPreferences.getLoginAvatar())
-                    .placeholder(R.drawable.ic_account).into(frgHome_imgAvatar)
-            }
-        }
-    }
+//    private fun setInfo() {
+//        frgHome_tvTitleUserName.text = appPreferences.getLoginUserName()
+//        if (getIDUserFacebook().isNotEmpty()) {
+//            context?.let {
+//                Glide.with(it).load(urlAvatar()).placeholder(R.drawable.ic_account)
+//                    .into(frgHome_imgAvatar)
+//            }
+//        } else {
+//            context?.let {
+//                Glide.with(it).load(appPreferences.getLoginAvatar())
+//                    .placeholder(R.drawable.ic_account).into(frgHome_imgAvatar)
+//            }
+//        }
+//    }
 
     private fun getIDUserFacebook(): String {
         var facebookUserId = ""
@@ -78,57 +78,57 @@ class HomeFragment : BaseFragment() {
         homeViewModel.getTopRateMovie(API_KEY)
     }
 
-    private fun observerViewModel() {
-        homeViewModel.popularMovie.observe(this@HomeFragment, {
-            initRecyclerViewPopularMovie(it)
-        })
+//    private fun observerViewModel() {
+//        homeViewModel.popularMovie.observe(this@HomeFragment, {
+//            initRecyclerViewPopularMovie(it)
+//        })
+//
+//        homeViewModel.topRateMovie.observe(this@HomeFragment, {
+//            initRecyclerViewTopRateMovie(it)
+//            hideLoading()
+//        })
+//    }
 
-        homeViewModel.topRateMovie.observe(this@HomeFragment, {
-            initRecyclerViewTopRateMovie(it)
-            hideLoading()
-        })
-    }
+//    private fun initRecyclerViewPopularMovie(listMoviePopularModel: ListMovieModel) {
+//        this.listPopularMovieModel.results.addAll(listMoviePopularModel.results)
+//        popularMovieAdapter =
+//            PopularMovieAdapter(this.listPopularMovieModel.results.toList()) { index, _ ->
+//                val detailMovieFragment = DetailMovieFragment()
+//                val bundle = Bundle()
+//                bundle.putSerializable(ID_MOVIE, this.listPopularMovieModel.results[index].id)
+//                detailMovieFragment.arguments = bundle
+//                addFragment(
+//                    detailMovieFragment,
+//                    R.id.frameLayout,
+//                    DetailMovieFragment::class.java.simpleName
+//                )
+//            }
+//        val linearLayoutManager =
+//            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        frgHome_rcvPosterMovie.setHasFixedSize(true)
+//        frgHome_rcvPosterMovie.layoutManager = linearLayoutManager
+//        frgHome_rcvPosterMovie.adapter = popularMovieAdapter
+//    }
 
-    private fun initRecyclerViewPopularMovie(listMoviePopularModel: ListMovieModel) {
-        this.listPopularMovieModel.results.addAll(listMoviePopularModel.results)
-        popularMovieAdapter =
-            PopularMovieAdapter(this.listPopularMovieModel.results.toList()) { index, _ ->
-                val detailMovieFragment = DetailMovieFragment()
-                val bundle = Bundle()
-                bundle.putSerializable(ID_MOVIE, this.listPopularMovieModel.results[index].id)
-                detailMovieFragment.arguments = bundle
-                addFragment(
-                    detailMovieFragment,
-                    R.id.frameLayout,
-                    DetailMovieFragment::class.java.simpleName
-                )
-            }
-        val linearLayoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        frgHome_rcvPosterMovie.setHasFixedSize(true)
-        frgHome_rcvPosterMovie.layoutManager = linearLayoutManager
-        frgHome_rcvPosterMovie.adapter = popularMovieAdapter
-    }
-
-    private fun initRecyclerViewTopRateMovie(listMovieTopRateModel: ListMovieModel) {
-        this.listTopRateModel.results.addAll(listMovieTopRateModel.results)
-        topRateMovieAdapter =
-            TopRateMovieAdapter(this.listTopRateModel.results.toList()) { index, _ ->
-                val detailMovieFragment = DetailMovieFragment()
-                val bundle = Bundle()
-                bundle.putSerializable(ID_MOVIE, this.listTopRateModel.results[index].id)
-                detailMovieFragment.arguments = bundle
-                addFragment(detailMovieFragment, R.id.frameLayout)
-            }
-        val linearLayoutManagerVertical =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        frgHome_rcvTopRateMovie.setHasFixedSize(true)
-        frgHome_rcvTopRateMovie.layoutManager = linearLayoutManagerVertical
-        frgHome_rcvTopRateMovie.adapter = topRateMovieAdapter
-    }
+//    private fun initRecyclerViewTopRateMovie(listMovieTopRateModel: ListMovieModel) {
+//        this.listTopRateModel.results.addAll(listMovieTopRateModel.results)
+//        topRateMovieAdapter =
+//            TopRateMovieAdapter(this.listTopRateModel.results.toList()) { index, _ ->
+//                val detailMovieFragment = DetailMovieFragment()
+//                val bundle = Bundle()
+//                bundle.putSerializable(ID_MOVIE, this.listTopRateModel.results[index].id)
+//                detailMovieFragment.arguments = bundle
+//                addFragment(detailMovieFragment, R.id.frameLayout)
+//            }
+//        val linearLayoutManagerVertical =
+//            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        frgHome_rcvTopRateMovie.setHasFixedSize(true)
+//        frgHome_rcvTopRateMovie.layoutManager = linearLayoutManagerVertical
+//        frgHome_rcvTopRateMovie.adapter = topRateMovieAdapter
+//    }
 
     override fun onResume() {
         super.onResume()
-        setInfo()
+//        setInfo()
     }
 }
