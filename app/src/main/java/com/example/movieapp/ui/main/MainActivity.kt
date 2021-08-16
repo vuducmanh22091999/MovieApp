@@ -74,15 +74,15 @@ class MainActivity : BaseActivity() {
                     currentFragment = homeFragment
                     return@setOnNavigationItemSelectedListener true
                 }
-                R.id.favouritesFragment -> {
-                        if (currentFragment === favoriteFragment)
-                            fragmentManager.beginTransaction().show(favoriteFragment).commit()
-                        else
-                            fragmentManager.beginTransaction().hide(currentFragment)
-                                .show(favoriteFragment).commit()
-                        currentFragment = favoriteFragment
-                        return@setOnNavigationItemSelectedListener true
-                }
+//                R.id.favouritesFragment -> {
+//                        if (currentFragment === favoriteFragment)
+//                            fragmentManager.beginTransaction().show(favoriteFragment).commit()
+//                        else
+//                            fragmentManager.beginTransaction().hide(currentFragment)
+//                                .show(favoriteFragment).commit()
+//                        currentFragment = favoriteFragment
+//                        return@setOnNavigationItemSelectedListener true
+//                }
                 R.id.accountFragment -> {
                         if (currentFragment === accountFragment)
                             fragmentManager.beginTransaction().show(accountFragment).commit()
@@ -92,15 +92,15 @@ class MainActivity : BaseActivity() {
                         currentFragment = accountFragment
                         return@setOnNavigationItemSelectedListener true
                 }
-                R.id.searchFragment -> {
-                    if (currentFragment === searchFragment)
-                        fragmentManager.beginTransaction().show(searchFragment).commit()
-                    else
-                        fragmentManager.beginTransaction().hide(currentFragment)
-                            .show(searchFragment).commit()
-                    currentFragment = searchFragment
-                    return@setOnNavigationItemSelectedListener true
-                }
+//                R.id.searchFragment -> {
+//                    if (currentFragment === searchFragment)
+//                        fragmentManager.beginTransaction().show(searchFragment).commit()
+//                    else
+//                        fragmentManager.beginTransaction().hide(currentFragment)
+//                            .show(searchFragment).commit()
+//                    currentFragment = searchFragment
+//                    return@setOnNavigationItemSelectedListener true
+//                }
             }
             true
         }
