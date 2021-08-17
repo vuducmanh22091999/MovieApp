@@ -8,8 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.model.movie.MovieModel
 import com.example.movieapp.utils.BASE_URL_IMG
-import kotlinx.android.synthetic.main.item_search.view.*
-import kotlinx.android.synthetic.main.item_top_rate_movie.view.*
+import kotlinx.android.synthetic.main.item_product.view.*
 
 class SearchMovieAdapter(
     private var listResultSearch: List<MovieModel>,
@@ -18,12 +17,12 @@ class SearchMovieAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindDataViewHolder(movieModel: MovieModel) {
             Glide.with(itemView.context).load(BASE_URL_IMG + movieModel.posterPath)
-                .placeholder(R.drawable.img_placeholder).into(itemView.itemTopRateMovie_imgPoster)
+                .placeholder(R.drawable.img_placeholder).into(itemView.itemProduct_imgPoster)
 
-            itemView.itemTopRateMovie_tvTitleNameMovie.text = movieModel.title
-            itemView.itemTopRateMovie_tvTitleScoreRateMovie.text = movieModel.voteAverage
-            itemView.itemTopRateMovie_tvOverviewMovie.text = movieModel.overview
-            itemView.itemTopRateMovie_tvReleasedDateMovie.text = movieModel.releaseDate
+//            itemView.itemProduct_tvTitleNameMovie.text = movieModel.title
+//            itemView.itemProduct_tvTitleScoreRateMovie.text = movieModel.voteAverage
+//            itemView.itemProduct_tvOverviewMovie.text = movieModel.overview
+//            itemView.itemProduct_tvReleasedDateMovie.text = movieModel.releaseDate
             itemView.setOnClickListener {
                 onClick(adapterPosition, movieModel.title)
             }
@@ -32,7 +31,7 @@ class SearchMovieAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.item_top_rate_movie, parent, false)
+        val view = layoutInflater.inflate(R.layout.item_product, parent, false)
         return ViewHolder(view)
     }
 

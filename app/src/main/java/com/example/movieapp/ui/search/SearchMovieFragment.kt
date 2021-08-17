@@ -13,8 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.movie.ListMovieModel
+import com.example.movieapp.data.model.product.ProductModel
 import com.example.movieapp.ui.detail.movie.DetailMovieFragment
-import com.example.movieapp.ui.home.adapter.PopularMovieAdapter
+import com.example.movieapp.ui.home.adapter.ListProductAdapter
 import com.example.movieapp.ui.search.adapter.SearchMovieAdapter
 import com.example.movieapp.utils.*
 import com.google.firebase.database.*
@@ -32,8 +33,8 @@ class SearchMovieFragment : BaseFragment(), View.OnClickListener {
     private var listMovieModel = ListMovieModel()
     private lateinit var timer: Timer
     private var idProduct = 0
-    private var listString = ArrayList<StringModel>()
-    private lateinit var listStringAdapter: ListStringAdapter
+    private var listString = ArrayList<ProductModel>()
+    private lateinit var listProductAdapter: ListProductAdapter
 
     private lateinit var database: DatabaseReference
 
@@ -90,12 +91,12 @@ class SearchMovieFragment : BaseFragment(), View.OnClickListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (value in snapshot.children) {
-                        val string = value.getValue(StringModel::class.java)
+                        val string = value.getValue(ProductModel::class.java)
                         if (string != null) {
 //                            listString.clear()
                             listString.add(string)
                         }
-                        listStringAdapter = ListStringAdapter(listString.toList()) { index, _ ->
+                        listProductAdapter = ListProductAdapter(listString.toList()) { index, _ ->
                             frgSearchMovie_etSearch.setText(listString[index].name.toString())
                             frgSearchMovie_etSearch1.setText(listString[index].number.toString())
                         }
@@ -103,7 +104,7 @@ class SearchMovieFragment : BaseFragment(), View.OnClickListener {
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                         rcvTest.setHasFixedSize(true)
                         rcvTest.layoutManager = linearLayoutManager
-                        rcvTest.adapter = listStringAdapter
+                        rcvTest.adapter = listProductAdapter
                     }
                 }
             }

@@ -6,26 +6,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
-import com.example.movieapp.data.model.movie.MovieModel
-import com.example.movieapp.utils.BASE_URL_IMG
+import com.example.movieapp.data.model.product.ProductModel
 import kotlinx.android.synthetic.main.item_product.view.*
 
-class TopRateMovieAdapter(
-    private val listTopRate: List<MovieModel>,
+class ListProductAdapter(
+    private val list: List<ProductModel>,
     private val onClick: (Int, String) -> Unit
-) : RecyclerView.Adapter<TopRateMovieAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ListProductAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun dataBindHolder(movieModel: MovieModel) {
+        fun bindDataViewHolder(productModel: ProductModel) {
+            itemView.itemProduct_tvTitleName.text = productModel.name
+            itemView.itemProduct_tvAmount.text = productModel.number
             itemView.context?.let {
-                Glide.with(itemView.context).load(BASE_URL_IMG + movieModel.posterPath)
+                Glide.with(itemView.context).load(productModel.urlAvatar)
                     .placeholder(R.drawable.img_placeholder).into(itemView.itemProduct_imgPoster)
             }
-//            itemView.itemProduct_tvTitleNameMovie.text = movieModel.title
-//            itemView.itemProduct_tvTitleScoreRateMovie.text = movieModel.voteAverage
-//            itemView.itemProduct_tvOverviewMovie.text = movieModel.overview
-//            itemView.itemProduct_tvReleasedDateMovie.text = movieModel.releaseDate
+
             itemView.setOnClickListener {
-                onClick(adapterPosition, movieModel.title)
+                onClick(adapterPosition, productModel.toString())
             }
         }
     }
@@ -37,8 +35,8 @@ class TopRateMovieAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.dataBindHolder(listTopRate[position])
+        holder.bindDataViewHolder(list[position])
     }
 
-    override fun getItemCount(): Int = listTopRate.size
+    override fun getItemCount() = list.size
 }

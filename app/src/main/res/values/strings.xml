@@ -85,5 +85,8 @@
     <string name="title_converse">Converse</string>
     <string name="title_puma">Puma</string>
     <string name="title_jordan">Jordan</string>
-
+    <string name="title_add_product">Add Product</string>
+    <string name="title_input_add_name">Type name product…</string>
+    <string name="title_input_add_amount">Type amount product…</string>
+    <string name="do_not_leave_blank">Don\'t leave blank</string>
 </resources>
