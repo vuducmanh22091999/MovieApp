@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/_8sdp">
 
     <LinearLayout
-        android:id="@+id/itemTopRateMovie_lnDetails"
+        android:id="@+id/itemProduct_lnDetails"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_32sdp"
         android:background="@color/blue900"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@id/itemTopRateMovie_imgPoster"
+        app:layout_constraintBottom_toBottomOf="@id/itemProduct_imgPoster"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/itemTopRateMovie_imgPoster"
-        app:layout_constraintTop_toTopOf="@id/itemTopRateMovie_imgPoster">
+        app:layout_constraintStart_toEndOf="@id/itemProduct_imgPoster"
+        app:layout_constraintTop_toTopOf="@id/itemProduct_imgPoster">
 
         <TextView
-            android:id="@+id/itemTopRateMovie_tvTitleNameMovie"
+            android:id="@+id/itemProduct_tvTitleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
@@ -28,7 +29,7 @@
             android:textSize="@dimen/_14sdp" />
 
         <TextView
-            android:id="@+id/itemTopRateMovie_tvOverviewMovie"
+            android:id="@+id/itemProduct_tvAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
@@ -40,19 +41,20 @@
             android:textSize="@dimen/_12sdp" />
 
         <TextView
-            android:id="@+id/itemTopRateMovie_tvReleasedDateMovie"
+            android:id="@+id/itemProduct_tvReleasedDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:text="@string/title_name_movie"
+            android:visibility="gone"
             android:textColor="@color/white80"
             android:textSize="@dimen/_12sdp" />
 
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/itemTopRateMovie_imgPoster"
+        android:id="@+id/itemProduct_imgPoster"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_150sdp"
         android:scaleType="centerCrop"
@@ -61,7 +63,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/itemTopRateMovie_tvTitleScoreRateMovie"
+        android:id="@+id/itemProduct_tvTitleScoreRateMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_64sdp"
@@ -71,9 +73,10 @@
         android:text="@string/title_name_movie"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintBottom_toTopOf="@id/itemTopRateMovie_lnDetails"
-        app:layout_constraintEnd_toEndOf="@id/itemTopRateMovie_lnDetails"
-        app:layout_constraintTop_toTopOf="@id/itemTopRateMovie_lnDetails"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/itemProduct_lnDetails"
+        app:layout_constraintEnd_toEndOf="@id/itemProduct_lnDetails"
+        app:layout_constraintTop_toTopOf="@id/itemProduct_lnDetails"
         app:drawableStartCompat="@drawable/ic_star" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

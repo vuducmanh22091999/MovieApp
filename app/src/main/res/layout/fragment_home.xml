@@ -32,7 +32,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <ImageView
-            android:id="@+id/frgHome_imgAdd"
+            android:id="@+id/frgHome_imgAddAdidas"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:src="@drawable/ic_add"
