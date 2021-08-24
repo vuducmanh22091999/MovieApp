@@ -1,23 +1,39 @@
 package com.example.movieapp.ui.home
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.product.ProductModel
 import com.example.movieapp.ui.add.AddScreenFragment
+import com.example.movieapp.ui.edit.EditProductFragment
 import com.example.movieapp.ui.home.adapter.ListProductAdapter
 import com.example.movieapp.utils.*
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.dialog_question_delete.*
+import kotlinx.android.synthetic.main.dialog_question_delete.dialogQuestionDelete_tvCancel
+import kotlinx.android.synthetic.main.dialog_question_update.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.ArrayList
 
 class HomeFragment : BaseFragment(), View.OnClickListener {
     private lateinit var database: DatabaseReference
-    private var listProduct = ArrayList<ProductModel>()
+    private var listProductAdidas = ArrayList<ProductModel>()
+    private var listProductNike = ArrayList<ProductModel>()
+    private var listProductConverse = ArrayList<ProductModel>()
+    private var listProductPuma = ArrayList<ProductModel>()
+    private var listProductJordan = ArrayList<ProductModel>()
     private lateinit var listProductAdapter: ListProductAdapter
+    private lateinit var dialog: Dialog
+    private lateinit var storage: StorageReference
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_home
@@ -25,8 +41,72 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
     override fun doViewCreated() {
         database = FirebaseDatabase.getInstance().reference.child(PRODUCT)
+        storage = FirebaseStorage.getInstance().getReference("Images")
         initListener()
         setDataForList()
+    }
+
+    private fun openDialogEdit(
+        nameProduct: String,
+        detailNameProduct: String,
+        amountProduct: String,
+        urlAvatar: String
+    ) {
+        dialog = context?.let { Dialog(it) }!!
+        dialog.setContentView(R.layout.dialog_question_update)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialog.dialogQuestionUpdate_tvYes.setOnClickListener {
+            val editProductFragment = EditProductFragment()
+            val bundle = Bundle()
+            bundle.putString(NAME_PRODUCT, nameProduct)
+            bundle.putString(DETAIL_NAME_PRODUCT, detailNameProduct)
+            bundle.putString(AMOUNT_PRODUCT, amountProduct)
+            bundle.putString(URL_AVATAR, urlAvatar)
+            editProductFragment.arguments = bundle
+            addFragment(
+                editProductFragment,
+                R.id.frameLayout,
+                EditProductFragment::class.java.simpleName
+            )
+            dialog.dismiss()
+        }
+
+        dialog.dialogQuestionUpdate_tvCancel.setOnClickListener {
+            Toast.makeText(context, "Cancel!!!", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun openDialogDelete(nameProduct: String, nameDetailProduct: String) {
+        dialog = context?.let { Dialog(it) }!!
+        dialog.setContentView(R.layout.dialog_question_delete)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialog.dialogQuestionDelete_tvDelete.setOnClickListener {
+            deleteProduct(nameProduct, nameDetailProduct)
+            Toast.makeText(context, "Delete!!!", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+
+        dialog.dialogQuestionDelete_tvCancel.setOnClickListener {
+            Toast.makeText(context, "Cancel!!!", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun deleteProduct(nameProduct: String, nameDetailProduct: String) {
+        database.child(nameProduct).child(nameDetailProduct).removeValue()
     }
 
     private fun setDataForList() {
@@ -41,16 +121,25 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         database.child(ADIDAS).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
+                    listProductAdidas.clear()
                     for (value in snapshot.children) {
-                        val string = value.getValue(ProductModel::class.java)
-                        if (string != null) {
-//                            listProduct.clear()
-                            listProduct.add(string)
+                        val key = value.key!!
+                        val productModel = value.getValue(ProductModel::class.java)
+                        if (productModel != null) {
+                            listProductAdidas.add(productModel)
                         }
 
-                        listProductAdapter = ListProductAdapter(listProduct.toList()) { index, _ ->
-                            Toast.makeText(context, listProduct[index].name, Toast.LENGTH_SHORT).show()
-                        }
+                        listProductAdapter =
+                            ListProductAdapter(listProductAdidas.toList(), { index, _ ->
+                                openDialogEdit(
+                                    ADIDAS,
+                                    listProductAdidas[index].name!!,
+                                    listProductAdidas[index].number!!,
+                                    listProductAdidas[index].urlAvatar!!
+                                )
+                            }, { index, _ ->
+                                openDialogDelete(ADIDAS, listProductAdidas[index].name!!)
+                            })
 
                         val linearLayoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -73,15 +162,23 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (value in snapshot.children) {
-                        val string = value.getValue(ProductModel::class.java)
-                        if (string != null) {
-//                            listProduct.clear()
-                            listProduct.add(string)
+                        val key = value.key!!
+                        val productModel = value.getValue(ProductModel::class.java)
+                        if (productModel != null) {
+                            listProductNike.add(productModel)
                         }
 
-                        listProductAdapter = ListProductAdapter(listProduct.toList()) { index, _ ->
-                            Toast.makeText(context, listProduct[index].name, Toast.LENGTH_SHORT).show()
-                        }
+                        listProductAdapter =
+                            ListProductAdapter(listProductNike.toList(), { index, _ ->
+                                openDialogEdit(
+                                    listProductNike[index].name!!,
+                                    listProductNike[index].number!!,
+                                    listProductNike[index].urlAvatar!!,
+                                    NIKE
+                                )
+                            }, { index, _ ->
+                                openDialogDelete(NIKE, listProductNike[index].name!!)
+                            })
 
                         val linearLayoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -104,15 +201,23 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (value in snapshot.children) {
-                        val string = value.getValue(ProductModel::class.java)
-                        if (string != null) {
-//                            listProduct.clear()
-                            listProduct.add(string)
+                        val key = value.key!!
+                        val productModel = value.getValue(ProductModel::class.java)
+                        if (productModel != null) {
+                            listProductConverse.add(productModel)
                         }
 
-                        listProductAdapter = ListProductAdapter(listProduct.toList()) { index, _ ->
-                            Toast.makeText(context, listProduct[index].name, Toast.LENGTH_SHORT).show()
-                        }
+                        listProductAdapter =
+                            ListProductAdapter(listProductConverse.toList(), { index, _ ->
+                                openDialogEdit(
+                                    listProductConverse[index].name!!,
+                                    listProductConverse[index].number!!,
+                                    listProductConverse[index].urlAvatar!!,
+                                    CONVERSE
+                                )
+                            }, { index, _ ->
+                                openDialogDelete(CONVERSE, listProductConverse[index].name!!)
+                            })
 
                         val linearLayoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -135,15 +240,23 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (value in snapshot.children) {
-                        val string = value.getValue(ProductModel::class.java)
-                        if (string != null) {
-//                            listProduct.clear()
-                            listProduct.add(string)
+                        val key = value.key!!
+                        val productModel = value.getValue(ProductModel::class.java)
+                        if (productModel != null) {
+                            listProductPuma.add(productModel)
                         }
 
-                        listProductAdapter = ListProductAdapter(listProduct.toList()) { index, _ ->
-                            Toast.makeText(context, listProduct[index].name, Toast.LENGTH_SHORT).show()
-                        }
+                        listProductAdapter =
+                            ListProductAdapter(listProductPuma.toList(), { index, _ ->
+                                openDialogEdit(
+                                    listProductPuma[index].name!!,
+                                    listProductPuma[index].number!!,
+                                    listProductPuma[index].urlAvatar!!,
+                                    PUMA
+                                )
+                            }, { index, _ ->
+                                openDialogDelete(PUMA, listProductPuma[index].name!!)
+                            })
 
                         val linearLayoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -166,15 +279,23 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (value in snapshot.children) {
-                        val string = value.getValue(ProductModel::class.java)
-                        if (string != null) {
-//                            listProduct.clear()
-                            listProduct.add(string)
+                        val key = value.key!!
+                        val productModel = value.getValue(ProductModel::class.java)
+                        if (productModel != null) {
+                            listProductJordan.add(productModel)
                         }
 
-                        listProductAdapter = ListProductAdapter(listProduct.toList()) { index, _ ->
-                            Toast.makeText(context, listProduct[index].name, Toast.LENGTH_SHORT).show()
-                        }
+                        listProductAdapter =
+                            ListProductAdapter(listProductJordan.toList(), { index, _ ->
+                                openDialogEdit(
+                                    listProductJordan[index].name!!,
+                                    listProductJordan[index].number!!,
+                                    listProductJordan[index].urlAvatar!!,
+                                    JORDAN
+                                )
+                            }, { index, _ ->
+                                openDialogDelete(JORDAN, listProductJordan[index].name!!)
+                            })
 
                         val linearLayoutManager =
                             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -241,7 +362,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when(v.id) {
+        when (v.id) {
             R.id.frgHome_imgAddAdidas -> addProductAdidas()
             R.id.frgHome_imgAddNike -> addProductNike()
             R.id.frgHome_imgAddConverse -> addProductConverse()

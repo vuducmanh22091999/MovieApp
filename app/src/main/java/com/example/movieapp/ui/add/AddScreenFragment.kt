@@ -10,6 +10,7 @@ import android.webkit.MimeTypeMap
 import android.widget.Toast
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
+import com.example.movieapp.data.model.product.ProductModel
 import com.example.movieapp.ui.main.MainActivity
 import com.example.movieapp.utils.*
 import com.google.firebase.database.DatabaseReference
@@ -29,6 +30,7 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
     private var idProduct = 0
     private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
+    private var urlAvatar = ""
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_add_product
@@ -87,18 +89,16 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun addProduct() {
-        val uploadTask: UploadTask
         if (frgAdd_etNameProduct.text.toString().isEmpty() || frgAdd_etAmountProduct.text.toString()
                 .isEmpty()
         )
             Toast.makeText(context, getString(R.string.do_not_leave_blank), Toast.LENGTH_SHORT)
                 .show()
         else {
-            val product = HashMap<String, Any>()
-            idProduct += 1
-            product["id"] = idProduct
-            product["name"] = frgAdd_etNameProduct.text.toString()
-            product["number"] = frgAdd_etAmountProduct.text.toString()
+            val name = frgAdd_etNameProduct.text.toString()
+            val number = frgAdd_etAmountProduct.text.toString()
+
+            val uploadTask: UploadTask
             if (uri != null) {
                 val fileReference: StorageReference = storage.child(
                     System.currentTimeMillis()
@@ -113,16 +113,17 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
                         fileReference.downloadUrl
                     }.addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            product["urlAvatar"] = task.result.toString()
+                            urlAvatar = task.result.toString()
+                            val productModel =
+                                ProductModel(name = name, urlAvatar = urlAvatar, number = number)
                             database.child(arguments?.getString(NAME_PRODUCT).toString())
-                                .child(arguments?.getString(NAME_PRODUCT).toString() + idProduct.toString())
-                                .setValue(product)
+                                .child(name).setValue(productModel)
                         }
                     }
                 }
             }
+            back()
         }
-//        back()
     }
 
     override fun onClick(v: View) {
