@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -47,10 +48,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun openDialogEdit(
-        nameProduct: String,
-        detailNameProduct: String,
-        amountProduct: String,
-        urlAvatar: String
+        productModel: ProductModel
     ) {
         dialog = context?.let { Dialog(it) }!!
         dialog.setContentView(R.layout.dialog_question_update)
@@ -63,10 +61,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         dialog.dialogQuestionUpdate_tvYes.setOnClickListener {
             val editProductFragment = EditProductFragment()
             val bundle = Bundle()
-            bundle.putString(NAME_PRODUCT, nameProduct)
-            bundle.putString(DETAIL_NAME_PRODUCT, detailNameProduct)
-            bundle.putString(AMOUNT_PRODUCT, amountProduct)
-            bundle.putString(URL_AVATAR, urlAvatar)
+            bundle.putSerializable(PRODUCT_MODEL, productModel)
             editProductFragment.arguments = bundle
             addFragment(
                 editProductFragment,
@@ -83,7 +78,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         dialog.show()
     }
 
-    private fun openDialogDelete(nameProduct: String, nameDetailProduct: String) {
+    private fun openDialogDelete(nameProduct: String, keyProduct: String) {
         dialog = context?.let { Dialog(it) }!!
         dialog.setContentView(R.layout.dialog_question_delete)
         dialog.window?.setLayout(
@@ -93,7 +88,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialog.dialogQuestionDelete_tvDelete.setOnClickListener {
-            deleteProduct(nameProduct, nameDetailProduct)
+            deleteProduct(nameProduct, keyProduct)
             Toast.makeText(context, "Delete!!!", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
@@ -105,47 +100,38 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         dialog.show()
     }
 
-    private fun deleteProduct(nameProduct: String, nameDetailProduct: String) {
-        database.child(nameProduct).child(nameDetailProduct).removeValue()
+    private fun deleteProduct(nameProduct: String, keyProduct: String) {
+        database.child(nameProduct).child(keyProduct).removeValue()
     }
 
     private fun setDataForList() {
-        productAdidas()
-        productNike()
-        productConverse()
-        productPuma()
-        productJordan()
+        product(ADIDAS)
+        product(NIKE)
+        product(CONVERSE)
+        product(PUMA)
+        product(JORDAN)
     }
 
-    private fun productAdidas() {
-        database.child(ADIDAS).addValueEventListener(object : ValueEventListener {
+    private fun product(typeProduct: String) {
+        database.child(typeProduct).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    listProductAdidas.clear()
+                    val listProduct = ArrayList<ProductModel>()
                     for (value in snapshot.children) {
-                        val key = value.key!!
                         val productModel = value.getValue(ProductModel::class.java)
                         if (productModel != null) {
-                            listProductAdidas.add(productModel)
+                            listProduct.add(productModel)
                         }
 
                         listProductAdapter =
-                            ListProductAdapter(listProductAdidas.toList(), { index, _ ->
+                            ListProductAdapter(listProduct.toList(), { index, _ ->
                                 openDialogEdit(
-                                    ADIDAS,
-                                    listProductAdidas[index].name!!,
-                                    listProductAdidas[index].number!!,
-                                    listProductAdidas[index].urlAvatar!!
+                                    listProduct[index]
                                 )
                             }, { index, _ ->
-                                openDialogDelete(ADIDAS, listProductAdidas[index].name!!)
+                                openDialogDelete(typeProduct, listProduct[index].id!!)
                             })
-
-                        val linearLayoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        frgHome_rcvAdidas.setHasFixedSize(true)
-                        frgHome_rcvAdidas.layoutManager = linearLayoutManager
-                        frgHome_rcvAdidas.adapter = listProductAdapter
+                        setupRecyclerView(typeProduct, listProduct, listProductAdapter)
                     }
                 }
             }
@@ -157,160 +143,46 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
-    private fun productNike() {
-        database.child(NIKE).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (value in snapshot.children) {
-                        val key = value.key!!
-                        val productModel = value.getValue(ProductModel::class.java)
-                        if (productModel != null) {
-                            listProductNike.add(productModel)
-                        }
-
-                        listProductAdapter =
-                            ListProductAdapter(listProductNike.toList(), { index, _ ->
-                                openDialogEdit(
-                                    listProductNike[index].name!!,
-                                    listProductNike[index].number!!,
-                                    listProductNike[index].urlAvatar!!,
-                                    NIKE
-                                )
-                            }, { index, _ ->
-                                openDialogDelete(NIKE, listProductNike[index].name!!)
-                            })
-
-                        val linearLayoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        frgHome_rcvNike.setHasFixedSize(true)
-                        frgHome_rcvNike.layoutManager = linearLayoutManager
-                        frgHome_rcvNike.adapter = listProductAdapter
-                    }
-                }
+    private fun setupRecyclerView(typeProduct: String, listProduct: List<ProductModel>, listProductAdapter: ListProductAdapter) {
+        val linearLayoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        when(typeProduct) {
+            ADIDAS -> {
+                listProductAdidas.clear()
+                listProductAdidas.addAll(listProduct)
+                frgHome_rcvAdidas.setHasFixedSize(true)
+                frgHome_rcvAdidas.layoutManager = linearLayoutManager
+                frgHome_rcvAdidas.adapter = listProductAdapter
             }
-
-            override fun onCancelled(error: DatabaseError) {
-
+            NIKE -> {
+                listProductNike.clear()
+                listProductNike.addAll(listProduct)
+                frgHome_rcvNike.setHasFixedSize(true)
+                frgHome_rcvNike.layoutManager = linearLayoutManager
+                frgHome_rcvNike.adapter = listProductAdapter
             }
-
-        })
-    }
-
-    private fun productConverse() {
-        database.child(CONVERSE).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (value in snapshot.children) {
-                        val key = value.key!!
-                        val productModel = value.getValue(ProductModel::class.java)
-                        if (productModel != null) {
-                            listProductConverse.add(productModel)
-                        }
-
-                        listProductAdapter =
-                            ListProductAdapter(listProductConverse.toList(), { index, _ ->
-                                openDialogEdit(
-                                    listProductConverse[index].name!!,
-                                    listProductConverse[index].number!!,
-                                    listProductConverse[index].urlAvatar!!,
-                                    CONVERSE
-                                )
-                            }, { index, _ ->
-                                openDialogDelete(CONVERSE, listProductConverse[index].name!!)
-                            })
-
-                        val linearLayoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        frgHome_rcvConverse.setHasFixedSize(true)
-                        frgHome_rcvConverse.layoutManager = linearLayoutManager
-                        frgHome_rcvConverse.adapter = listProductAdapter
-                    }
-                }
+            CONVERSE -> {
+                listProductConverse.clear()
+                listProductConverse.addAll(listProduct)
+                frgHome_rcvConverse.setHasFixedSize(true)
+                frgHome_rcvConverse.layoutManager = linearLayoutManager
+                frgHome_rcvConverse.adapter = listProductAdapter
             }
-
-            override fun onCancelled(error: DatabaseError) {
-
+            PUMA -> {
+                listProductPuma.clear()
+                listProductPuma.addAll(listProduct)
+                frgHome_rcvPuma.setHasFixedSize(true)
+                frgHome_rcvPuma.layoutManager = linearLayoutManager
+                frgHome_rcvPuma.adapter = listProductAdapter
             }
-
-        })
-    }
-
-    private fun productPuma() {
-        database.child(PUMA).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (value in snapshot.children) {
-                        val key = value.key!!
-                        val productModel = value.getValue(ProductModel::class.java)
-                        if (productModel != null) {
-                            listProductPuma.add(productModel)
-                        }
-
-                        listProductAdapter =
-                            ListProductAdapter(listProductPuma.toList(), { index, _ ->
-                                openDialogEdit(
-                                    listProductPuma[index].name!!,
-                                    listProductPuma[index].number!!,
-                                    listProductPuma[index].urlAvatar!!,
-                                    PUMA
-                                )
-                            }, { index, _ ->
-                                openDialogDelete(PUMA, listProductPuma[index].name!!)
-                            })
-
-                        val linearLayoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        frgHome_rcvPuma.setHasFixedSize(true)
-                        frgHome_rcvPuma.layoutManager = linearLayoutManager
-                        frgHome_rcvPuma.adapter = listProductAdapter
-                    }
-                }
+            JORDAN -> {
+                listProductJordan.clear()
+                listProductJordan.addAll(listProduct)
+                frgHome_rcvJordan.setHasFixedSize(true)
+                frgHome_rcvJordan.layoutManager = linearLayoutManager
+                frgHome_rcvJordan.adapter = listProductAdapter
             }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
-    }
-
-    private fun productJordan() {
-        database.child(JORDAN).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (value in snapshot.children) {
-                        val key = value.key!!
-                        val productModel = value.getValue(ProductModel::class.java)
-                        if (productModel != null) {
-                            listProductJordan.add(productModel)
-                        }
-
-                        listProductAdapter =
-                            ListProductAdapter(listProductJordan.toList(), { index, _ ->
-                                openDialogEdit(
-                                    listProductJordan[index].name!!,
-                                    listProductJordan[index].number!!,
-                                    listProductJordan[index].urlAvatar!!,
-                                    JORDAN
-                                )
-                            }, { index, _ ->
-                                openDialogDelete(JORDAN, listProductJordan[index].name!!)
-                            })
-
-                        val linearLayoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        frgHome_rcvJordan.setHasFixedSize(true)
-                        frgHome_rcvJordan.layoutManager = linearLayoutManager
-                        frgHome_rcvJordan.adapter = listProductAdapter
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
+        }
     }
 
     private fun initListener() {

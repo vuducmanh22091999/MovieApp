@@ -29,4 +29,5 @@ const val JORDAN = "Jordan"
 const val DETAIL_NAME_PRODUCT = "detail_name_product"
 const val AMOUNT_PRODUCT = "amount_product"
 const val URL_AVATAR = "url_avatar"
+const val PRODUCT_MODEL = "product_model"
 

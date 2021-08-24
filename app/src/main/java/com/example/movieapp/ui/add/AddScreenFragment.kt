@@ -114,10 +114,17 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
                     }.addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             urlAvatar = task.result.toString()
+                            val key = System.currentTimeMillis().toString()
                             val productModel =
-                                ProductModel(name = name, urlAvatar = urlAvatar, number = number)
+                                ProductModel(
+                                    type = arguments?.getString(NAME_PRODUCT).toString(),
+                                    id = key,
+                                    name = name,
+                                    urlAvatar = urlAvatar,
+                                    number = number
+                                )
                             database.child(arguments?.getString(NAME_PRODUCT).toString())
-                                .child(name).setValue(productModel)
+                                .child(key).setValue(productModel)
                         }
                     }
                 }

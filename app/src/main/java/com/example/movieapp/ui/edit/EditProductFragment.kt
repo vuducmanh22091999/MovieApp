@@ -26,11 +26,8 @@ class EditProductFragment: BaseFragment(), View.OnClickListener {
     private lateinit var storage: StorageReference
     private val REQUEST_CODE_IMAGE = 1
     private var uri: Uri? = null
-    private var nameProduct = ""
-    private var detailNameProduct = ""
-    private var amountProduct = ""
-    private var urlAvatarProduct = ""
     private val infoProduct = HashMap<String, Any>()
+    private var productModel = ProductModel()
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_edit_product
@@ -49,13 +46,10 @@ class EditProductFragment: BaseFragment(), View.OnClickListener {
     }
 
     private fun getInfoFromHomeScreen() {
-        detailNameProduct = arguments?.getString(DETAIL_NAME_PRODUCT).toString()
-        amountProduct = arguments?.getString(AMOUNT_PRODUCT).toString()
-        urlAvatarProduct = arguments?.getString(URL_AVATAR).toString()
-        nameProduct = arguments?.getString(NAME_PRODUCT).toString()
-        frgEditProduct_etNameProduct.setText(detailNameProduct)
-        frgEditProduct_etAmountProduct.setText(amountProduct)
-        Picasso.get().load(urlAvatarProduct).into(frgEditProduct_imgAvatar)
+        productModel = arguments?.getSerializable(PRODUCT_MODEL) as ProductModel
+        frgEditProduct_etNameProduct.setText(productModel.name)
+        frgEditProduct_etAmountProduct.setText(productModel.number)
+        Picasso.get().load(productModel.urlAvatar).into(frgEditProduct_imgAvatar)
 
     }
 
@@ -69,27 +63,39 @@ class EditProductFragment: BaseFragment(), View.OnClickListener {
         infoProduct["name"] = frgEditProduct_etNameProduct.text.toString()
         infoProduct["number"] = frgEditProduct_etAmountProduct.text.toString()
 
-        if (uri != null) {
-            val fileReference: StorageReference = storage.child(
-                System.currentTimeMillis()
-                    .toString() + "." + getFileExtension(uri!!)
-            )
-            uploadTask = fileReference.putFile(uri!!)
-            uploadTask.addOnSuccessListener {
-                val urlTask = uploadTask.continueWithTask { task ->
-                    if (!task.isSuccessful) {
-                        throw task.exception!!
+        if (uri != null || !productModel.urlAvatar.isNullOrEmpty()) {
+            if (uri != null) {
+                val fileReference: StorageReference = storage.child(
+                    System.currentTimeMillis()
+                        .toString() + "." + getFileExtension(uri!!)
+                )
+                uploadTask = fileReference.putFile(uri!!)
+                uploadTask.addOnSuccessListener {
+                    val urlTask = uploadTask.continueWithTask { task ->
+                        if (!task.isSuccessful) {
+                            throw task.exception!!
+                        }
+                        fileReference.downloadUrl
+                    }.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            productModel.run {
+                                infoProduct["urlAvatar"] = task.result.toString()
+                                database.child(type!!)
+                                    .child(id!!).updateChildren(infoProduct)
+                                back()
+                            }
+                        }
+                    }.addOnFailureListener {
+                        Toast.makeText(context, "Failed!!", Toast.LENGTH_SHORT).show()
                     }
-                    fileReference.downloadUrl
-                }.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        infoProduct["urlAvatar"] = task.result.toString()
-                        database.child(nameProduct)
-                            .child(detailNameProduct).updateChildren(infoProduct)
-                        back()
-                    }
-                }.addOnFailureListener {
-                    Toast.makeText(context, "Failed!!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else {
+                productModel.run {
+                    infoProduct["urlAvatar"] = this.urlAvatar ?: ""
+                    database.child(type!!)
+                        .child(id!!).updateChildren(infoProduct)
+                    back()
                 }
             }
         }
