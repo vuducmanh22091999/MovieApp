@@ -11,7 +11,8 @@ import kotlinx.android.synthetic.main.item_product.view.*
 
 class ListProductAdapter(
     private val list: List<ProductModel>,
-    private val onClick: (Int, String) -> Unit
+    private val onClick: (Int, String) -> Unit,
+    private val onClickDelete: (Int, String) -> Unit
 ) : RecyclerView.Adapter<ListProductAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindDataViewHolder(productModel: ProductModel) {
@@ -24,6 +25,10 @@ class ListProductAdapter(
 
             itemView.setOnClickListener {
                 onClick(adapterPosition, productModel.toString())
+            }
+
+            itemView.itemProduct_imgDelete.setOnClickListener {
+                onClickDelete(adapterPosition, productModel.toString())
             }
         }
     }

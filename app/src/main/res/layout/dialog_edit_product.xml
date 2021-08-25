@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginHorizontal="@dimen/_8sdp"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    app:cardCornerRadius="@dimen/_16sdp"
+    app:cardElevation="@dimen/_4sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_main">
+
+        <ImageView
+            android:id="@+id/dialogEditProduct_imgClose"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:src="@drawable/ic_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/dialogEditProduct_imgAvatarProduct"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:src="@drawable/img_deadpool"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialogEditProduct_imgClose" />
+
+        <EditText
+            android:id="@+id/dialogEditProduct_etNameProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@drawable/shape_radius_4sdp_blue700"
+            android:completionThreshold="1"
+            android:hint="@string/title_input_add_name"
+            android:inputType="text"
+            android:lines="1"
+            android:padding="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white80"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialogEditProduct_imgAvatarProduct" />
+
+        <EditText
+            android:id="@+id/dialogEditProduct_etAmountProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/shape_radius_4sdp_blue700"
+            android:completionThreshold="1"
+            android:hint="@string/title_input_add_name"
+            android:inputType="number"
+            android:lines="1"
+            android:padding="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white80"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialogEditProduct_etNameProduct" />
+
+        <TextView
+            android:id="@+id/dialogEditProduct_tvUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_update"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            android:padding="@dimen/_8sdp"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/_8sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialogEditProduct_etAmountProduct"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

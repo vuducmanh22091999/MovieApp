@@ -96,15 +96,15 @@ class SearchMovieFragment : BaseFragment(), View.OnClickListener {
 //                            listString.clear()
                             listString.add(string)
                         }
-                        listProductAdapter = ListProductAdapter(listString.toList()) { index, _ ->
-                            frgSearchMovie_etSearch.setText(listString[index].name.toString())
-                            frgSearchMovie_etSearch1.setText(listString[index].number.toString())
-                        }
-                        val linearLayoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        rcvTest.setHasFixedSize(true)
-                        rcvTest.layoutManager = linearLayoutManager
-                        rcvTest.adapter = listProductAdapter
+//                        listProductAdapter = ListProductAdapter(listString.toList()) { index, _ ->
+//                            frgSearchMovie_etSearch.setText(listString[index].name.toString())
+//                            frgSearchMovie_etSearch1.setText(listString[index].number.toString())
+//                        }
+//                        val linearLayoutManager =
+//                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//                        rcvTest.setHasFixedSize(true)
+//                        rcvTest.layoutManager = linearLayoutManager
+//                        rcvTest.adapter = listProductAdapter
                     }
                 }
             }

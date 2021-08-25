@@ -89,4 +89,6 @@
     <string name="title_input_add_name">Type name product…</string>
     <string name="title_input_add_amount">Type amount product…</string>
     <string name="do_not_leave_blank">Don\'t leave blank</string>
+    <string name="title_question_delete">Do you want delete item?</string>
+    <string name="title_question_update">Do you want update item?</string>
 </resources>

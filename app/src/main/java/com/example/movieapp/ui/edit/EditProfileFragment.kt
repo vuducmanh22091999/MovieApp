@@ -84,7 +84,6 @@ class EditProfileFragment : BaseFragment(), View.OnClickListener {
                     fileReference.downloadUrl
                 }.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val downloadUri = task.result
                         infoUser["urlAvatar"] = task.result.toString()
                         auth.currentUser?.uid?.let {
                             databaseReference.child(it).updateChildren(infoUser)
