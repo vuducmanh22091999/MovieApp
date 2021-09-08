@@ -7,5 +7,6 @@ data class ProductModel(
     val id: String? = null,
     val urlAvatar: String? = null,
     val name: String? = null,
-    val number: String? = null
+    val amount: String? = null,
+    val price: String? = null
 ): Serializable

@@ -25,6 +25,7 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
     private lateinit var appPreferences: AppPreferences
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var urlAvatar : Uri
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_account
@@ -42,8 +43,7 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
         auth.currentUser?.uid?.let {
             databaseReference.child(it).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val urlAvatar = Uri.parse(snapshot.child("urlAvatar").value.toString())
-                    Log.d("abc-test", urlAvatar.toString())
+                    urlAvatar = Uri.parse(snapshot.child("urlAvatar").value.toString())
                     if (snapshot.exists() && snapshot.childrenCount > 0) {
                         frgAccount_tvEmailUser.text = auth.currentUser!!.email.toString()
                         if (snapshot.child("urlAvatar").value.toString() == "")
@@ -118,6 +118,8 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
 
     private fun logOut() {
         val intent = Intent(activity, LoginActivity::class.java)
+        auth.signOut()
+        appPreferences.setIsLogin(false)
         appPreferences.setLoginEmail("")
         appPreferences.setLoginUserName("")
         appPreferences.setLoginAvatar("")
@@ -129,6 +131,7 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
         val bundle = Bundle()
         bundle.putString(USER_NAME, frgAccount_tvNameUser.text.toString())
         bundle.putString(PHONE_NUMBER, frgAccount_tvPhoneUser.text.toString())
+        bundle.putString(URL_AVATAR, Uri.parse(urlAvatar.toString()).toString())
         editProfileFragment.arguments = bundle
         addFragment(editProfileFragment, R.id.frameLayout, EditProfileFragment::class.java.simpleName)
     }

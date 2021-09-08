@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/MovieApp/app/src/main/res/drawable/shape_radius_edit_text.xml" value="0.22962962962962963" />
+        <entry key="..\:/MovieApp/app/src/main/res/drawable/shape_radius_facebook.xml" value="0.22962962962962963" />
+        <entry key="..\:/MovieApp/app/src/main/res/drawable/shape_radius_login.xml" value="0.22962962962962963" />
+        <entry key="..\:/MovieApp/app/src/main/res/drawable/shapre_radius_edit_text.xml" value="0.22962962962962963" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_edit_product.xml" value="0.2" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_question_delete.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_question_login.xml" value="0.12360688956433637" />

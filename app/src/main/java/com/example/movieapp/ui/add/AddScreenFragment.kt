@@ -1,12 +1,13 @@
 package com.example.movieapp.ui.add
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
@@ -20,17 +21,15 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_add_product.*
-import kotlinx.android.synthetic.main.fragment_edit_profile.*
-import kotlinx.android.synthetic.main.fragment_search_movie.*
 import java.io.IOException
 
 class AddScreenFragment : BaseFragment(), View.OnClickListener {
     private val REQUEST_CODE_IMAGE = 1
     private var uri: Uri? = null
-    private var idProduct = 0
     private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
     private var urlAvatar = ""
+    private lateinit var progress: ProgressDialog
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_add_product
@@ -39,9 +38,21 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
     override fun doViewCreated() {
         database = FirebaseDatabase.getInstance().reference.child(PRODUCT)
         storage = FirebaseStorage.getInstance().getReference("Images")
+        progress = ProgressDialog(context)
         initListener()
         handleBottom()
         setInfo()
+    }
+
+    private fun showProgress() {
+        progress.setTitle("Loading")
+        progress.setMessage("Waiting add data...")
+        progress.setCancelable(false)
+        progress.show()
+    }
+
+    private fun dismissProgress() {
+        progress.dismiss()
     }
 
     private fun handleBottom() {
@@ -96,7 +107,8 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
                 .show()
         else {
             val name = frgAdd_etNameProduct.text.toString()
-            val number = frgAdd_etAmountProduct.text.toString()
+            val amount = frgAdd_etAmountProduct.text.toString()
+            val price = frgAdd_etPriceProduct.text.toString()
 
             val uploadTask: UploadTask
             if (uri != null) {
@@ -105,7 +117,10 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
                         .toString() + "." + getFileExtension(uri!!)
                 )
                 uploadTask = fileReference.putFile(uri!!)
-                uploadTask.addOnSuccessListener {
+                uploadTask.addOnProgressListener {
+//                    showLoading()
+                    showProgress()
+                }.addOnSuccessListener {
                     val urlTask = uploadTask.continueWithTask { task ->
                         if (!task.isSuccessful) {
                             throw task.exception!!
@@ -121,15 +136,22 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
                                     id = key,
                                     name = name,
                                     urlAvatar = urlAvatar,
-                                    number = number
+                                    amount = amount,
+                                    price = price
                                 )
                             database.child(arguments?.getString(NAME_PRODUCT).toString())
-                                .child(key).setValue(productModel)
+                                .child(key).setValue(productModel).addOnCompleteListener {
+                                    if ((activity is MainActivity)) {
+                                        dismissProgress()
+                                        (activity as MainActivity).hideLoading()
+                                        (activity as MainActivity).hideKeyboard()
+                                    }
+                                    back()
+                                }
                         }
                     }
                 }
             }
-            back()
         }
     }
 

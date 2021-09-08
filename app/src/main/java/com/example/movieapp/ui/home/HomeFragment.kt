@@ -1,10 +1,10 @@
 package com.example.movieapp.ui.home
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -35,6 +35,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     private lateinit var listProductAdapter: ListProductAdapter
     private lateinit var dialog: Dialog
     private lateinit var storage: StorageReference
+    private lateinit var progress: ProgressDialog
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_home
@@ -43,8 +44,19 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     override fun doViewCreated() {
         database = FirebaseDatabase.getInstance().reference.child(PRODUCT)
         storage = FirebaseStorage.getInstance().getReference("Images")
+        progress = ProgressDialog(context)
         initListener()
         setDataForList()
+    }
+
+    private fun showProgress() {
+        progress.setMessage("Waiting get data...")
+        progress.setCancelable(false)
+        progress.show()
+    }
+
+    private fun dismissProgress() {
+        progress.dismiss()
     }
 
     private fun openDialogEdit(
@@ -78,7 +90,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         dialog.show()
     }
 
-    private fun openDialogDelete(nameProduct: String, keyProduct: String) {
+    private fun openDialogDelete(nameProduct: String, idProduct: String) {
         dialog = context?.let { Dialog(it) }!!
         dialog.setContentView(R.layout.dialog_question_delete)
         dialog.window?.setLayout(
@@ -88,7 +100,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialog.dialogQuestionDelete_tvDelete.setOnClickListener {
-            deleteProduct(nameProduct, keyProduct)
+            deleteProduct(nameProduct, idProduct)
             Toast.makeText(context, "Delete!!!", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
@@ -100,8 +112,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         dialog.show()
     }
 
-    private fun deleteProduct(nameProduct: String, keyProduct: String) {
-        database.child(nameProduct).child(keyProduct).removeValue()
+    private fun deleteProduct(nameProduct: String, idProduct: String) {
+        database.child(nameProduct).child(idProduct).removeValue()
     }
 
     private fun setDataForList() {
@@ -113,6 +125,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun product(typeProduct: String) {
+        showProgress()
         database.child(typeProduct).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -183,6 +196,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 frgHome_rcvJordan.adapter = listProductAdapter
             }
         }
+        dismissProgress()
     }
 
     private fun initListener() {

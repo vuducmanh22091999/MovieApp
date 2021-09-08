@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_main">
+    android:background="@color/color_main"
+    android:clickable="true"
+    android:focusable="true">
 
     <ImageView
         android:id="@+id/frgEditProfile_imgSave"
@@ -21,7 +23,7 @@
         android:layout_height="@dimen/_100sdp"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:src="@drawable/img_deadpool"
+        android:src="@drawable/ic_account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/frgEditProfile_imgSave" />
@@ -33,11 +35,11 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:padding="@dimen/_8sdp"
         android:text="@string/title_change_your_avatar"
-        android:textSize="@dimen/_14sdp"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/frgEditProfile_imgAvatar"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/frgEditProfile_imgAvatar" />
 
     <EditText
         android:id="@+id/frgEditProfile_etNameUser"
