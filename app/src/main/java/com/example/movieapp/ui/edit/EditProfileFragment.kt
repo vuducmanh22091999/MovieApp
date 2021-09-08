@@ -1,10 +1,10 @@
 package com.example.movieapp.ui.edit
 
 import android.app.Activity.RESULT_OK
+import android.app.ProgressDialog
 import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
-import android.os.Handler
 import android.view.View
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
@@ -30,6 +30,8 @@ class EditProfileFragment : BaseFragment(), View.OnClickListener {
     private val infoUser = HashMap<String, Any>()
     private var userName = ""
     private var phoneNumber = ""
+    private var urlAvatar = ""
+    private lateinit var progress: ProgressDialog
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_edit_profile
@@ -39,9 +41,20 @@ class EditProfileFragment : BaseFragment(), View.OnClickListener {
         auth = FirebaseAuth.getInstance()
         databaseReference = FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(ADMIN)
         storage = FirebaseStorage.getInstance().getReference("Images")
+        progress = ProgressDialog(context)
         handleBottom()
         getInfoFromAccountScreen()
         initListener()
+    }
+
+    private fun showProgress() {
+        progress.setMessage("Waiting update profile...")
+        progress.setCancelable(false)
+        progress.show()
+    }
+
+    private fun dismissProgress() {
+        progress.dismiss()
     }
 
     private fun getFileExtension(uri: Uri): String? {
@@ -62,11 +75,14 @@ class EditProfileFragment : BaseFragment(), View.OnClickListener {
     private fun getInfoFromAccountScreen() {
         userName = arguments?.getString(USER_NAME).toString()
         phoneNumber = arguments?.getString(PHONE_NUMBER).toString()
+        urlAvatar = arguments?.getString(URL_AVATAR).toString()
         frgEditProfile_etNameUser.setText(userName)
         frgEditProfile_etPhoneUser.setText(phoneNumber)
+        Picasso.get().load(urlAvatar).into(frgEditProfile_imgAvatar)
     }
 
     private fun saveProfile() {
+        showProgress()
         val uploadTask: UploadTask
         infoUser["userName"] = frgEditProfile_etNameUser.text.toString()
         infoUser["phoneNumber"] = frgEditProfile_etPhoneUser.text.toString()
@@ -87,14 +103,29 @@ class EditProfileFragment : BaseFragment(), View.OnClickListener {
                         infoUser["urlAvatar"] = task.result.toString()
                         auth.currentUser?.uid?.let {
                             databaseReference.child(it).updateChildren(infoUser)
+                                .addOnCompleteListener {
+                                    if ((activity is MainActivity)) {
+                                        dismissProgress()
+                                    }
+                                    back()
+                                }
                         }
                     }
                 }
             }
+        } else {
+            infoUser["urlAvatar"] = urlAvatar
+            auth.currentUser?.uid?.let {
+                databaseReference.child(it).updateChildren(infoUser)
+                    .addOnCompleteListener {
+                        if ((activity is MainActivity)) {
+                            dismissProgress()
+                            (activity as MainActivity).hideKeyboard()
+                        }
+                        back()
+                    }
+            }
         }
-//        Handler().postDelayed({
-            back()
-//        }, 5000)
     }
 
     private fun openGallery() {

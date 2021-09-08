@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_main">
+    android:background="@color/color_main"
+    android:clickable="true"
+    android:focusable="true">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/frgAccount_imgAvatar"
@@ -12,9 +14,9 @@
         android:layout_height="@dimen/_100sdp"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:src="@drawable/img_deadpool"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_account"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/frgAccount_imgEdit" />
 
     <ImageView
@@ -31,12 +33,12 @@
         android:id="@+id/frgAccount_tvEmailUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_16sdp"
+        android:paddingVertical="@dimen/_8sdp"
         android:text="@string/title_email"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frgAccount_imgAvatar" />
 
@@ -46,9 +48,9 @@
         android:layout_height="wrap_content"
         android:paddingVertical="@dimen/_8sdp"
         android:text="@string/title_account"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvEmailUser" />
 
@@ -58,9 +60,9 @@
         android:layout_height="wrap_content"
         android:paddingVertical="@dimen/_8sdp"
         android:text="@string/title_phone"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="@+id/frgAccount_tvNameUser"
         app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvNameUser" />
 

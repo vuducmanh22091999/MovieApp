@@ -1,5 +1,6 @@
 package com.example.movieapp.ui.home.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +16,11 @@ class ListProductAdapter(
     private val onClickDelete: (Int, String) -> Unit
 ) : RecyclerView.Adapter<ListProductAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SetTextI18n")
         fun bindDataViewHolder(productModel: ProductModel) {
             itemView.itemProduct_tvTitleName.text = productModel.name
-            itemView.itemProduct_tvAmount.text = productModel.number
+            itemView.itemProduct_tvAmount.text = productModel.amount
+            itemView.itemProduct_tvPriceProduct.text = productModel.price + "$"
             itemView.context?.let {
                 Glide.with(itemView.context).load(productModel.urlAvatar)
                     .placeholder(R.drawable.img_placeholder).into(itemView.itemProduct_imgPoster)

@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
     android:background="@color/color_main">
 
     <ImageView
@@ -68,6 +70,25 @@
         app:layout_constraintTop_toBottomOf="@id/frgAdd_tvNameProduct" />
 
     <EditText
+        android:id="@+id/frgAdd_etPriceProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@drawable/shape_radius_4sdp_blue700"
+        android:completionThreshold="1"
+        android:hint="@string/title_input_price_product"
+        android:inputType="number"
+        android:lines="1"
+        android:padding="16dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white80"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgAdd_etNameProduct" />
+
+    <EditText
         android:id="@+id/frgAdd_etAmountProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,7 +105,7 @@
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frgAdd_etNameProduct" />
+        app:layout_constraintTop_toBottomOf="@id/frgAdd_etPriceProduct" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
