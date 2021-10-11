@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_main"
+    android:clickable="true"
+    android:focusable="true">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/frgUserAccount_imgAvatar"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:src="@drawable/ic_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgUserAccount_imgEdit" />
+
+    <ImageView
+        android:id="@+id/frgUserAccount_imgEdit"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/frgUserAccount_tvEmailUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:paddingVertical="@dimen/_8sdp"
+        android:text="@string/title_email"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frgUserAccount_imgAvatar" />
+
+    <TextView
+        android:id="@+id/frgUserAccount_tvNameUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_8sdp"
+        android:text="@string/title_name"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frgUserAccount_tvEmailUser" />
+
+    <TextView
+        android:id="@+id/frgUserAccount_tvPhoneUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_8sdp"
+        android:text="@string/title_phone"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@+id/frgUserAccount_tvNameUser"
+        app:layout_constraintTop_toBottomOf="@+id/frgUserAccount_tvNameUser" />
+
+    <TextView
+        android:id="@+id/frgUserAccount_tvTitleHelp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:drawablePadding="@dimen/_10sdp"
+        android:gravity="center|start|center_horizontal"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:text="@string/title_help"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        android:visibility="gone"
+        app:drawableEndCompat="@drawable/ic_right_arrow"
+        app:drawableStartCompat="@drawable/ic_help"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgUserAccount_imgAvatar"
+        tools:ignore="RtlSymmetry" />
+
+    <TextView
+        android:id="@+id/frgUserAccount_tvTitleAbout"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_32sdp"
+        android:drawablePadding="@dimen/_10sdp"
+        android:gravity="center|start|center_horizontal"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:text="@string/title_about"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frgUserAccount_tvTitleHelp"
+        tools:ignore="RtlSymmetry" />
+
+
+    <!--    app:drawableStartCompat="@drawable/ic_about"-->
+    <!--    app:drawableEndCompat="@drawable/ic_right_arrow"-->
+
+    <TextView
+        android:id="@+id/frgUserAccount_tvLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_48sdp"
+        android:layout_marginVertical="@dimen/_32sdp"
+        android:background="@drawable/shape_radius_log_out"
+        android:gravity="center"
+        android:padding="@dimen/_8sdp"
+        android:text="@string/title_logout"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

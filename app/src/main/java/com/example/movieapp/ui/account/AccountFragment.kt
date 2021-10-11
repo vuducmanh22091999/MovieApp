@@ -131,6 +131,7 @@ class AccountFragment : BaseFragment(), View.OnClickListener {
         val bundle = Bundle()
         bundle.putString(USER_NAME, frgAccount_tvNameUser.text.toString())
         bundle.putString(PHONE_NUMBER, frgAccount_tvPhoneUser.text.toString())
+        bundle.putString(TYPE_ACCOUNT, ADMIN)
         bundle.putString(URL_AVATAR, Uri.parse(urlAvatar.toString()).toString())
         editProfileFragment.arguments = bundle
         addFragment(editProfileFragment, R.id.frameLayout, EditProfileFragment::class.java.simpleName)
