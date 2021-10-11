@@ -1,15 +1,13 @@
 package com.example.movieapp.ui.login
 
-import android.accounts.Account
 import android.content.Intent
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseActivity
 import com.example.movieapp.data.local.AppPreferences
-import com.example.movieapp.ui.main.AdminActivity
+import com.example.movieapp.ui.main.UserActivity
 import com.example.movieapp.ui.main.MainActivity
 import com.example.movieapp.utils.ACCOUNT
 import com.example.movieapp.utils.ADMIN
@@ -71,7 +69,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                             databaseReference =
                                 FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(USER).child(onlineID)
                             databaseReference.setValue(true)
-                            val intent = Intent(this, AdminActivity::class.java)
+                            val intent = Intent(this, UserActivity::class.java)
                             startActivity(intent)
                         }
                         hideLoading()

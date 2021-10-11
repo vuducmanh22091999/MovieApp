@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import java.io.IOException
 import kotlin.collections.HashMap
 import android.webkit.MimeTypeMap
+import com.example.movieapp.ui.main.UserActivity
 import com.example.movieapp.utils.*
 import com.google.firebase.storage.*
 import com.squareup.picasso.Picasso
@@ -31,6 +32,7 @@ class EditProfileFragment : BaseFragment(), View.OnClickListener {
     private var userName = ""
     private var phoneNumber = ""
     private var urlAvatar = ""
+    private var typeAccount = ""
     private lateinit var progress: ProgressDialog
 
     override fun getLayoutID(): Int {
@@ -38,8 +40,9 @@ class EditProfileFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun doViewCreated() {
+        typeAccount = arguments?.getString(TYPE_ACCOUNT).toString()
         auth = FirebaseAuth.getInstance()
-        databaseReference = FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(ADMIN)
+        databaseReference = FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(typeAccount)
         storage = FirebaseStorage.getInstance().getReference("Images")
         progress = ProgressDialog(context)
         handleBottom()
@@ -69,7 +72,7 @@ class EditProfileFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun handleBottom() {
-        (activity as MainActivity).hideBottom()
+        (activity as UserActivity).hideBottom()
     }
 
     private fun getInfoFromAccountScreen() {
@@ -78,7 +81,10 @@ class EditProfileFragment : BaseFragment(), View.OnClickListener {
         urlAvatar = arguments?.getString(URL_AVATAR).toString()
         frgEditProfile_etNameUser.setText(userName)
         frgEditProfile_etPhoneUser.setText(phoneNumber)
-        Picasso.get().load(urlAvatar).into(frgEditProfile_imgAvatar)
+        if (urlAvatar == "null")
+            Picasso.get().load(R.drawable.ic_account).into(frgEditProfile_imgAvatar)
+        else
+            Picasso.get().load(urlAvatar).into(frgEditProfile_imgAvatar)
     }
 
     private fun saveProfile() {

@@ -6,8 +6,8 @@ import com.example.movieapp.R
 import com.example.movieapp.base.BaseActivity
 import com.example.movieapp.data.local.AppPreferences
 import com.example.movieapp.ui.login.LoginActivity
-import com.example.movieapp.ui.main.AdminActivity
 import com.example.movieapp.ui.main.MainActivity
+import com.example.movieapp.ui.main.UserActivity
 import com.example.movieapp.utils.SPLASH_DISPLAY_LENGTH
 
 class SplashActivity : BaseActivity() {
@@ -31,7 +31,7 @@ class SplashActivity : BaseActivity() {
                 }, SPLASH_DISPLAY_LENGTH)
             } else {
                 Handler().postDelayed({
-                    val intentNewScreen = Intent(this@SplashActivity, MainActivity::class.java)
+                    val intentNewScreen = Intent(this@SplashActivity, UserActivity::class.java)
                     startActivity(intentNewScreen)
                     finish()
                 }, SPLASH_DISPLAY_LENGTH)

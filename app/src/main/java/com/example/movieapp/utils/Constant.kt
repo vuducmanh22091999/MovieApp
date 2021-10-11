@@ -27,4 +27,5 @@ const val PUMA = "Puma"
 const val JORDAN = "Jordan"
 const val URL_AVATAR = "url_avatar"
 const val PRODUCT_MODEL = "product_model"
+const val TYPE_ACCOUNT = "type_account"
 
