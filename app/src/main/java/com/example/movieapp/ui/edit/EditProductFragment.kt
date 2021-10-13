@@ -61,8 +61,8 @@ class EditProductFragment : BaseFragment(), View.OnClickListener {
     private fun getInfoFromHomeScreen() {
         productModel = arguments?.getSerializable(PRODUCT_MODEL) as ProductModel
         frgEditProduct_etNameProduct.setText(productModel.name)
-        frgEditProduct_etAmountProduct.setText(productModel.amount)
-        frgEditProduct_etPriceProduct.setText(productModel.price)
+        frgEditProduct_etAmountProduct.setText(productModel.amount.toString())
+        frgEditProduct_etPriceProduct.setText(productModel.price.toString())
         Picasso.get().load(productModel.urlAvatar).into(frgEditProduct_imgAvatar)
 
     }
