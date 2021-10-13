@@ -5,10 +5,10 @@
         android:icon="@drawable/ic_home"
         android:title="@string/title_home" />
 
-<!--    <item-->
-<!--        android:id="@+id/searchFragment"-->
-<!--        android:icon="@drawable/ic_search"-->
-<!--        android:title="@string/title_search" />-->
+    <item
+        android:id="@+id/cartFragment"
+        android:icon="@drawable/ic_shopping_cart"
+        android:title="@string/title_user_cart" />
 
 <!--    <item-->
 <!--        android:id="@+id/favouritesFragment"-->

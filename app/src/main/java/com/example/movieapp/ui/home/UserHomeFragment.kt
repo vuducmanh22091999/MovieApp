@@ -1,11 +1,13 @@
 package com.example.movieapp.ui.home
 
 import android.app.ProgressDialog
+import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.product.ProductModel
+import com.example.movieapp.ui.detail.product.DetailProductFragment
 import com.example.movieapp.ui.home.adapter.UserProductAdapter
 import com.example.movieapp.utils.*
 import com.google.firebase.database.*
@@ -67,8 +69,16 @@ class UserHomeFragment : BaseFragment() {
                         }
 
                         userProductAdapter =
-                            UserProductAdapter(listProduct.toList()) { index, string ->
-                            Toast.makeText(context, listProduct[index].toString(), Toast.LENGTH_SHORT).show()
+                            UserProductAdapter(listProduct.toList()) { index, _ ->
+                                val detailProductFragment = DetailProductFragment()
+                                val bundle = Bundle()
+                                bundle.putSerializable(DETAIL_PRODUCT, listProduct[index])
+                                detailProductFragment.arguments = bundle
+                                addFragment(
+                                    detailProductFragment,
+                                    R.id.actUser_frameLayout,
+                                    DetailProductFragment::class.java.simpleName
+                                )
                             }
                         setupRecyclerView(typeProduct, listProduct, userProductAdapter)
                     }

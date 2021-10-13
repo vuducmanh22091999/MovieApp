@@ -75,8 +75,8 @@ class EditProductFragment : BaseFragment(), View.OnClickListener {
     private fun updateProduct() {
         val uploadTask: UploadTask
         infoProduct["name"] = frgEditProduct_etNameProduct.text.toString()
-        infoProduct["number"] = frgEditProduct_etAmountProduct.text.toString()
-        infoProduct["price"] = frgEditProduct_etPriceProduct.text.toString()
+        infoProduct["number"] = frgEditProduct_etAmountProduct.text
+        infoProduct["price"] = frgEditProduct_etPriceProduct.text
 
         if (uri != null || !productModel.urlAvatar.isNullOrEmpty()) {
             if (uri != null) {
