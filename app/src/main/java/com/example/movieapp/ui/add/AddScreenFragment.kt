@@ -107,8 +107,8 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
                 .show()
         else {
             val name = frgAdd_etNameProduct.text.toString()
-            val amount = frgAdd_etAmountProduct.text.toString()
-            val price = frgAdd_etPriceProduct.text.toString()
+            val amount = frgAdd_etAmountProduct.text.toString().toInt()
+            val price = frgAdd_etPriceProduct.text.toString().toInt()
 
             val uploadTask: UploadTask
             if (uri != null) {

@@ -2,24 +2,18 @@ package com.example.movieapp.ui.favorite
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.local.AppPreferences
-import com.example.movieapp.data.model.favorite.FavoriteMovieModel
 import com.example.movieapp.data.model.movie.ListMovieModel
 import com.example.movieapp.ui.detail.movie.DetailMovieFragment
-import com.example.movieapp.ui.favorite.adapter.FavoriteAdapter
-import com.example.movieapp.ui.home.adapter.PopularMovieAdapter
 import com.example.movieapp.ui.home.adapter.TopRateMovieAdapter
 import com.example.movieapp.ui.login.LoginActivity
 import com.example.movieapp.utils.API_KEY
 import com.example.movieapp.utils.ID_MOVIE
 import com.example.movieapp.utils.SESSION_ID
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel

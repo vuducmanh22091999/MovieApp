@@ -18,152 +18,152 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_16sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/frgHome_tvAdidas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_adidas"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@color/white"
             android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintTop_toBottomOf="@id/frgHome_tvHome"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:text="@string/title_adidas"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_tvHome" />
 
         <ImageView
             android:id="@+id/frgHome_imgAddAdidas"
             android:layout_width="@dimen/_16sdp"
             android:layout_height="@dimen/_16sdp"
             android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="@id/frgHome_tvAdidas"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/frgHome_tvAdidas"
-            app:layout_constraintBottom_toBottomOf="@id/frgHome_tvAdidas"/>
+            app:layout_constraintTop_toTopOf="@id/frgHome_tvAdidas" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/frgHome_rcvAdidas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgHome_tvAdidas"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_tvAdidas" />
 
         <TextView
             android:id="@+id/frgHome_tvNike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_nike"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@color/white"
             android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintTop_toBottomOf="@id/frgHome_rcvAdidas"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:text="@string/title_nike"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_rcvAdidas" />
 
         <ImageView
             android:id="@+id/frgHome_imgAddNike"
             android:layout_width="@dimen/_16sdp"
             android:layout_height="@dimen/_16sdp"
             android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="@id/frgHome_tvNike"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/frgHome_tvNike"
-            app:layout_constraintBottom_toBottomOf="@id/frgHome_tvNike"/>
+            app:layout_constraintTop_toTopOf="@id/frgHome_tvNike" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/frgHome_rcvNike"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgHome_tvNike"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_tvNike" />
 
         <TextView
             android:id="@+id/frgHome_tvConverse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_converse"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@color/white"
             android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintTop_toBottomOf="@id/frgHome_rcvNike"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:text="@string/title_converse"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_rcvNike" />
 
         <ImageView
             android:id="@+id/frgHome_imgAddConverse"
             android:layout_width="@dimen/_16sdp"
             android:layout_height="@dimen/_16sdp"
             android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="@id/frgHome_tvConverse"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/frgHome_tvConverse"
-            app:layout_constraintBottom_toBottomOf="@id/frgHome_tvConverse"/>
+            app:layout_constraintTop_toTopOf="@id/frgHome_tvConverse" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/frgHome_rcvConverse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgHome_tvConverse"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_tvConverse" />
 
         <TextView
             android:id="@+id/frgHome_tvPuma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_puma"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@color/white"
             android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintTop_toBottomOf="@id/frgHome_rcvConverse"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:text="@string/title_puma"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_rcvConverse" />
 
         <ImageView
             android:id="@+id/frgHome_imgAddPuma"
             android:layout_width="@dimen/_16sdp"
             android:layout_height="@dimen/_16sdp"
             android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="@id/frgHome_tvPuma"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/frgHome_tvPuma"
-            app:layout_constraintBottom_toBottomOf="@id/frgHome_tvPuma"/>
+            app:layout_constraintTop_toTopOf="@id/frgHome_tvPuma" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/frgHome_rcvPuma"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgHome_tvPuma"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_tvPuma" />
 
         <TextView
             android:id="@+id/frgHome_tvJordan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_jordan"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@color/white"
             android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintTop_toBottomOf="@id/frgHome_rcvPuma"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:text="@string/title_jordan"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_rcvPuma" />
 
         <ImageView
             android:id="@+id/frgHome_imgAddJordan"
             android:layout_width="@dimen/_16sdp"
             android:layout_height="@dimen/_16sdp"
             android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="@id/frgHome_tvJordan"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/frgHome_tvJordan"
-            app:layout_constraintBottom_toBottomOf="@id/frgHome_tvJordan"/>
+            app:layout_constraintTop_toTopOf="@id/frgHome_tvJordan" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/frgHome_rcvJordan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgHome_tvJordan"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgHome_tvJordan" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

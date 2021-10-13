@@ -34,7 +34,6 @@ import kotlinx.android.synthetic.main.dialog_question_login.*
 import kotlinx.android.synthetic.main.dialog_video.*
 import kotlinx.android.synthetic.main.fragment_detail_movie.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.item_favorite_movie.view.*
 import kotlinx.android.synthetic.main.item_poster_movie.*
 import kotlinx.android.synthetic.main.item_poster_movie.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
