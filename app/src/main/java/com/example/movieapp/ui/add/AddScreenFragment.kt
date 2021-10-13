@@ -7,7 +7,6 @@ import android.content.Intent
 import android.net.Uri
 import android.view.View
 import android.webkit.MimeTypeMap
-import android.widget.ProgressBar
 import android.widget.Toast
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
@@ -19,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_add_product.*
 import java.io.IOException
 
@@ -28,8 +26,12 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
     private var uri: Uri? = null
     private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
-    private var urlAvatar = ""
+    private var localImageUrls = arrayListOf<String>()
+    private var imageUrls = arrayListOf<String>()
     private lateinit var progress: ProgressDialog
+    private lateinit var listImageViewPagerAdapter: ListImageViewPagerAdapter
+    private var productModel = ProductModel()
+    private var updateCount = 0
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_add_product
@@ -62,6 +64,8 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
     private fun initListener() {
         frgAdd_imgSave.setOnClickListener(this)
         frgAdd_imgProduct.setOnClickListener(this)
+        frgAdd_tvAdd.setOnClickListener(this)
+        frgAdd_imgAddImages.setOnClickListener(this)
     }
 
     private fun setInfo() {
@@ -77,16 +81,34 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
     private fun openGallery() {
         val intent = Intent()
         intent.type = "image/*"
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE_IMAGE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-            uri = data.data!!
+
+        if (requestCode == REQUEST_CODE_IMAGE && resultCode == Activity.RESULT_OK) {
             try {
-                Picasso.get().load(uri).into(frgAdd_imgProduct)
+                data?.let { intent ->
+                    intent.clipData?.let {
+                        val count = it.itemCount
+                        for (i in 0 until count) {
+                            uri = it.getItemAt(i).uri
+                            localImageUrls.add(uri.toString())
+                        }
+                    }
+                    intent.data?.let {
+                        localImageUrls.add(it.toString())
+                    }
+                    listImageViewPagerAdapter = ListImageViewPagerAdapter(
+                        childFragmentManager,
+                        localImageUrls
+                    )
+                    frgAdd_viewpager.adapter = listImageViewPagerAdapter
+                    frgAdd_imgProduct.visibility = View.GONE
+                }
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -99,7 +121,7 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
         return mime.getExtensionFromMimeType(cR.getType(uri))
     }
 
-    private fun addProduct() {
+    private fun createProduct() {
         if (frgAdd_etNameProduct.text.toString().isEmpty() || frgAdd_etAmountProduct.text.toString()
                 .isEmpty()
         )
@@ -110,15 +132,45 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
             val amount = frgAdd_etAmountProduct.text.toString().toInt()
             val price = frgAdd_etPriceProduct.text.toString().toInt()
 
-            val uploadTask: UploadTask
-            if (uri != null) {
+            val key = System.currentTimeMillis().toString()
+            productModel.apply {
+                this.type = arguments?.getString(NAME_PRODUCT).toString()
+                this.id = key
+                this.name = name
+                this.amount = amount
+                this.price = price
+            }
+        }
+    }
+
+    private fun insertProduct() {
+        productModel.apply {
+            this.listImage = imageUrls
+            this.urlAvatar = imageUrls[0]
+        }
+
+        database.child(arguments?.getString(NAME_PRODUCT).toString())
+            .child(productModel.id.toString()).setValue(productModel).addOnCompleteListener {
+                if ((activity is MainActivity)) {
+                    dismissProgress()
+                    (activity as MainActivity).hideLoading()
+                    (activity as MainActivity).hideKeyboard()
+                }
+                back()
+            }
+    }
+
+    private fun uploadImages() {
+        for (url in localImageUrls) {
+            val imageUri = Uri.parse(url)
+            imageUri?.let {
+                val uploadTask: UploadTask
                 val fileReference: StorageReference = storage.child(
                     System.currentTimeMillis()
-                        .toString() + "." + getFileExtension(uri!!)
+                        .toString() + "." + getFileExtension(it)
                 )
-                uploadTask = fileReference.putFile(uri!!)
+                uploadTask = fileReference.putFile(it)
                 uploadTask.addOnProgressListener {
-//                    showLoading()
                     showProgress()
                 }.addOnSuccessListener {
                     val urlTask = uploadTask.continueWithTask { task ->
@@ -128,26 +180,16 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
                         fileReference.downloadUrl
                     }.addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            urlAvatar = task.result.toString()
-                            val key = System.currentTimeMillis().toString()
-                            val productModel =
-                                ProductModel(
-                                    type = arguments?.getString(NAME_PRODUCT).toString(),
-                                    id = key,
-                                    name = name,
-                                    urlAvatar = urlAvatar,
-                                    amount = amount,
-                                    price = price
-                                )
-                            database.child(arguments?.getString(NAME_PRODUCT).toString())
-                                .child(key).setValue(productModel).addOnCompleteListener {
-                                    if ((activity is MainActivity)) {
-                                        dismissProgress()
-                                        (activity as MainActivity).hideLoading()
-                                        (activity as MainActivity).hideKeyboard()
-                                    }
-                                    back()
-                                }
+                            imageUrls.add(task.result.toString())
+                            updateCount++
+                            if (updateCount == localImageUrls.size) {
+                                insertProduct()
+                            }
+                        }
+                    }.addOnFailureListener {
+                        updateCount++
+                        if (updateCount == localImageUrls.size) {
+                            insertProduct()
                         }
                     }
                 }
@@ -157,8 +199,12 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.frgAdd_imgSave -> addProduct()
+            R.id.frgAdd_imgSave -> {
+                createProduct()
+                uploadImages()
+            }
             R.id.frgAdd_imgProduct -> openGallery()
+            R.id.frgAdd_imgAddImages -> openGallery()
         }
     }
 }

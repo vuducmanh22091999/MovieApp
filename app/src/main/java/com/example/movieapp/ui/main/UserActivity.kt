@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseActivity
 import com.example.movieapp.ui.account.AccountUserFragment
+import com.example.movieapp.ui.cart.UserCartFragment
 import com.example.movieapp.ui.home.HomeFragment
 import com.example.movieapp.ui.home.UserHomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -15,6 +16,7 @@ class UserActivity : BaseActivity() {
     private lateinit var currentFragment: Fragment
     private lateinit var userHomeFragment: UserHomeFragment
     private lateinit var accountUserFragment: AccountUserFragment
+    private lateinit var userCartFragment: UserCartFragment
     private var fragmentManager = supportFragmentManager
 
     override fun getLayoutID(): Int {
@@ -42,15 +44,15 @@ class UserActivity : BaseActivity() {
                     currentFragment = userHomeFragment
                     return@setOnNavigationItemSelectedListener true
                 }
-//                R.id.favouritesFragment -> {
-//                        if (currentFragment === favoriteFragment)
-//                            fragmentManager.beginTransaction().show(favoriteFragment).commit()
-//                        else
-//                            fragmentManager.beginTransaction().hide(currentFragment)
-//                                .show(favoriteFragment).commit()
-//                        currentFragment = favoriteFragment
-//                        return@setOnNavigationItemSelectedListener true
-//                }
+                R.id.cartFragment -> {
+                        if (currentFragment === userCartFragment)
+                            fragmentManager.beginTransaction().show(userCartFragment).commit()
+                        else
+                            fragmentManager.beginTransaction().hide(currentFragment)
+                                .show(userCartFragment).commit()
+                        currentFragment = userCartFragment
+                        return@setOnNavigationItemSelectedListener true
+                }
                 R.id.accountFragment -> {
                     if (currentFragment === accountUserFragment)
                         fragmentManager.beginTransaction().show(accountUserFragment).commit()
@@ -77,6 +79,7 @@ class UserActivity : BaseActivity() {
     private fun setupFragment() {
         userHomeFragment = UserHomeFragment()
         accountUserFragment = AccountUserFragment()
+        userCartFragment = UserCartFragment()
 
         fragmentManager.beginTransaction()
             .add(R.id.actUser_frameLayout, userHomeFragment, fragment::class.java.simpleName)
@@ -87,7 +90,34 @@ class UserActivity : BaseActivity() {
             .commit()
         fragmentManager.beginTransaction().hide(accountUserFragment).commit()
 
+        fragmentManager.beginTransaction()
+            .add(R.id.actUser_frameLayout, userCartFragment, fragment::class.java.simpleName)
+            .commit()
+        fragmentManager.beginTransaction().hide(userCartFragment).commit()
+
         currentFragment = userHomeFragment
+    }
+
+    override fun onBackPressed() {
+        val index = fragmentManager.backStackEntryCount - 1
+        if (index >= 0) {
+            super.onBackPressed()
+            actUser_bottomNavigation.visibility = View.VISIBLE
+        } else {
+            val menuItem = actUser_bottomNavigation.menu.getItem(0)
+            if (actUser_bottomNavigation.selectedItemId != menuItem.itemId) {
+
+                if (currentFragment === userHomeFragment)
+                    fragmentManager.beginTransaction().show(userHomeFragment).commit()
+                else {
+                    fragmentManager.beginTransaction().hide(currentFragment).show(userHomeFragment)
+                        .commit()
+                    currentFragment = userHomeFragment
+                }
+                actUser_bottomNavigation.selectedItemId = menuItem.itemId
+            } else
+                super.onBackPressed()
+        }
     }
 
 }

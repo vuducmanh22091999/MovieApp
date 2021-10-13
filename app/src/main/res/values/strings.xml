@@ -4,6 +4,7 @@
     <string name="title_favorite">Favorite</string>
     <string name="title_account">Account</string>
     <string name="title_search">Search</string>
+    <string name="title_user_cart">Cart</string>
     <string name="title_hello">Hello</string>
     <string name="title_name">User name</string>
     <string name="title_welcome">Lets explore your favorites movie</string>
@@ -92,4 +93,6 @@
     <string name="do_not_leave_blank">Don\'t leave blank</string>
     <string name="title_question_delete">Do you want delete item?</string>
     <string name="title_question_update">Do you want update item?</string>
+    <string name="title_add_to_cart">Add to cart</string>
+    <string name="title_images">Images</string>
 </resources>
