@@ -6,7 +6,6 @@ import com.example.movieapp.R
 import com.example.movieapp.base.BaseActivity
 import com.example.movieapp.ui.account.AccountUserFragment
 import com.example.movieapp.ui.cart.UserCartFragment
-import com.example.movieapp.ui.home.HomeFragment
 import com.example.movieapp.ui.home.UserHomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_user.*

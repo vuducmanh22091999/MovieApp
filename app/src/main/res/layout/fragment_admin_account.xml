@@ -9,18 +9,17 @@
     android:focusable="true">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/frgAccount_imgAvatar"
+        android:id="@+id/frgAccountAdmin_imgAvatar"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_16sdp"
         android:src="@drawable/ic_account"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frgAccount_imgEdit" />
+        app:layout_constraintTop_toBottomOf="@id/frgAccountAdmin_imgEdit" />
 
     <ImageView
-        android:id="@+id/frgAccount_imgEdit"
+        android:id="@+id/frgAccountAdmin_imgEdit"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_16sdp"
@@ -30,44 +29,46 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/frgAccount_tvEmailUser"
-        android:layout_width="match_parent"
+        android:id="@+id/frgAccountAdmin_tvEmailUser"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
         android:paddingVertical="@dimen/_8sdp"
         android:text="@string/title_email"
         android:textAlignment="center"
+        android:layout_marginStart="@dimen/_16sdp"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frgAccount_imgAvatar" />
+        app:layout_constraintStart_toEndOf="@+id/frgAccountAdmin_imgAvatar"
+        app:layout_constraintTop_toTopOf="@+id/frgAccountAdmin_imgAvatar" />
 
     <TextView
-        android:id="@+id/frgAccount_tvNameUser"
-        android:layout_width="match_parent"
+        android:id="@+id/frgAccountAdmin_tvNameUser"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_16sdp"
         android:text="@string/title_account"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvEmailUser" />
+        app:layout_constraintStart_toEndOf="@+id/frgAccountAdmin_imgAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/frgAccountAdmin_tvEmailUser" />
 
     <TextView
-        android:id="@+id/frgAccount_tvPhoneUser"
-        android:layout_width="match_parent"
+        android:id="@+id/frgAccountAdmin_tvPhoneUser"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_16sdp"
         android:text="@string/title_phone"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="@+id/frgAccount_tvNameUser"
-        app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvNameUser" />
+        app:layout_constraintStart_toEndOf="@+id/frgAccountAdmin_imgAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/frgAccountAdmin_tvNameUser" />
 
     <TextView
-        android:id="@+id/frgAccount_tvTitleHelp"
+        android:id="@+id/frgAccountAdmin_tvTitleHelp"
         android:layout_width="0dp"
         android:layout_height="@dimen/_50sdp"
         android:layout_marginTop="@dimen/_16sdp"
@@ -83,11 +84,11 @@
         app:drawableStartCompat="@drawable/ic_help"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frgAccount_imgAvatar"
+        app:layout_constraintTop_toBottomOf="@id/frgAccountAdmin_imgAvatar"
         tools:ignore="RtlSymmetry" />
 
     <TextView
-        android:id="@+id/frgAccount_tvTitleAbout"
+        android:id="@+id/frgAccountAdmin_tvTitleAbout"
         android:layout_width="0dp"
         android:layout_height="@dimen/_50sdp"
         android:layout_marginTop="@dimen/_32sdp"
@@ -102,7 +103,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frgAccount_tvTitleHelp"
+        app:layout_constraintTop_toBottomOf="@+id/frgAccountAdmin_tvTitleHelp"
         tools:ignore="RtlSymmetry" />
 
 
@@ -110,7 +111,7 @@
     <!--    app:drawableEndCompat="@drawable/ic_right_arrow"-->
 
     <TextView
-        android:id="@+id/frgAccount_tvLogout"
+        android:id="@+id/frgAccountAdmin_tvLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_48sdp"

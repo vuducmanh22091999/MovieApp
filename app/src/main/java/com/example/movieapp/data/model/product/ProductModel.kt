@@ -9,5 +9,5 @@ data class ProductModel(
     var name: String? = null,
     var amount: Int? = null,
     var price: Int? = null,
-    var listImage: ArrayList<String> = ArrayList()
+    var listImage: ArrayList<String> = arrayListOf()
 ): Serializable

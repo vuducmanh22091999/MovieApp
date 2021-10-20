@@ -8,7 +8,7 @@
     android:focusable="true">
 
     <ImageView
-        android:id="@+id/frgEditProfile_imgSave"
+        android:id="@+id/frgEditProfileAdmin_imgSave"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_16sdp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/frgEditProfile_imgAvatar"
+        android:id="@+id/frgEditProfileAdmin_imgAvatar"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
         android:layout_marginStart="@dimen/_16sdp"
@@ -26,10 +26,10 @@
         android:src="@drawable/ic_account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frgEditProfile_imgSave" />
+        app:layout_constraintTop_toBottomOf="@id/frgEditProfileAdmin_imgSave" />
 
     <TextView
-        android:id="@+id/frgEditProfile_tvChangeYourAvatar"
+        android:id="@+id/frgEditProfileAdmin_tvChangeYourAvatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
@@ -39,10 +39,10 @@
         android:textSize="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frgEditProfile_imgAvatar" />
+        app:layout_constraintTop_toBottomOf="@id/frgEditProfileAdmin_imgAvatar" />
 
     <EditText
-        android:id="@+id/frgEditProfile_etNameUser"
+        android:id="@+id/frgEditProfileAdmin_etNameUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -54,10 +54,10 @@
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frgEditProfile_tvChangeYourAvatar" />
+        app:layout_constraintTop_toBottomOf="@+id/frgEditProfileAdmin_tvChangeYourAvatar" />
 
     <EditText
-        android:id="@+id/frgEditProfile_etEmailUser"
+        android:id="@+id/frgEditProfileAdmin_etEmailUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -68,11 +68,11 @@
         android:textColorHint="@color/white"
         android:textSize="@dimen/_12sdp"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/frgEditProfile_etNameUser"
-        app:layout_constraintTop_toBottomOf="@+id/frgEditProfile_etNameUser" />
+        app:layout_constraintStart_toStartOf="@+id/frgEditProfileAdmin_etNameUser"
+        app:layout_constraintTop_toBottomOf="@+id/frgEditProfileAdmin_etNameUser" />
 
     <EditText
-        android:id="@+id/frgEditProfile_etPhoneUser"
+        android:id="@+id/frgEditProfileAdmin_etPhoneUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -83,8 +83,8 @@
         android:textColor="@color/white"
         android:textColorHint="@color/grey700"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="@+id/frgEditProfile_etEmailUser"
-        app:layout_constraintTop_toBottomOf="@+id/frgEditProfile_etEmailUser" />
+        app:layout_constraintStart_toStartOf="@+id/frgEditProfileAdmin_etEmailUser"
+        app:layout_constraintTop_toBottomOf="@+id/frgEditProfileAdmin_etEmailUser" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_main"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/frgEditProfileUser_imgSave"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:src="@drawable/ic_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/frgEditProfileUser_imgAvatar"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:src="@drawable/ic_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgEditProfileUser_imgSave" />
+
+    <TextView
+        android:id="@+id/frgEditProfileUser_tvChangeYourAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:padding="@dimen/_8sdp"
+        android:text="@string/title_change_your_avatar"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgEditProfileUser_imgAvatar" />
+
+    <EditText
+        android:id="@+id/frgEditProfileUser_etNameUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/title_input_your_name"
+        android:paddingVertical="@dimen/_8sdp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/grey700"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frgEditProfileUser_tvChangeYourAvatar" />
+
+    <EditText
+        android:id="@+id/frgEditProfileUser_etEmailUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/title_email"
+        android:paddingVertical="@dimen/_8sdp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/frgEditProfileUser_etNameUser"
+        app:layout_constraintTop_toBottomOf="@+id/frgEditProfileUser_etNameUser" />
+
+    <EditText
+        android:id="@+id/frgEditProfileUser_etPhoneUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/title_input_phone_number"
+        android:inputType="phone"
+        android:paddingVertical="@dimen/_8sdp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/grey700"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@+id/frgEditProfileUser_etEmailUser"
+        app:layout_constraintTop_toBottomOf="@+id/frgEditProfileUser_etEmailUser" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

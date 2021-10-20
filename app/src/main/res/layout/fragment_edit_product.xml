@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,81 +7,141 @@
     android:clickable="true"
     android:focusable="true">
 
-    <ImageView
-        android:id="@+id/frgEditProduct_imgSave"
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:src="@drawable/ic_save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/frgEditProduct_imgAvatar"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:src="@drawable/img_deadpool"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frgEditProduct_imgSave" />
-
-    <EditText
-        android:id="@+id/frgEditProduct_etNameProduct"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@android:color/transparent"
-        android:completionThreshold="1"
-        android:hint="@string/title_input_add_name"
-        android:lines="1"
-        android:paddingVertical="@dimen/_8sdp"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textColorHint="@color/grey700"
-        android:textSize="@dimen/_12sdp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frgEditProduct_imgAvatar" />
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/frgEditProduct_etPriceProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@android:color/transparent"
-        android:completionThreshold="1"
-        android:hint="@string/title_input_price_product"
-        android:inputType="number"
-        android:lines="1"
-        android:paddingVertical="@dimen/_8sdp"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textColorHint="@color/grey700"
-        android:textSize="@dimen/_12sdp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frgEditProduct_etNameProduct" />
+        <TextView
+            android:id="@+id/frgEditProduct_tvUpdateProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@string/title_update_product"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/frgEditProduct_etAmountProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@android:color/transparent"
-        android:completionThreshold="1"
-        android:hint="@string/title_input_add_amount"
-        android:inputType="number"
-        android:lines="1"
-        android:paddingVertical="@dimen/_8sdp"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textColorHint="@color/grey700"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="@+id/frgEditProduct_etPriceProduct"
-        app:layout_constraintTop_toBottomOf="@+id/frgEditProduct_etPriceProduct" />
+        <TextView
+            android:id="@+id/frgEditProduct_tvImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:text="@string/title_images"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgEditProduct_tvUpdateProduct" />
 
+        <ImageView
+            android:id="@+id/frgEditProduct_imgAddImages"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="@id/frgEditProduct_tvImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/frgEditProduct_tvImage" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/frgEditProduct_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgEditProduct_tvImage" />
+
+        <com.make.dots.dotsindicator.DotsIndicator
+            android:id="@+id/frgEditProduct_circleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:paddingHorizontal="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            app:dot_drawable="@drawable/ic_dot_selected"
+            app:dot_drawable_unselected="@drawable/ic_dot_unselected"
+            app:dot_height="8dp"
+            app:dot_margin="6dp"
+            app:dot_width="8dp"
+            app:layout_constraintBottom_toTopOf="@id/frgEditProduct_etNameProduct"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/frgEditProduct_etNameProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@android:color/transparent"
+            android:completionThreshold="1"
+            android:hint="@string/title_input_add_name"
+            android:lines="1"
+            android:paddingVertical="@dimen/_8sdp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textColorHint="@color/grey700"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frgEditProduct_viewpager" />
+
+        <EditText
+            android:id="@+id/frgEditProduct_etPriceProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@android:color/transparent"
+            android:completionThreshold="1"
+            android:hint="@string/title_input_price_product"
+            android:inputType="number"
+            android:lines="1"
+            android:paddingVertical="@dimen/_8sdp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textColorHint="@color/grey700"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frgEditProduct_etNameProduct" />
+
+        <EditText
+            android:id="@+id/frgEditProduct_etAmountProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@android:color/transparent"
+            android:completionThreshold="1"
+            android:hint="@string/title_input_add_amount"
+            android:inputType="number"
+            android:lines="1"
+            android:paddingVertical="@dimen/_8sdp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textColorHint="@color/grey700"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="@+id/frgEditProduct_etPriceProduct"
+            app:layout_constraintTop_toBottomOf="@+id/frgEditProduct_etPriceProduct" />
+
+        <TextView
+            android:id="@+id/frgEditProduct_tvUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@drawable/shape_radius_log_out"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/title_update"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgEditProduct_etAmountProduct" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

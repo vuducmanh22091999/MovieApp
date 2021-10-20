@@ -4,7 +4,9 @@ import android.view.View
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.product.CartProductModel
+import com.example.movieapp.data.model.product.ProductImage
 import com.example.movieapp.data.model.product.ProductModel
+import com.example.movieapp.ui.add.ListImageViewPagerAdapter
 import com.example.movieapp.ui.main.UserActivity
 import com.example.movieapp.utils.DETAIL_PRODUCT
 import com.example.movieapp.utils.USER_CART
@@ -19,6 +21,8 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
     private var detailProductModel = ProductModel()
     private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
+    private lateinit var listImageViewPagerAdapter: ListImageViewPagerAdapter
+    private var productImages: ArrayList<ProductImage> = arrayListOf()
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_detail_product
@@ -42,10 +46,28 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
 
     private fun getInfoFromUserHome() {
         detailProductModel = arguments?.getSerializable(DETAIL_PRODUCT) as ProductModel
-        Picasso.get().load(detailProductModel.urlAvatar).into(frgDetailProduct_imgAvatar)
         frgDetailProduct_tvTitleNameProduct.text = detailProductModel.name
-//        frgDetailProduct_tvAmount.text = detailProductModel.amount.toString()
         frgDetailProduct_tvPrice.text = detailProductModel.price.toString()
+        getProductImage()
+        listImageViewPagerAdapter = ListImageViewPagerAdapter(
+            childFragmentManager,
+            productImages
+        )
+        frgDetailProduct_viewpager.adapter = listImageViewPagerAdapter
+        listImageViewPagerAdapter.notifyDataSetChanged()
+        frgDetailProduct_circleIndicator.setViewPager(frgDetailProduct_viewpager)
+    }
+
+    private fun getProductImage() {
+        for (imageUrl in detailProductModel.listImage) {
+            val imageName = getImageName(imageUrl)
+            productImages.add(ProductImage(imageName = imageName, imageUrl = imageUrl))
+        }
+    }
+
+    private fun getImageName(path: String): String {
+        val stringArray = path.split("/").toTypedArray()
+        return stringArray[stringArray.size - 1].substringBefore(".")
     }
 
     private fun addToCart() {

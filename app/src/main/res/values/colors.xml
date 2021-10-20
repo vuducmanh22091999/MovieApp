@@ -20,5 +20,6 @@
     <color name="background_login_facebook">#3B599B</color>
     <color name="background_login_google">#F44336</color>
     <color name="blue">#68ABF3</color>
+    <color name="grey320">#CCCCCC</color>
 
 </resources>
