@@ -4,9 +4,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseActivity
-import com.example.movieapp.ui.account.AccountFragment
+import com.example.movieapp.ui.account.AccountAdminFragment
 import com.example.movieapp.ui.favorite.FavoriteFragment
-import com.example.movieapp.ui.home.HomeFragment
+import com.example.movieapp.ui.home.AdminHomeFragment
 import com.example.movieapp.ui.search.SearchMovieFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_question_login.*
@@ -15,10 +15,10 @@ import kotlinx.android.synthetic.main.dialog_question_login.*
 class MainActivity : BaseActivity() {
     private var fragment = Fragment()
     private lateinit var currentFragment: Fragment
-    private lateinit var homeFragment: HomeFragment
+    private lateinit var adminHomeFragment: AdminHomeFragment
     private lateinit var searchFragment: SearchMovieFragment
     private lateinit var favoriteFragment: FavoriteFragment
-    private lateinit var accountFragment: AccountFragment
+    private lateinit var accountAdminFragment: AccountAdminFragment
     private var fragmentManager = supportFragmentManager
 
     override fun getLayoutID(): Int {
@@ -34,12 +34,12 @@ class MainActivity : BaseActivity() {
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.homeFragment -> {
-                    if (currentFragment === homeFragment)
-                        fragmentManager.beginTransaction().show(homeFragment).commit()
+                    if (currentFragment === adminHomeFragment)
+                        fragmentManager.beginTransaction().show(adminHomeFragment).commit()
                     else
-                        fragmentManager.beginTransaction().hide(currentFragment).show(homeFragment)
+                        fragmentManager.beginTransaction().hide(currentFragment).show(adminHomeFragment)
                             .commit()
-                    currentFragment = homeFragment
+                    currentFragment = adminHomeFragment
                     return@setOnNavigationItemSelectedListener true
                 }
 //                R.id.favouritesFragment -> {
@@ -52,12 +52,12 @@ class MainActivity : BaseActivity() {
 //                        return@setOnNavigationItemSelectedListener true
 //                }
                 R.id.accountFragment -> {
-                        if (currentFragment === accountFragment)
-                            fragmentManager.beginTransaction().show(accountFragment).commit()
+                        if (currentFragment === accountAdminFragment)
+                            fragmentManager.beginTransaction().show(accountAdminFragment).commit()
                         else
                             fragmentManager.beginTransaction().hide(currentFragment)
-                                .show(accountFragment).commit()
-                        currentFragment = accountFragment
+                                .show(accountAdminFragment).commit()
+                        currentFragment = accountAdminFragment
                         return@setOnNavigationItemSelectedListener true
                 }
 //                R.id.searchFragment -> {
@@ -75,19 +75,19 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupFragment() {
-        homeFragment = HomeFragment()
+        adminHomeFragment = AdminHomeFragment()
         searchFragment = SearchMovieFragment()
-        accountFragment = AccountFragment()
+        accountAdminFragment = AccountAdminFragment()
         favoriteFragment = FavoriteFragment()
 
         fragmentManager.beginTransaction()
-            .add(R.id.frameLayout, homeFragment, fragment::class.java.simpleName)
+            .add(R.id.frameLayout, adminHomeFragment, fragment::class.java.simpleName)
             .commit()
 
         fragmentManager.beginTransaction()
-            .add(R.id.frameLayout, accountFragment, fragment::class.java.simpleName)
+            .add(R.id.frameLayout, accountAdminFragment, fragment::class.java.simpleName)
             .commit()
-        fragmentManager.beginTransaction().hide(accountFragment).commit()
+        fragmentManager.beginTransaction().hide(accountAdminFragment).commit()
 
         fragmentManager.beginTransaction()
             .add(R.id.frameLayout, searchFragment, fragment::class.java.simpleName)
@@ -99,7 +99,7 @@ class MainActivity : BaseActivity() {
             .commit()
         fragmentManager.beginTransaction().hide(favoriteFragment).commit()
 
-        currentFragment = homeFragment
+        currentFragment = adminHomeFragment
     }
 
     fun hideBottom() {
@@ -115,12 +115,12 @@ class MainActivity : BaseActivity() {
             val menuItem = bottomNavigation.menu.getItem(0)
             if (bottomNavigation.selectedItemId != menuItem.itemId) {
 
-                if (currentFragment === homeFragment)
-                    fragmentManager.beginTransaction().show(homeFragment).commit()
+                if (currentFragment === adminHomeFragment)
+                    fragmentManager.beginTransaction().show(adminHomeFragment).commit()
                 else {
-                    fragmentManager.beginTransaction().hide(currentFragment).show(homeFragment)
+                    fragmentManager.beginTransaction().hide(currentFragment).show(adminHomeFragment)
                         .commit()
-                    currentFragment = homeFragment
+                    currentFragment = adminHomeFragment
                 }
                 bottomNavigation.selectedItemId = menuItem.itemId
             } else

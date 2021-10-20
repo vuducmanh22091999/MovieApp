@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/MovieApp/app/src/main/res/drawable/ic_dot_selected.xml" value="0.225" />
+        <entry key="..\:/MovieApp/app/src/main/res/drawable/ic_dot_unselected.xml" value="0.225" />
         <entry key="..\:/MovieApp/app/src/main/res/drawable/shape_radius_4sdp_blue700.xml" value="0.22685185185185186" />
         <entry key="..\:/MovieApp/app/src/main/res/drawable/shape_radius_add_to_cart.xml" value="0.22685185185185186" />
         <entry key="..\:/MovieApp/app/src/main/res/drawable/shape_radius_edit_text.xml" value="0.22962962962962963" />
@@ -23,10 +25,13 @@
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_account.xml" value="0.264" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_add.xml" value="0.2" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_add_product.xml" value="0.25416666666666665" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_admin_account.xml" value="0.2513586956521739" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_detail_cast.xml" value="0.12360688956433637" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_detail_product.xml" value="0.25416666666666665" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_edit.xml" value="0.2513586956521739" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_edit_product.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_edit_profile.xml" value="0.264" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_edit_profile_admin.xml" value="0.2513586956521739" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_image.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_search_movie.xml" value="0.264" />
@@ -42,6 +47,7 @@
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_top_rate_movie.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_user_cart.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/menu/navigation.xml" value="0.19907407407407407" />
+        <entry key="..\:/MovieApp/app/src/main/res/xml/file_paths.xml" value="0.24728260869565216" />
       </map>
     </option>
   </component>

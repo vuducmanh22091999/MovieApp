@@ -6,7 +6,7 @@ class AppPreferences(context: Context) {
     private val LOGIN_SAVE_EMAIL = "login_save_email"
     private val LOGIN_SAVE_USER_NAME = "login_save_user_name"
     private val LOGIN_SAVE_PHOTO_URL = "login_save_photo_url"
-    val IS_LOGIN = "is_login"
+    private val IS_LOGIN = "is_login"
 
     private val appPreferences =
         context.getSharedPreferences("db_movie_app", Context.MODE_PRIVATE)
@@ -15,7 +15,7 @@ class AppPreferences(context: Context) {
         appPreferences.edit().putBoolean(IS_LOGIN, boolean).apply()
     }
 
-    fun getIsLogin(): Boolean? {
+    fun getIsLogin(): Boolean {
         return appPreferences.getBoolean(IS_LOGIN, false)
     }
 

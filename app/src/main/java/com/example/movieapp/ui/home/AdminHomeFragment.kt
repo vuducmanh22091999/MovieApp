@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.dialog_question_update.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.ArrayList
 
-class HomeFragment : BaseFragment(), View.OnClickListener {
+class AdminHomeFragment : BaseFragment(), View.OnClickListener {
     private lateinit var database: DatabaseReference
     private var listProductAdidas = ArrayList<ProductModel>()
     private var listProductNike = ArrayList<ProductModel>()
@@ -143,6 +143,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                                 )
                             }, { index, _ ->
                                 openDialogDelete(typeProduct, listProduct[index].id!!)
+                                listProductAdapter.notifyItemRemoved(index)
                             })
                         setupRecyclerView(typeProduct, listProduct, listProductAdapter)
                     }

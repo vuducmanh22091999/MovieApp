@@ -60,15 +60,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         appPreferences.setLoginEmail(email)
                         onlineID = auth.currentUser?.uid.toString()
                         if (email.contains("admin")) {
-                            databaseReference =
-                                FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(ADMIN).child(onlineID)
-                            databaseReference.setValue(true)
+//                            databaseReference =
+//                                FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(ADMIN).child(onlineID)
+//                            databaseReference.setValue(true)
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
                         } else {
-                            databaseReference =
-                                FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(USER).child(onlineID)
-                            databaseReference.setValue(true)
+//                            databaseReference =
+//                                FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(USER).child(onlineID)
+//                            databaseReference.setValue(true)
                             val intent = Intent(this, UserActivity::class.java)
                             startActivity(intent)
                         }
@@ -96,6 +96,16 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
+                        onlineID = auth.currentUser?.uid.toString()
+                        if (email.contains("admin")) {
+                            databaseReference =
+                                FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(ADMIN).child(onlineID)
+                            databaseReference.setValue(true)
+                        } else {
+                            databaseReference =
+                                FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(USER).child(onlineID)
+                            databaseReference.setValue(true)
+                        }
                         Toast.makeText(this, "Register success", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(intent)

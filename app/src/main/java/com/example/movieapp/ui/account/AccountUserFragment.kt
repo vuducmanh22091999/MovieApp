@@ -7,12 +7,11 @@ import android.view.View
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.local.AppPreferences
-import com.example.movieapp.ui.edit.EditProfileFragment
+import com.example.movieapp.ui.edit.EditProfileUserFragment
 import com.example.movieapp.ui.login.LoginActivity
 import com.example.movieapp.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_account.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_user_account.*
 
@@ -46,7 +45,7 @@ class AccountUserFragment: BaseFragment(), View.OnClickListener {
                     urlAvatar = Uri.parse(snapshot.child("urlAvatar").value.toString())
                     if (snapshot.exists() && snapshot.childrenCount > 0) {
                         frgUserAccount_tvEmailUser.text = auth.currentUser!!.email.toString()
-                        if (snapshot.child("urlAvatar").value.toString() == "")
+                        if (snapshot.child("urlAvatar").value.toString() == "null")
                             frgUserAccount_imgAvatar.setImageResource(R.drawable.ic_account)
                         else
                             Picasso.get().load(urlAvatar).into(frgUserAccount_imgAvatar)
@@ -74,14 +73,14 @@ class AccountUserFragment: BaseFragment(), View.OnClickListener {
     }
 
     private fun moveEditScreen() {
-        val editProfileFragment = EditProfileFragment()
+        val editProfileFragment = EditProfileUserFragment()
         val bundle = Bundle()
         bundle.putString(USER_NAME, frgUserAccount_tvNameUser.text.toString())
         bundle.putString(TYPE_ACCOUNT, USER)
         bundle.putString(PHONE_NUMBER, frgUserAccount_tvPhoneUser.text.toString())
         bundle.putString(URL_AVATAR, Uri.parse(urlAvatar.toString()).toString())
         editProfileFragment.arguments = bundle
-        addFragment(editProfileFragment, R.id.actUser_frameLayout, EditProfileFragment::class.java.simpleName)
+        addFragment(editProfileFragment, R.id.actUser_frameLayout, EditProfileUserFragment::class.java.simpleName)
     }
 
     override fun onClick(v: View) {
