@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/_16sdp"
         app:cardElevation="@dimen/_8sdp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,32 +19,32 @@
             android:id="@+id/itemProductUser_imgAvatar"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
+            android:scaleType="centerCrop"
             android:src="@drawable/img_deadpool" />
 
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/itemProductUser_imgPoster"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_deadpool"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/itemProductUser_tvTitleNameProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_32sdp"
         android:text="@string/title_name_movie"
         android:textColor="@color/white"
         android:textSize="@dimen/_14sdp"
-        app:layout_constraintStart_toEndOf="@id/cardView"
-        app:layout_constraintTop_toTopOf="@+id/cardView" />
-
-    <TextView
-        android:id="@+id/itemProductUser_tvAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:text="@string/title_content_language_movie"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="@+id/itemProductUser_tvTitleNameProduct"
-        app:layout_constraintTop_toBottomOf="@+id/itemProductUser_tvTitleNameProduct" />
+        app:layout_constraintStart_toEndOf="@id/itemProductUser_imgPoster"
+        app:layout_constraintTop_toTopOf="@+id/itemProductUser_imgPoster" />
 
     <TextView
         android:id="@+id/itemProductUser_tvPrice"
@@ -53,7 +54,8 @@
         android:text="@string/title_content_language_movie"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="@+id/itemProductUser_tvAmount"
-        app:layout_constraintTop_toBottomOf="@+id/itemProductUser_tvAmount" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/itemProductUser_tvTitleNameProduct"
+        app:layout_constraintTop_toBottomOf="@+id/itemProductUser_tvTitleNameProduct" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

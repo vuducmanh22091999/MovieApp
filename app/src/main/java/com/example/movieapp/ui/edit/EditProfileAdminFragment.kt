@@ -1,19 +1,19 @@
 package com.example.movieapp.ui.edit
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import android.app.Instrumentation
 import android.app.ProgressDialog
 import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.ui.main.MainActivity
@@ -23,8 +23,8 @@ import com.google.firebase.database.FirebaseDatabase
 import java.io.IOException
 import kotlin.collections.HashMap
 import android.webkit.MimeTypeMap
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.example.movieapp.utils.*
 import com.google.firebase.storage.*
@@ -32,6 +32,8 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_edit_profile_admin.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.example.movieapp.data.model.account.AccountModel
+import kotlinx.android.synthetic.main.fragment_add_product.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,18 +42,17 @@ class EditProfileAdminFragment : BaseFragment(), View.OnClickListener {
     private lateinit var auth: FirebaseAuth
     private val REQUEST_CAMERA_IMAGE = 2
     private val REQUEST_CAMERA_PERMISSIONS = 20
-    private val REQUEST_GALLERY_PERMISSIONS = 200
     private lateinit var databaseReference: DatabaseReference
     private lateinit var storage: StorageReference
     private val REQUEST_GALLERY_IMAGE = 1
     private var uri: Uri? = null
-    private val infoUser = HashMap<String, Any>()
     private var userName = ""
     private var phoneNumber = ""
     private var urlAvatar = ""
     private var typeAccount = ""
     private lateinit var progress: ProgressDialog
     lateinit var currentPhotoPath: String
+    private val accountModel = AccountModel()
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_edit_profile_admin
@@ -65,8 +66,21 @@ class EditProfileAdminFragment : BaseFragment(), View.OnClickListener {
         storage = FirebaseStorage.getInstance().getReference("Images")
         progress = ProgressDialog(context)
         handleBottom()
+        hideKeyboardWhenClickOutside()
         getInfoFromAccountScreen()
         initListener()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun hideKeyboardWhenClickOutside() {
+        repeat(2) {
+            frgEditProfileAdmin_layout.setOnTouchListener { v, event ->
+                val imm =
+                    context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                true
+            }
+        }
     }
 
     private fun showProgress() {
@@ -88,6 +102,7 @@ class EditProfileAdminFragment : BaseFragment(), View.OnClickListener {
     private fun initListener() {
         frgEditProfileAdmin_imgSave.setOnClickListener(this)
         frgEditProfileAdmin_tvChangeYourAvatar.setOnClickListener(this)
+        frgEditProfileAdmin_tvUpdateInfo.setOnClickListener(this)
     }
 
     private fun handleBottom() {
@@ -107,47 +122,55 @@ class EditProfileAdminFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun saveProfile() {
-        showProgress()
-        val uploadTask: UploadTask
-        infoUser["userName"] = frgEditProfileAdmin_etNameUser.text.toString()
-        infoUser["phoneNumber"] = frgEditProfileAdmin_etPhoneUser.text.toString()
-        if (uri != null) {
-            val fileReference: StorageReference = storage.child(
-                System.currentTimeMillis()
-                    .toString() + "." + getFileExtension(uri!!)
-            )
-            uploadTask = fileReference.putFile(uri!!)
-            uploadTask.addOnSuccessListener {
-                val urlTask = uploadTask.continueWithTask { task ->
-                    if (!task.isSuccessful) {
-                        throw task.exception!!
-                    }
-                    fileReference.downloadUrl
-                }.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        infoUser["urlAvatar"] = task.result.toString()
-                        auth.currentUser?.uid?.let {
-                            databaseReference.child(it).updateChildren(infoUser)
-                                .addOnCompleteListener {
-                                    if ((activity is MainActivity)) {
+        if (frgEditProfileAdmin_etPhoneUser.text.toString().length > 10)
+            Toast.makeText(context, "Phone number < 10 character. Please!!!", Toast.LENGTH_SHORT).show()
+        else if (frgEditProfileAdmin_etPhoneUser.text.toString().length <= 9)
+            Toast.makeText(context, "Phone number = 10 character. Please!!!", Toast.LENGTH_SHORT).show()
+        else {
+            showProgress()
+            val uploadTask: UploadTask
+            accountModel.userName = frgEditProfileAdmin_etNameUser.text.toString()
+            accountModel.phoneNumber = frgEditProfileAdmin_etPhoneUser.text.toString()
+            accountModel.email = auth.currentUser!!.email.toString()
+            if (uri != null) {
+                val fileReference: StorageReference = storage.child(
+                    System.currentTimeMillis()
+                        .toString() + "." + getFileExtension(uri!!)
+                )
+                uploadTask = fileReference.putFile(uri!!)
+                uploadTask.addOnSuccessListener {
+                    val urlTask = uploadTask.continueWithTask { task ->
+                        if (!task.isSuccessful) {
+                            throw task.exception!!
+                        }
+                        fileReference.downloadUrl
+                    }.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            accountModel.urlAvatar = task.result.toString()
+                            auth.currentUser?.uid?.let {
+                                databaseReference.child(it).setValue(accountModel)
+                                    .addOnCompleteListener {
+                                        if (activity is MainActivity)
+                                            (activity as MainActivity).hideKeyboard()
                                         dismissProgress()
+                                        back()
                                     }
-                                    back()
-                                }
+                            }
                         }
                     }
                 }
-            }
-        } else {
-            infoUser["urlAvatar"] = urlAvatar
-            auth.currentUser?.uid?.let {
-                databaseReference.child(it).updateChildren(infoUser)
-                    .addOnCompleteListener {
-                        if ((activity is MainActivity)) {
+            } else {
+//                infoUser["urlAvatar"] = urlAvatar
+                accountModel.urlAvatar = urlAvatar
+                auth.currentUser?.uid?.let {
+                    databaseReference.child(it).setValue(accountModel)
+                        .addOnCompleteListener {
+                            if (activity is MainActivity)
+                                (activity as MainActivity).hideKeyboard()
                             dismissProgress()
+                            back()
                         }
-                        back()
-                    }
+                }
             }
         }
     }
@@ -310,7 +333,7 @@ class EditProfileAdminFragment : BaseFragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.frgEditProfileAdmin_imgSave -> saveProfile()
+            R.id.frgEditProfileAdmin_tvUpdateInfo -> saveProfile()
             R.id.frgEditProfileAdmin_tvChangeYourAvatar -> showPictureDialog()
         }
     }

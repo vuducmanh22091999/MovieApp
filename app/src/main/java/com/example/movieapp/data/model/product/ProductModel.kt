@@ -4,10 +4,10 @@ import java.io.Serializable
 
 data class ProductModel(
     var type: String? = null,
-    var id: String? = null,
+    var id: Long? = null,
     var urlAvatar: String? = null,
     var name: String? = null,
-    var amount: Int? = null,
-    var price: Int? = null,
-    var listImage: ArrayList<String> = arrayListOf()
+    var price: Int = 0,
+    var listImage: ArrayList<String> = arrayListOf(),
+    var listSize: ArrayList<SizeProductModel> = arrayListOf()
 ): Serializable

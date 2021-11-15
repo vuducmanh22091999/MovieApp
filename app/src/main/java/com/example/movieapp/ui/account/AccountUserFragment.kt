@@ -3,15 +3,18 @@ package com.example.movieapp.ui.account
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.local.AppPreferences
 import com.example.movieapp.ui.edit.EditProfileUserFragment
 import com.example.movieapp.ui.login.LoginActivity
+import com.example.movieapp.ui.order_history.OrderHistoryFragment
 import com.example.movieapp.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_user_account.*
 
@@ -31,11 +34,26 @@ class AccountUserFragment: BaseFragment(), View.OnClickListener {
         databaseReference = FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(USER)
         initListener()
         getInfoUserFromFirebase()
+        hideLogout()
     }
 
     private fun initListener() {
         frgUserAccount_tvLogout.setOnClickListener(this)
         frgUserAccount_imgEdit.setOnClickListener(this)
+        frgUserAccount_tvOrderHistory.setOnClickListener(this)
+    }
+
+    private fun moveToOrderHistory() {
+        val orderHistoryFragment = OrderHistoryFragment()
+        addFragment(orderHistoryFragment, R.id.actUser_frameLayout, OrderHistoryFragment::class.java.simpleName)
+    }
+
+    private fun hideLogout() {
+        if (auth.currentUser?.uid?.isNotEmpty() == true)
+            frgUserAccount_tvLogout.visibility = View.VISIBLE
+        else
+            frgUserAccount_tvLogout.visibility = View.GONE
+        auth.currentUser?.uid?.let { Log.d("id-user", it) }
     }
 
     private fun getInfoUserFromFirebase() {
@@ -64,6 +82,7 @@ class AccountUserFragment: BaseFragment(), View.OnClickListener {
 
     private fun logOut() {
         val intent = Intent(activity, LoginActivity::class.java)
+        intent.putExtra("hideRegister", false)
         auth.signOut()
         appPreferences.setIsLogin(false)
         appPreferences.setLoginEmail("")
@@ -87,6 +106,7 @@ class AccountUserFragment: BaseFragment(), View.OnClickListener {
         when(v.id) {
             R.id.frgUserAccount_tvLogout -> logOut()
             R.id.frgUserAccount_imgEdit -> moveEditScreen()
+            R.id.frgUserAccount_tvOrderHistory -> moveToOrderHistory()
         }
     }
 }

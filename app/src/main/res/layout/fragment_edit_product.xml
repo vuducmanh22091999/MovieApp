@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_main"
-    android:clickable="true"
-    android:focusable="true">
+    android:id="@+id/frgEditProduct_layout"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:focusable="true">
 
         <TextView
             android:id="@+id/frgEditProduct_tvUpdateProduct"
@@ -108,23 +110,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/frgEditProduct_etNameProduct" />
 
-        <EditText
-            android:id="@+id/frgEditProduct_etAmountProduct"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/frgEditProduct_rcvSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_8sdp"
-            android:background="@android:color/transparent"
-            android:completionThreshold="1"
-            android:hint="@string/title_input_add_amount"
-            android:inputType="number"
-            android:lines="1"
-            android:paddingVertical="@dimen/_8sdp"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textColorHint="@color/grey700"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="@+id/frgEditProduct_etPriceProduct"
-            app:layout_constraintTop_toBottomOf="@+id/frgEditProduct_etPriceProduct" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgEditProduct_etPriceProduct"/>
 
         <TextView
             android:id="@+id/frgEditProduct_tvUpdate"
@@ -138,10 +132,11 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgEditProduct_etAmountProduct" />
+            app:layout_constraintTop_toBottomOf="@id/frgEditProduct_rcvSize" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

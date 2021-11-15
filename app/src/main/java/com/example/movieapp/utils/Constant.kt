@@ -13,8 +13,8 @@ const val ID_MOVIE = "id_movie"
 const val ID_CAST = "id_cast"
 
 
-const val ADMIN = "admin"
-const val USER = "user"
+const val ADMIN = "admin_account"
+const val USER = "user_account"
 const val ACCOUNT = "account"
 const val USER_NAME = "user_name"
 const val PHONE_NUMBER = "phone_number"
@@ -30,4 +30,6 @@ const val PRODUCT_MODEL = "product_model"
 const val TYPE_ACCOUNT = "type_account"
 const val DETAIL_PRODUCT = "detail_product"
 const val USER_CART = "user_cart"
-
+const val CART_PRODUCT_MODEL = "cart_product_model"
+const val TYPE = "type"
+const val ORDER_SUCCESS = "order_success"

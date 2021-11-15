@@ -1,26 +1,30 @@
 package com.example.movieapp.ui.add
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.webkit.MimeTypeMap
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.product.ProductImage
 import com.example.movieapp.data.model.product.ProductModel
+import com.example.movieapp.data.model.product.SizeProductModel
 import com.example.movieapp.ui.main.MainActivity
 import com.example.movieapp.utils.*
 import com.google.firebase.database.DatabaseReference
@@ -29,15 +33,21 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.fragment_add_product.*
+import kotlinx.coroutines.*
+import java.io.File
 import java.io.IOException
+import java.util.logging.Handler
+import kotlin.collections.ArrayList
 
-class AddScreenFragment : BaseFragment(), View.OnClickListener {
+class AddProductFragment : BaseFragment(), View.OnClickListener {
     private val REQUEST_CODE_IMAGE = 1
     private var uri: Uri? = null
     private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
     private lateinit var progress: ProgressDialog
     private lateinit var listImageViewPagerAdapter: ListImageViewPagerAdapter
+    private lateinit var listSizeAdapter: ListSizeAdapter
+    private var listSize = ArrayList<SizeProductModel>()
     private var productModel = ProductModel()
     private var updateCount = 0
     private var productImages: ArrayList<ProductImage> = arrayListOf()
@@ -52,12 +62,26 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
         storage = FirebaseStorage.getInstance().getReference("Images")
         progress = ProgressDialog(context)
         initListener()
+        hideKeyboardWhenClickOutside()
         handleBottom()
+        setDataForListSize()
+        setUpRecyclerView()
         setInfo()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun hideKeyboardWhenClickOutside() {
+        repeat(2) {
+            frgAdd_layout.setOnTouchListener { v, event ->
+                val imm =
+                    context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                true
+            }
+        }
+    }
+
     private fun showProgress() {
-        progress.setTitle("Loading")
         progress.setMessage("Waiting add data...")
         progress.setCancelable(false)
         progress.show()
@@ -74,7 +98,7 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
     private fun initListener() {
         frgAdd_imgSave.setOnClickListener(this)
         frgAdd_imgProduct.setOnClickListener(this)
-        frgAdd_tvAdd.setOnClickListener(this)
+        frgAdd_tvAddProduct.setOnClickListener(this)
         frgAdd_imgAddImages.setOnClickListener(this)
     }
 
@@ -86,6 +110,29 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
             PUMA -> frgAdd_tvNameProduct.text = PUMA
             JORDAN -> frgAdd_tvNameProduct.text = JORDAN
         }
+    }
+
+    private fun setUpRecyclerView() {
+        listSizeAdapter = ListSizeAdapter(listSize.toList()) { index, amountSize ->
+            listSize[index].isSelected = !listSize[index].isSelected
+            listSize[index].amountSize = amountSize
+            if (listSize[index].isSelected) {
+                productModel.listSize.add(listSize[index])
+                listSizeAdapter.notifyItemChanged(index)
+            } else {
+                productModel.listSize.remove(listSize[index])
+                listSizeAdapter.notifyItemChanged(index)
+            }
+        }
+        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        frgAdd_rcvSize.setHasFixedSize(true)
+        frgAdd_rcvSize.layoutManager = linearLayoutManager
+        frgAdd_rcvSize.adapter = listSizeAdapter
+    }
+
+    private fun setDataForListSize() {
+        for (size in 38..43)
+            listSize.add(SizeProductModel(size = size, isSelected = false))
     }
 
     private fun showPictureDialog() {
@@ -148,16 +195,37 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_IMAGE && resultCode == Activity.RESULT_OK) {
             try {
+                var countImage = 0
                 data?.let { intent ->
                     intent.clipData?.let {
                         val count = it.itemCount
                         for (i in 0 until count) {
                             uri = it.getItemAt(i).uri
-                            productImages.add(ProductImage(imagePath = uri.toString()))
+                            val f = File(it.getItemAt(i).uri.path)
+                            val imageName = f.name
+                            productImages.add(
+                                ProductImage(
+                                    imageName = imageName,
+                                    urlLocal = uri.toString()
+                                )
+                            )
                         }
                     }
                     intent.data?.let {
-                        productImages.add(ProductImage(imagePath = it.toString()))
+                        val f = File(it.path)
+                        val imageName = f.name
+                        productImages.add(
+                            ProductImage(
+                                imageName = imageName,
+                                urlLocal = it.toString()
+                            )
+                        )
+//                        productImages.add(
+//                            ProductImage(
+//                                imageName = System.currentTimeMillis().toString(),
+//                                urlLocal = it.toString()
+//                            )
+//                        )
                     }
                     listImageViewPagerAdapter = ListImageViewPagerAdapter(
                         childFragmentManager,
@@ -180,136 +248,119 @@ class AddScreenFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun createProduct() {
-        if (frgAdd_etNameProduct.text.toString().isEmpty() || frgAdd_etAmountProduct.text.toString()
-                .isEmpty() || productImages.isEmpty()
+        if (frgAdd_etNameProduct.text.toString().isEmpty() ||
+            frgAdd_etPriceProduct.text.toString().isEmpty()
         )
             Toast.makeText(context, getString(R.string.do_not_leave_blank), Toast.LENGTH_SHORT)
                 .show()
+        else if (productImages.isEmpty())
+            Toast.makeText(context, getString(R.string.add_image), Toast.LENGTH_SHORT)
+                .show()
+        else if (frgAdd_etPriceProduct.text.toString().trim().toInt() == 0 ||
+            frgAdd_etPriceProduct.text.toString().trim().toInt() < 0
+        )
+            Toast.makeText(context, getString(R.string.title_price_bigger_0), Toast.LENGTH_SHORT)
+                .show()
         else {
             val name = frgAdd_etNameProduct.text.toString()
-            val amount = frgAdd_etAmountProduct.text.toString().toInt()
             val price = frgAdd_etPriceProduct.text.toString().toInt()
 
-            val key = System.currentTimeMillis().toString()
+            val key = System.currentTimeMillis()
+            uploadPhoto()
             productModel.apply {
                 this.type = arguments?.getString(NAME_PRODUCT).toString()
                 this.id = key
                 this.name = name
-                this.amount = amount
                 this.price = price
+                this.listImage = productModel.listImage
             }
-            uploadImages()
         }
-    }
-
-    private fun getProductImage() {
-        for (imageUrl in productModel.listImage) {
-            val imageName = getImageName(imageUrl)
-            productImages.add(ProductImage(imageName = imageName, imageUrl = imageUrl))
-        }
-    }
-
-    private fun getImageName(path: String): String {
-        val stringArray = path.split("/").toTypedArray()
-        return stringArray[stringArray.size - 1].substringBefore(".")
     }
 
     private fun insertProduct() {
-//        getProductImage()
-//        productModel.listImage.clear()
-//        productImages.filter { it.imageUrl != null }.forEach { image ->
-//            image.imageUrl?.let { url ->
-//                productModel.listImage.add(url)
-//            }
-//        }
-        productModel.apply {
-            this.urlAvatar = listImage.toList()[0]
+        productImages.forEach { image ->
+            image.urlFirebase?.let { url ->
+                productModel.listImage.add(url)
+            }
         }
-//        Log.d("ImageURI", productModel.toString())
+
+        Log.d("test-add-image", productModel.listImage.toString())
+
+        productModel.apply {
+            this.urlAvatar = listImage[0]
+        }
         database.child(arguments?.getString(NAME_PRODUCT).toString())
             .child(productModel.id.toString()).setValue(productModel).addOnCompleteListener {
                 if ((activity is MainActivity)) {
                     dismissProgress()
                     updateCount = 0
-                    (activity as MainActivity).hideLoading()
                     (activity as MainActivity).hideKeyboard()
                 }
                 back()
             }
     }
 
-    private fun uploadImages() {
-        var numberOfRequest: Int
-        productImages.filter { it.imagePath != null }.apply {
-            showProgress()
-            numberOfRequest = this.size
-        }.forEach { productImage ->
-            val imageUri = Uri.parse(productImage.imagePath)
-            imageUri?.let { it ->
+    private fun uploadPhoto() {
+        showProgress()
+        val productImage = productImages[updateCount]
+        val fileUri = Uri.parse(productImage.urlLocal)
+        fileUri?.let { it ->
+            android.os.Handler().postDelayed({
                 val uploadTask: UploadTask
                 val fileReference: StorageReference = storage.child(
                     "${productImage.imageName}.${getFileExtension(it)}"
                 )
                 uploadTask = fileReference.putFile(it)
                 uploadTask.addOnSuccessListener {
-                    val urlTask = uploadTask.continueWithTask { task ->
-                        if (!task.isSuccessful) {
-                            throw task.exception!!
+                    fileReference.downloadUrl.addOnSuccessListener {
+                        this.productImages[updateCount].apply {
+                            this.urlFirebase = it.toString()
+                            this.urlLocal = null
+                            this.isUploadSuccess = true
                         }
-                        fileReference.downloadUrl
-                    }.addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val uri = task.result.toString()
-                            updateCount++
-                            productImages.find { image ->
-                                image.imageName == getImageName(task.result?.path ?: "")
-                            }?.apply {
-                                this.imageUrl = uri
-                                this.imagePath = null
-                                this.isUploadSuccess = true
-                            }
-//                            Log.d("ImageURI", "ImageURI : $uri")
-                            productModel.listImage.add(uri)
-                            if (updateCount == numberOfRequest) {
-                                productImages.find { image ->
-                                    image.imageName == getImageName(task.result?.path ?: "")
-                                }?.apply {
-                                    if (this.imagePath == null)
-                                        insertProduct()
-                                    else {
-                                        dismissProgress()
-                                        showRetryDialog()
-                                    }
-                                }
-                            }
-                        }
-                    }.addOnFailureListener {
-                        Log.d("ImageURI", "addOnFailureListener : ${it.message}")
+                        updateCount++
+                        if (updateCount == productImages.size)
+                            android.os.Handler().postDelayed({
+                                insertProduct()
+                            }, SPLASH_DISPLAY_LENGTH)
+                        else
+                            android.os.Handler().postDelayed({
+                                uploadPhoto()
+                            }, SPLASH_DISPLAY_LENGTH)
+
                     }
                 }
-            }
+            }, SPLASH_DISPLAY_LENGTH)
+//            val uploadTask: UploadTask
+//            val fileReference: StorageReference = storage.child(
+//                "${productImage.imageName}.${getFileExtension(it)}"
+//            )
+//            uploadTask = fileReference.putFile(it)
+//            uploadTask.addOnSuccessListener {
+//                fileReference.downloadUrl.addOnSuccessListener {
+//                    this.productImages[updateCount].apply {
+//                        this.urlFirebase = it.toString()
+//                        this.urlLocal = null
+//                        this.isUploadSuccess = true
+//                    }
+//                    updateCount++
+//                    if (updateCount == productImages.size)
+//                        android.os.Handler().postDelayed({
+//                            insertProduct()
+//                        }, SPLASH_DISPLAY_LENGTH)
+//                    else
+//                        android.os.Handler().postDelayed({
+//                            uploadPhoto()
+//                        }, SPLASH_DISPLAY_LENGTH)
+//
+//                }
+//            }
         }
-    }
-
-    private fun showRetryDialog() {
-        val pictureDialog = AlertDialog.Builder(context)
-        pictureDialog.setTitle("Load image failed. Retry...")
-        val pictureDialogItems = arrayOf("Ok")
-        pictureDialog.setItems(
-            pictureDialogItems
-        ) { _, which ->
-            when (which) {
-                0 -> openGallery()
-            }
-        }
-        pictureDialog.show()
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.frgAdd_imgSave -> {
-                createProduct()
-            }
+            R.id.frgAdd_tvAddProduct -> createProduct()
             R.id.frgAdd_imgAddImages -> showPictureDialog()
         }
     }

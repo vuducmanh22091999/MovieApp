@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:focusable="true"
     android:background="@color/color_main">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frgAdd_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/frgAdd_imgSave"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:src="@drawable/ic_save"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <TextView
-            android:id="@+id/frgAdd_tvAdd"
+            android:id="@+id/frgAdd_tvUpdateProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
@@ -32,7 +22,19 @@
             android:textSize="@dimen/_16sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgAdd_imgSave" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/frgAdd_imgSave"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:src="@drawable/ic_save"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/frgAdd_tvNameProduct"
@@ -44,7 +46,7 @@
             android:textSize="@dimen/_14sdp"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgAdd_tvAdd" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/frgAdd_tvImage"
@@ -55,27 +57,27 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgAdd_tvNameProduct" />
+            app:layout_constraintTop_toBottomOf="@id/frgAdd_tvUpdateProduct" />
 
         <ImageView
             android:id="@+id/frgAdd_imgAddImages"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
-            android:src="@drawable/ic_add"
             android:layout_marginEnd="@dimen/_8sdp"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="@id/frgAdd_tvImage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/frgAdd_tvImage"
-            app:layout_constraintBottom_toBottomOf="@id/frgAdd_tvImage"/>
+            app:layout_constraintTop_toTopOf="@id/frgAdd_tvImage" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/frgAdd_viewpager"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp"
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgAdd_tvImage"/>
+            app:layout_constraintTop_toBottomOf="@id/frgAdd_tvImage" />
 
         <com.make.dots.dotsindicator.DotsIndicator
             android:id="@+id/frgAdd_circleIndicator"
@@ -142,25 +144,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/frgAdd_etNameProduct" />
 
-        <EditText
-            android:id="@+id/frgAdd_etAmountProduct"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/frgAdd_rcvSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_8sdp"
-            android:background="@drawable/shape_radius_4sdp_blue700"
-            android:completionThreshold="1"
-            android:hint="@string/title_input_add_amount"
-            android:inputType="number"
-            android:lines="1"
-            android:padding="16dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white80"
-            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/frgAdd_etPriceProduct" />
 
+
+        <TextView
+            android:id="@+id/frgAdd_tvAddProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/shape_radius_add_to_cart"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/title_add_product"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frgAdd_rcvSize" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

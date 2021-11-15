@@ -2,9 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/actLogin_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_main"
+    android:focusableInTouchMode="true"
     tools:context=".ui.login.LoginActivity">
 
     <ImageView
@@ -49,6 +51,41 @@
         app:layout_constraintTop_toBottomOf="@id/actLogin_etEmail"
         tools:ignore="TextViewEdits" />
 
+    <EditText
+        android:id="@+id/actLogin_etConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/shape_radius_edit_text"
+        android:hint="@string/title_confirm_password"
+        android:inputType="textPassword"
+        android:padding="@dimen/_16sdp"
+        android:textColor="@color/black"
+        android:visibility="invisible"
+        android:textColorHint="@color/grey700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actLogin_etPassword"
+        tools:ignore="TextViewEdits" />
+
+    <TextView
+        android:id="@+id/actLogin_tvResetPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/shape_radius_login"
+        android:padding="@dimen/_8sdp"
+        android:text="@string/title_reset_password"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16sdp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actLogin_etPassword" />
+
     <TextView
         android:id="@+id/actLogin_tvLogin"
         android:layout_width="match_parent"
@@ -78,6 +115,19 @@
         app:layout_constraintTop_toBottomOf="@id/actLogin_tvLogin" />
 
     <TextView
+        android:id="@+id/actLogin_tvForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:padding="@dimen/_16sdp"
+        android:text="@string/title_forgot_password"
+        android:textSize="@dimen/_16sdp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actLogin_tvHaveAccount"/>
+
+    <TextView
         android:id="@+id/actLogin_tvRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,11 +139,24 @@
         android:text="@string/title_register"
         android:textColor="@color/black"
         android:textSize="@dimen/_16sdp"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/actLogin_tvHaveAccount" />
+        app:layout_constraintTop_toBottomOf="@id/actLogin_etConfirmPassword" />
 
+    <TextView
+        android:id="@+id/actLogin_tvBackToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_back_to_login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:padding="@dimen/_8sdp"
+        android:visibility="invisible"
+        android:enabled="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actLogin_tvRegister"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

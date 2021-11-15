@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.movieapp.R
@@ -26,9 +27,21 @@ abstract class BaseActivity: AppCompatActivity() {
 
     fun addFragment(fragment: Fragment, id: Int, tag: String? = null) {
         supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+            R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                 .add(id, fragment, fragment::class.java.simpleName)
                 .addToBackStack(tag)
                 .commit()
+    }
+
+    fun AppCompatActivity.hideSoftKeyboard() {
+        currentFocus?.run {
+            (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+                this.windowToken,
+                0
+            )
+            if (this is EditText) this.clearFocus()
+        }
     }
 
     fun hideKeyboard() {

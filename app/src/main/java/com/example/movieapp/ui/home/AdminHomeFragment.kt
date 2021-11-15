@@ -7,12 +7,11 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.product.ProductModel
-import com.example.movieapp.ui.add.AddScreenFragment
+import com.example.movieapp.ui.add.AddProductFragment
 import com.example.movieapp.ui.edit.EditProductFragment
 import com.example.movieapp.ui.home.adapter.ListProductAdapter
 import com.example.movieapp.utils.*
@@ -84,13 +83,12 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
         }
 
         dialog.dialogQuestionUpdate_tvCancel.setOnClickListener {
-            Toast.makeText(context, "Cancel!!!", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
         dialog.show()
     }
 
-    private fun openDialogDelete(nameProduct: String, idProduct: String) {
+    private fun openDialogDelete(nameProduct: String, idProduct: Long) {
         dialog = context?.let { Dialog(it) }!!
         dialog.setContentView(R.layout.dialog_question_delete)
         dialog.window?.setLayout(
@@ -101,19 +99,17 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
 
         dialog.dialogQuestionDelete_tvDelete.setOnClickListener {
             deleteProduct(nameProduct, idProduct)
-            Toast.makeText(context, "Delete!!!", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
 
         dialog.dialogQuestionDelete_tvCancel.setOnClickListener {
-            Toast.makeText(context, "Cancel!!!", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
         dialog.show()
     }
 
-    private fun deleteProduct(nameProduct: String, idProduct: String) {
-        database.child(nameProduct).child(idProduct).removeValue()
+    private fun deleteProduct(nameProduct: String, idProduct: Long) {
+        database.child(nameProduct).child(idProduct.toString()).removeValue()
     }
 
     private fun setDataForList() {
@@ -128,6 +124,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
         showProgress()
         database.child(typeProduct).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                dismissProgress()
                 if (snapshot.exists()) {
                     val listProduct = ArrayList<ProductModel>()
                     for (value in snapshot.children) {
@@ -143,7 +140,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
                                 )
                             }, { index, _ ->
                                 openDialogDelete(typeProduct, listProduct[index].id!!)
-                                listProductAdapter.notifyItemRemoved(index)
+                                listProductAdapter.notifyDataSetChanged()
                             })
                         setupRecyclerView(typeProduct, listProduct, listProductAdapter)
                     }
@@ -209,7 +206,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun addProductAdidas() {
-        val addScreenFragment = AddScreenFragment()
+        val addScreenFragment = AddProductFragment()
         val bundle = Bundle()
         bundle.putString(NAME_PRODUCT, ADIDAS)
         addScreenFragment.arguments = bundle
@@ -217,7 +214,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun addProductNike() {
-        val addScreenFragment = AddScreenFragment()
+        val addScreenFragment = AddProductFragment()
         val bundle = Bundle()
         bundle.putString(NAME_PRODUCT, NIKE)
         addScreenFragment.arguments = bundle
@@ -225,7 +222,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun addProductConverse() {
-        val addScreenFragment = AddScreenFragment()
+        val addScreenFragment = AddProductFragment()
         val bundle = Bundle()
         bundle.putString(NAME_PRODUCT, CONVERSE)
         addScreenFragment.arguments = bundle
@@ -233,7 +230,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun addProductPuma() {
-        val addScreenFragment = AddScreenFragment()
+        val addScreenFragment = AddProductFragment()
         val bundle = Bundle()
         bundle.putString(NAME_PRODUCT, PUMA)
         addScreenFragment.arguments = bundle
@@ -241,7 +238,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun addProductJordan() {
-        val addScreenFragment = AddScreenFragment()
+        val addScreenFragment = AddProductFragment()
         val bundle = Bundle()
         bundle.putString(NAME_PRODUCT, JORDAN)
         addScreenFragment.arguments = bundle

@@ -18,11 +18,11 @@ class ListImageViewPagerAdapter(
         val productImage = listImage[position]
         var imagePath = ""
 
-        productImage.imagePath?.let {
+        productImage.urlLocal?.let {
             imagePath = it
         }
 
-        productImage.imageUrl?.let {
+        productImage.urlFirebase?.let {
             imagePath = it
         }
 

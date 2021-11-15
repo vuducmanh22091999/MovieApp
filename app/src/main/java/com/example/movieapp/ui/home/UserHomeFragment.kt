@@ -2,7 +2,7 @@ package com.example.movieapp.ui.home
 
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
@@ -106,6 +106,7 @@ class UserHomeFragment : BaseFragment() {
                 frgUserHome_rcvAdidas.setHasFixedSize(true)
                 frgUserHome_rcvAdidas.layoutManager = linearLayoutManager
                 frgUserHome_rcvAdidas.adapter = userProductAdapter
+                frgUserHome_tvAdidas.visibility = View.VISIBLE
             }
             NIKE -> {
                 listProductNike.clear()
@@ -113,6 +114,7 @@ class UserHomeFragment : BaseFragment() {
                 frgUserHome_rcvNike.setHasFixedSize(true)
                 frgUserHome_rcvNike.layoutManager = linearLayoutManager
                 frgUserHome_rcvNike.adapter = userProductAdapter
+                frgUserHome_tvNike.visibility = View.VISIBLE
             }
             CONVERSE -> {
                 listProductConverse.clear()
@@ -120,6 +122,7 @@ class UserHomeFragment : BaseFragment() {
                 frgUserHome_rcvConverse.setHasFixedSize(true)
                 frgUserHome_rcvConverse.layoutManager = linearLayoutManager
                 frgUserHome_rcvConverse.adapter = userProductAdapter
+                frgUserHome_tvConverse.visibility = View.VISIBLE
             }
             PUMA -> {
                 listProductPuma.clear()
@@ -127,6 +130,7 @@ class UserHomeFragment : BaseFragment() {
                 frgUserHome_rcvPuma.setHasFixedSize(true)
                 frgUserHome_rcvPuma.layoutManager = linearLayoutManager
                 frgUserHome_rcvPuma.adapter = userProductAdapter
+                frgUserHome_tvPuma.visibility = View.VISIBLE
             }
             JORDAN -> {
                 listProductJordan.clear()
@@ -134,6 +138,7 @@ class UserHomeFragment : BaseFragment() {
                 frgUserHome_rcvJordan.setHasFixedSize(true)
                 frgUserHome_rcvJordan.layoutManager = linearLayoutManager
                 frgUserHome_rcvJordan.adapter = userProductAdapter
+                frgUserHome_tvJordan.visibility = View.VISIBLE
             }
         }
         dismissProgress()
