@@ -8,4 +8,4 @@ data class AccountModel(
     var phoneNumber: String = "",
     var email: String = "",
     var urlAvatar: String = ""
-): Serializable
+) : Serializable

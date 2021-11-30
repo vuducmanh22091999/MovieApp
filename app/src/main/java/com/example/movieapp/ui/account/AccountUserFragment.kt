@@ -14,15 +14,14 @@ import com.example.movieapp.ui.order_history.OrderHistoryFragment
 import com.example.movieapp.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_user_account.*
 
-class AccountUserFragment: BaseFragment(), View.OnClickListener {
+class AccountUserFragment : BaseFragment(), View.OnClickListener {
     private lateinit var appPreferences: AppPreferences
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
-    private lateinit var urlAvatar : Uri
+    private lateinit var urlAvatar: Uri
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_user_account
@@ -41,19 +40,26 @@ class AccountUserFragment: BaseFragment(), View.OnClickListener {
         frgUserAccount_tvLogout.setOnClickListener(this)
         frgUserAccount_imgEdit.setOnClickListener(this)
         frgUserAccount_tvOrderHistory.setOnClickListener(this)
+        frgUserAccount_tvLogin.setOnClickListener(this)
     }
 
     private fun moveToOrderHistory() {
         val orderHistoryFragment = OrderHistoryFragment()
-        addFragment(orderHistoryFragment, R.id.actUser_frameLayout, OrderHistoryFragment::class.java.simpleName)
+        addFragment(
+            orderHistoryFragment,
+            R.id.actUser_frameLayout,
+            OrderHistoryFragment::class.java.simpleName
+        )
     }
 
     private fun hideLogout() {
-        if (auth.currentUser?.uid?.isNotEmpty() == true)
+        if (auth.currentUser?.uid?.isNotEmpty() == true) {
             frgUserAccount_tvLogout.visibility = View.VISIBLE
-        else
+            frgUserAccount_tvLogin.visibility = View.GONE
+        } else {
             frgUserAccount_tvLogout.visibility = View.GONE
-        auth.currentUser?.uid?.let { Log.d("id-user", it) }
+            frgUserAccount_tvLogin.visibility = View.VISIBLE
+        }
     }
 
     private fun getInfoUserFromFirebase() {
@@ -68,7 +74,8 @@ class AccountUserFragment: BaseFragment(), View.OnClickListener {
                         else
                             Picasso.get().load(urlAvatar).into(frgUserAccount_imgAvatar)
                         frgUserAccount_tvNameUser.text = snapshot.child("userName").value.toString()
-                        frgUserAccount_tvPhoneUser.text = snapshot.child("phoneNumber").value.toString()
+                        frgUserAccount_tvPhoneUser.text =
+                            snapshot.child("phoneNumber").value.toString()
                     }
                 }
 
@@ -91,6 +98,12 @@ class AccountUserFragment: BaseFragment(), View.OnClickListener {
         startActivity(intent)
     }
 
+    private fun logIn() {
+        val intent = Intent(activity, LoginActivity::class.java)
+        intent.putExtra("hideRegister", false)
+        startActivity(intent)
+    }
+
     private fun moveEditScreen() {
         val editProfileFragment = EditProfileUserFragment()
         val bundle = Bundle()
@@ -99,14 +112,19 @@ class AccountUserFragment: BaseFragment(), View.OnClickListener {
         bundle.putString(PHONE_NUMBER, frgUserAccount_tvPhoneUser.text.toString())
         bundle.putString(URL_AVATAR, Uri.parse(urlAvatar.toString()).toString())
         editProfileFragment.arguments = bundle
-        addFragment(editProfileFragment, R.id.actUser_frameLayout, EditProfileUserFragment::class.java.simpleName)
+        addFragment(
+            editProfileFragment,
+            R.id.actUser_frameLayout,
+            EditProfileUserFragment::class.java.simpleName
+        )
     }
 
     override fun onClick(v: View) {
-        when(v.id) {
+        when (v.id) {
             R.id.frgUserAccount_tvLogout -> logOut()
             R.id.frgUserAccount_imgEdit -> moveEditScreen()
             R.id.frgUserAccount_tvOrderHistory -> moveToOrderHistory()
+            R.id.frgUserAccount_tvLogin -> logIn()
         }
     }
 }

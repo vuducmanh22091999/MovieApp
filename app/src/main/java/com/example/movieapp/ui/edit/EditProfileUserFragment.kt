@@ -106,6 +106,7 @@ class EditProfileUserFragment : BaseFragment(), View.OnClickListener {
         frgEditProfileUser_imgSave.setOnClickListener(this)
         frgEditProfileUser_tvChangeYourAvatar.setOnClickListener(this)
         frgEditProfileUser_tvUpdateInfo.setOnClickListener(this)
+        frgEditProfileUser_imgBack.setOnClickListener(this)
     }
 
     private fun handleBottom() {
@@ -330,6 +331,7 @@ class EditProfileUserFragment : BaseFragment(), View.OnClickListener {
         when (v.id) {
             R.id.frgEditProfileUser_tvUpdateInfo -> saveProfile()
             R.id.frgEditProfileUser_tvChangeYourAvatar -> showPictureDialog()
+            R.id.frgEditProfileUser_imgBack -> (activity as UserActivity).onBackPressed()
         }
     }
 }

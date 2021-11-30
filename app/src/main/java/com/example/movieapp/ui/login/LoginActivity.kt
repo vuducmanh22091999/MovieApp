@@ -3,6 +3,7 @@ package com.example.movieapp.ui.login
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.example.movieapp.base.BaseActivity
@@ -114,6 +115,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 Toast.makeText(this, "Don't email blank!!", Toast.LENGTH_SHORT).show()
             TextUtils.isEmpty(password) ->
                 Toast.makeText(this, "Don't password blank!!", Toast.LENGTH_SHORT).show()
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
+                Toast.makeText(this, "Wrong email format!!!", Toast.LENGTH_SHORT).show()
             else -> {
                 showLoading()
                 auth.signInWithEmailAndPassword(email, password)
@@ -160,6 +163,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 Toast.makeText(this, "Don't leave password blank!!", Toast.LENGTH_SHORT).show()
             actLogin_etConfirmPassword.text.toString() != actLogin_etPassword.text.toString() ->
                 Toast.makeText(this, "Confirm password failed!!!", Toast.LENGTH_SHORT).show()
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
+                Toast.makeText(this, "Wrong email format!!!", Toast.LENGTH_SHORT).show()
             else -> {
                 showLoading()
                 auth.createUserWithEmailAndPassword(email, password)
@@ -203,16 +208,23 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         actLogin_tvForgotPassword.visibility = View.GONE
     }
 
+    private fun backToLogin() {
+        actLogin_tvRegister.visibility = View.GONE
+        actLogin_etConfirmPassword.visibility = View.GONE
+        actLogin_tvLogin.visibility = View.VISIBLE
+        actLogin_tvHaveAccount.visibility = View.VISIBLE
+        actLogin_tvRegister.isEnabled = false
+        actLogin_tvBackToLogin.visibility = View.GONE
+        actLogin_tvBackToLogin.isEnabled = false
+        actLogin_tvForgotPassword.visibility = View.VISIBLE
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
             R.id.actLogin_tvLogin -> login()
             R.id.actLogin_tvRegister -> register()
             R.id.actLogin_tvHaveAccount -> showRegister()
-            R.id.actLogin_tvBackToLogin -> {
-                val intent = Intent(this, LoginActivity::class.java)
-                intent.putExtra("hideRegister", false)
-                startActivity(intent)
-            }
+            R.id.actLogin_tvBackToLogin -> backToLogin()
             R.id.actLogin_tvForgotPassword -> forgotPassword()
             R.id.actLogin_tvResetPassword -> resetPassword()
         }

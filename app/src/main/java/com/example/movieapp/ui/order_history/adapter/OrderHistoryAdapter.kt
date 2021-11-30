@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.model.product.CartProductModel
-import com.example.movieapp.utils.formatString
+import com.example.movieapp.utils.formatStringLong
 import kotlinx.android.synthetic.main.item_order_history.view.*
 
 class OrderHistoryAdapter(private val listProduct: List<CartProductModel>) :
@@ -26,7 +26,7 @@ class OrderHistoryAdapter(private val listProduct: List<CartProductModel>) :
             itemView.itemOrderHistory_tvAmountUserOrder.text =
                 "Amount user order: ${cartProductModel.amountUserOrder}"
             itemView.itemOrderHistory_tvPrice.text =
-                "Total: ${formatString(cartProductModel.totalPrice)}$"
+                "Total: ${formatStringLong(cartProductModel.totalPrice)}$"
             itemView.itemOrderHistory_tvSize.text =
                 "Size: ${cartProductModel.productModel?.listSize?.get(0)?.size.toString()}"
         }

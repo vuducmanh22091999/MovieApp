@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/_8sdp"
+    android:layout_marginStart="@dimen/_8sdp"
+    android:padding="@dimen/_8sdp">
+
+    <ImageView
+        android:id="@+id/itemConfirmOrder_imgAvatar"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_deadpool"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/itemConfirmOrder_tvTitleNameProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:text="@string/title_name_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toEndOf="@id/itemConfirmOrder_imgAvatar"
+        app:layout_constraintTop_toTopOf="@id/itemConfirmOrder_imgAvatar" />
+
+    <TextView
+        android:id="@+id/itemConfirmOrder_tvAmountUserOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/title_content_language_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@+id/itemConfirmOrder_tvTitleNameProduct"
+        app:layout_constraintTop_toBottomOf="@+id/itemConfirmOrder_tvTitleNameProduct" />
+
+    <TextView
+        android:id="@+id/itemConfirmOrder_tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_content_language_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@+id/itemConfirmOrder_tvAmountUserOrder"
+        app:layout_constraintTop_toBottomOf="@+id/itemConfirmOrder_tvAmountUserOrder" />
+
+    <TextView
+        android:id="@+id/itemConfirmOrder_tvSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_content_language_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@+id/itemConfirmOrder_tvTitleNameProduct"
+        app:layout_constraintTop_toBottomOf="@+id/itemConfirmOrder_tvTitleNameProduct" />
+
+    <View
+        android:id="@+id/itemConfirmOrder_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/itemConfirmOrder_imgAvatar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

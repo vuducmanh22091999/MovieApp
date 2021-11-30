@@ -16,6 +16,7 @@
         <entry key="..\:/MovieApp/app/src/main/res/drawable/shape_radius_google.xml" value="0.22685185185185186" />
         <entry key="..\:/MovieApp/app/src/main/res/drawable/shape_radius_log_out.xml" value="0.22685185185185186" />
         <entry key="..\:/MovieApp/app/src/main/res/drawable/shape_radius_login.xml" value="0.22962962962962963" />
+        <entry key="..\:/MovieApp/app/src/main/res/drawable/shape_radius_search.xml" value="0.25462962962962965" />
         <entry key="..\:/MovieApp/app/src/main/res/drawable/shapre_radius_edit_text.xml" value="0.22962962962962963" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/activity_admin.xml" value="0.24818840579710144" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/activity_login.xml" value="0.264" />
@@ -24,6 +25,7 @@
         <entry key="..\:/MovieApp/app/src/main/res/layout/activity_splash.xml" value="0.12360688956433637" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/activity_user.xml" value="0.24818840579710144" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_edit_product.xml" value="0.2" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_input_address.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_question_delete.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_question_login.xml" value="0.12360688956433637" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_question_update.xml" value="0.25416666666666665" />
@@ -32,6 +34,7 @@
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_add_product.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_admin_account.xml" value="0.2513586956521739" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_admin_cart.xml" value="0.24048913043478262" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_confirm_order.xml" value="0.264" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_detail_cast.xml" value="0.12360688956433637" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_detail_product.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_edit.xml" value="0.2513586956521739" />
@@ -49,6 +52,7 @@
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_admin_cart_product.xml" value="0.24909420289855072" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_cart_product.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_cast.xml" value="0.12360688956433637" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/item_confirm_order_cart.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_favorite_movie.xml" value="0.12360688956433637" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_order_history.xml" value="0.22644927536231885" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_poster_movie.xml" value="0.12360688956433637" />

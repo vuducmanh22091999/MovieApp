@@ -11,6 +11,7 @@ import com.example.movieapp.ui.cart.adapter.AdminCartAdapter
 import com.example.movieapp.utils.*
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_admin_cart.*
+import kotlinx.android.synthetic.main.fragment_edit_profile_user.*
 import java.util.ArrayList
 
 class AdminCartFragment : BaseFragment() {
@@ -29,12 +30,6 @@ class AdminCartFragment : BaseFragment() {
         databaseUser = FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(USER)
         databaseOrderSuccess = FirebaseDatabase.getInstance().reference.child(ORDER_SUCCESS)
         getDataUser()
-        checkCart()
-    }
-
-    private fun checkCart() {
-        if (listProductOrderSuccess.isEmpty())
-            frgAdminCart_tvNotification.visibility = View.VISIBLE
     }
 
     private fun getDataUser() {
@@ -69,6 +64,7 @@ class AdminCartFragment : BaseFragment() {
                                     if (cartProductModel.isOrderSuccess) {
                                         listProductOrderSuccess.add(cartProductModel)
                                     }
+                                    frgAdminCart_tvNotification.visibility = View.GONE
                                     adminCartAdapter =
                                         AdminCartAdapter(listProductOrderSuccess.toList(), account.userName)
                                     val linearLayoutManager =

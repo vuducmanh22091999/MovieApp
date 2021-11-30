@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.model.product.ProductModel
-import com.example.movieapp.utils.formatString
+import com.example.movieapp.utils.formatStringInt
+import com.example.movieapp.utils.formatStringLong
 import kotlinx.android.synthetic.main.item_product_user.view.*
 
 class UserProductAdapter(
@@ -19,7 +20,7 @@ class UserProductAdapter(
         @SuppressLint("SetTextI18n")
         fun bindDataViewHolder(productModel: ProductModel) {
             itemView.itemProductUser_tvTitleNameProduct.text = productModel.name
-            itemView.itemProductUser_tvPrice.text = "Price : ${formatString(productModel.price)}$"
+            itemView.itemProductUser_tvPrice.text = "Price : ${formatStringLong(productModel.price)}$"
             itemView.context?.let {
                 Glide.with(itemView.context).load(productModel.urlAvatar)
                     .placeholder(R.drawable.img_placeholder).into(itemView.itemProductUser_imgPoster)

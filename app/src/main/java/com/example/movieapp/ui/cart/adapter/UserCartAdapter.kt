@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.model.product.CartProductModel
-import com.example.movieapp.utils.formatString
+import com.example.movieapp.utils.formatStringInt
+import com.example.movieapp.utils.formatStringLong
 import kotlinx.android.synthetic.main.item_user_cart_product.view.*
 
 class UserCartAdapter(
     private val list: List<CartProductModel>,
-    private var minus: (Int, Int) -> Unit,
-    private var plus: (Int, Int) -> Unit
+    private var minus: (Int, Long) -> Unit,
+    private var plus: (Int, Long) -> Unit
 ) : RecyclerView.Adapter<UserCartAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
@@ -29,13 +30,13 @@ class UserCartAdapter(
             itemView.itemCartProductUser_tvTitleNameProduct.text =
                 cartProductModel.productModel?.name
             itemView.itemCartProductUser_tvPrice.text =
-                "${formatString(cartProductModel.productModel?.price!!)}$"
+                "${formatStringLong(cartProductModel.productModel?.price!!)}$"
             itemView.itemCartProductUser_tvAmountOrder.text = cartProductModel.amountUserOrder.toString()
             itemView.itemCartProductUser_imgMinus.setOnClickListener {
                 minus(absoluteAdapterPosition, cartProductModel.amountUserOrder)
                 itemView.itemCartProductUser_tvAmountOrder.text = cartProductModel.amountUserOrder.toString()
             }
-            if (cartProductModel.amountUserOrder == 0) {
+            if (cartProductModel.amountUserOrder == 0L) {
                 itemView.itemCartProductUser_imgMinus.isClickable = false
                 itemView.itemCartProductUser_imgMinus.isFocusable = false
             }

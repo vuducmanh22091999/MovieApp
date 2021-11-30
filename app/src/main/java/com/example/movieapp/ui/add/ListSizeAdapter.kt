@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,20 +16,18 @@ import kotlinx.android.synthetic.main.item_size.view.*
 
 class ListSizeAdapter(
     private val listSize: List<SizeProductModel>,
-    private var pickSize: (Int, Int) -> Unit
+    private var pickSize: (Int, Long) -> Unit
 ) : RecyclerView.Adapter<ListSizeAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bindDataViewHolder(sizeProductModel: SizeProductModel) {
             itemView.itemSize_tvSize.text = sizeProductModel.size.toString()
             itemView.isSelected = sizeProductModel.isSelected
-            if (sizeProductModel.isSelected && sizeProductModel.amountSize != 0)
-                itemView.itemSize_etAmountSize.setText(sizeProductModel.amountSize.toString())
-            else if (sizeProductModel.isSelected)
-                itemView.itemSize_etAmountSize.hint = "Type amount product..."
-            else if (!sizeProductModel.isSelected)
-                itemView.itemSize_etAmountSize.hint = "Type amount product..."
             if (sizeProductModel.isSelected) {
+                if (sizeProductModel.amountSize != 0L)
+                    itemView.itemSize_etAmountSize.setText(sizeProductModel.amountSize.toString())
+                else
+                    itemView.itemSize_etAmountSize.setText("")
                 itemView.itemSize_etAmountSize.isFocusable = true
                 itemView.itemSize_etAmountSize.isFocusableInTouchMode = true
                 itemView.itemSize_etAmountSize.addTextChangedListener(object : TextWatcher {
@@ -41,23 +40,39 @@ class ListSizeAdapter(
 
                     }
 
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        if (TextUtils.isEmpty(s))
-                            Toast.makeText(itemView.context, "Don't leave blank", Toast.LENGTH_SHORT).show()
-                        else if (s.toString().trim().toInt() == 0 || s.toString().trim().toInt() < 0)
-                            Toast.makeText(itemView.context, "Amount bigger 0", Toast.LENGTH_SHORT).show()
-                        else
-                            sizeProductModel.amountSize = s.toString().toInt()
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+//                        when {
+//                            TextUtils.isEmpty(s) ->
+//                                Toast.makeText(
+//                                    itemView.context,
+//                                    "Don't leave blank",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            s.toString().trim().toLong() <= 0 ->
+//                                Toast.makeText(
+//                                    itemView.context,
+//                                    "Amount > 0",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            else ->
+                                sizeProductModel.amountSize = s.toString().toLong()
+//                        }
                     }
 
                     override fun afterTextChanged(s: Editable?) {
                     }
 
                 })
-            }
-            if (!sizeProductModel.isSelected) {
+            } else {
                 itemView.itemSize_etAmountSize.isFocusable = false
                 itemView.itemSize_etAmountSize.isFocusableInTouchMode = false
+                sizeProductModel.amountSize = 0L
+                itemView.itemSize_etAmountSize.setText("")
             }
             itemView.setOnClickListener {
                 pickSize(absoluteAdapterPosition, sizeProductModel.amountSize)

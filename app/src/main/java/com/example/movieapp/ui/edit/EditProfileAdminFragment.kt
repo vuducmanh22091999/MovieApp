@@ -103,6 +103,7 @@ class EditProfileAdminFragment : BaseFragment(), View.OnClickListener {
         frgEditProfileAdmin_imgSave.setOnClickListener(this)
         frgEditProfileAdmin_tvChangeYourAvatar.setOnClickListener(this)
         frgEditProfileAdmin_tvUpdateInfo.setOnClickListener(this)
+        frgEditProfileAdmin_imgBack.setOnClickListener(this)
     }
 
     private fun handleBottom() {
@@ -335,6 +336,7 @@ class EditProfileAdminFragment : BaseFragment(), View.OnClickListener {
         when (v.id) {
             R.id.frgEditProfileAdmin_tvUpdateInfo -> saveProfile()
             R.id.frgEditProfileAdmin_tvChangeYourAvatar -> showPictureDialog()
+            R.id.frgEditProfileAdmin_imgBack -> (activity as MainActivity).onBackPressed()
         }
     }
 }

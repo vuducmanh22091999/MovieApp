@@ -3,10 +3,8 @@ package com.example.movieapp.ui.detail.product
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.movieapp.R
@@ -66,6 +64,7 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
 
     private fun initListener() {
         frgDetailProduct_tvAddToCart.setOnClickListener(this)
+        frgDetailProduct_imgBack.setOnClickListener(this)
     }
 
     private fun handleBottom() {
@@ -114,7 +113,8 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
     private fun getInfoFromUserHome() {
         detailProductModel = arguments?.getSerializable(DETAIL_PRODUCT) as ProductModel
         frgDetailProduct_tvTitleNameProduct.text = detailProductModel.name
-        frgDetailProduct_tvPrice.text = "${formatString(detailProductModel.price)}$"
+        frgDetailProduct_tvPrice.text = "${formatStringLong(detailProductModel.price)}$"
+        frgDetailProduct_tvContent.text = detailProductModel.contentProduct
         getProductImage()
         listImageViewPagerAdapter = ListImageViewPagerAdapter(
             childFragmentManager,
@@ -179,14 +179,14 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
         when {
             frgDetailProduct_etAmountOrder.text.toString().isEmpty() ->
                 Toast.makeText(context, "Don't leave blank!!!", Toast.LENGTH_SHORT).show()
-            frgDetailProduct_etAmountOrder.text.toString().toInt() == 0 ->
+            frgDetailProduct_etAmountOrder.text.toString().trim().toLong() == 0L ->
                 Toast.makeText(context, "Please type amount > 0", Toast.LENGTH_SHORT).show()
             listSizePicked.isEmpty() -> Toast.makeText(
                 context,
                 "Please pick size",
                 Toast.LENGTH_SHORT
             ).show()
-            frgDetailProduct_etAmountOrder.text.toString().toInt() > listSizePicked[0].amountSize ->
+            frgDetailProduct_etAmountOrder.text.toString().trim().toLong() > listSizePicked[0].amountSize ->
                 Toast.makeText(
                     context,
                     "Amount order is smaller than available current amount",
@@ -217,7 +217,7 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
             addToCart()
     }
 
-    private fun insertCart(key: Long, amountUserOrder: Int) {
+    private fun insertCart(key: Long, amountUserOrder: Long) {
         showProgress()
         val totalCart = detailProductModel.price * amountUserOrder
         val cartProductModel = CartProductModel(
@@ -251,13 +251,14 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
 
     private fun addToCart() {
         val key = System.currentTimeMillis()
-        val amountUserOrder = frgDetailProduct_etAmountOrder.text.toString().toInt()
+        val amountUserOrder = frgDetailProduct_etAmountOrder.text.toString().trim().toLong()
         insertCart(key, amountUserOrder)
     }
 
     override fun onClick(v: View) {
         when (v.id) {
             R.id.frgDetailProduct_tvAddToCart -> checkValidate()
+            R.id.frgDetailProduct_imgBack -> (activity as UserActivity).onBackPressed()
         }
     }
 }

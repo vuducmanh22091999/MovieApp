@@ -23,8 +23,8 @@ class SelectionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun iniListener() {
-        actSelection_btnAdmin.setOnClickListener(this)
-        actSelection_btnUser.setOnClickListener(this)
+        actSelection_tvAdmin.setOnClickListener(this)
+        actSelection_tvUser.setOnClickListener(this)
     }
 
     private fun moveAdminScreen() {
@@ -46,8 +46,8 @@ class SelectionActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when(v.id) {
-            R.id.actSelection_btnAdmin -> moveAdminScreen()
-            R.id.actSelection_btnUser -> moveUserScreen()
+            R.id.actSelection_tvAdmin -> moveAdminScreen()
+            R.id.actSelection_tvUser -> moveUserScreen()
         }
     }
 }

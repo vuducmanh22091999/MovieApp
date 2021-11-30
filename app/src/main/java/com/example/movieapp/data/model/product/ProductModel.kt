@@ -7,7 +7,8 @@ data class ProductModel(
     var id: Long? = null,
     var urlAvatar: String? = null,
     var name: String? = null,
-    var price: Int = 0,
+    var price: Long = 0,
+    var contentProduct: String = "",
     var listImage: ArrayList<String> = arrayListOf(),
     var listSize: ArrayList<SizeProductModel> = arrayListOf()
 ): Serializable

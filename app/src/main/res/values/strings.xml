@@ -97,6 +97,7 @@
     <string name="title_input_add_name">Type name product…</string>
     <string name="title_input_add_amount">Type amount product…</string>
     <string name="title_input_price_product">Type price product…</string>
+    <string name="title_input_content_product">Type content product…</string>
     <string name="do_not_leave_blank">Don\'t leave blank!!!</string>
     <string name="add_image">Add image!!!</string>
     <string name="title_price_bigger_0">Price bigger 0!!!</string>
@@ -116,4 +117,11 @@
     <string name="title_pick_type">Or?</string>
     <string name="title_admin">Admin</string>
     <string name="title_user">User</string>
+    <string name="key_public_payment">pk_test_51JwIpuIid84sdPkuFSIgkd6WU6ym7cutXYuiGCYqI9SOVA6mqHwlRDhhunuRGi1HXN9gpx6OBrcbPH87SfBG9SWt00BpzgJRkw</string>
+    <string name="key_secret_payment">sk_test_51JwIpuIid84sdPkutxs40oLJiaTibBbmsEvhjAsKzrnFcWWE7XPVp0Tv0crIK11PDMGz59jYszBbScGu6Xlvuls600NZ3q2nHI</string>
+    <string name="title_confirm_order">Confirm Order</string>
+    <string name="title_no_order_history">No order history</string>
+    <string name="title_search_product">Input name product for search…</string>
+    <string name="title_add_address">Add address</string>
+    <string name="key_google_map">AIzaSyAJGuXBxn2FCFM6bkZd6xokjpTCuFbbkDw</string>
 </resources>

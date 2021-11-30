@@ -79,7 +79,7 @@ class DetailMovieFragment : BaseFragment(), View.OnClickListener {
         dialog.setContentView(R.layout.dialog_question_login)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        dialog.dialogQuestionLogin_tvDelete.setOnClickListener {
+        dialog.dialogQuestionLogin_tvYes.setOnClickListener {
             val intentNewScreen = Intent(context, LoginActivity::class.java)
             startActivity(intentNewScreen)
             dialog.dismiss()

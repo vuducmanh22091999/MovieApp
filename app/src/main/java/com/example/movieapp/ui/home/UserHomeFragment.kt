@@ -1,14 +1,20 @@
 package com.example.movieapp.ui.home
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.product.ProductModel
 import com.example.movieapp.ui.detail.product.DetailProductFragment
 import com.example.movieapp.ui.home.adapter.UserProductAdapter
+import com.example.movieapp.ui.main.UserActivity
 import com.example.movieapp.utils.*
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -16,7 +22,7 @@ import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_user_home.*
 import java.util.ArrayList
 
-class UserHomeFragment : BaseFragment() {
+class UserHomeFragment : BaseFragment(), View.OnClickListener {
     private lateinit var database: DatabaseReference
     private var listProductAdidas = ArrayList<ProductModel>()
     private var listProductNike = ArrayList<ProductModel>()
@@ -26,6 +32,8 @@ class UserHomeFragment : BaseFragment() {
     private lateinit var userProductAdapter: UserProductAdapter
     private lateinit var storage: StorageReference
     private lateinit var progress: ProgressDialog
+    var listProductSearch = ArrayList<ProductModel>()
+    var listName: ArrayList<String> = ArrayList()
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_user_home
@@ -35,13 +43,68 @@ class UserHomeFragment : BaseFragment() {
         database = FirebaseDatabase.getInstance().reference.child(PRODUCT)
         storage = FirebaseStorage.getInstance().getReference("Images")
         progress = ProgressDialog(context)
+        initListener()
+        hideKeyboardWhenClickOutside()
         setDataForList()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun hideKeyboardWhenClickOutside() {
+        repeat(2) {
+            frgUserHome_layout.setOnTouchListener { v, event ->
+                val imm =
+                    context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                true
+            }
+        }
+    }
+
+    private fun initListener() {
+        frgUserHome_imgSearch.setOnClickListener(this)
     }
 
     private fun showProgress() {
         progress.setMessage("Waiting get data...")
         progress.setCancelable(false)
         progress.show()
+    }
+
+    private fun autoSearch() {
+        listName.clear()
+        listProductSearch.forEach {
+            listName.add(it.name!!)
+        }
+
+        val autoSearchAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            listName,
+        )
+        frgUserHome_autoNameProduct.setAdapter(autoSearchAdapter)
+    }
+
+    private fun moveToDetailProduct() {
+        val name = frgUserHome_autoNameProduct.text.toString()
+        var productModel = ProductModel()
+        listProductSearch.forEach {
+            if (it.name == name)
+                productModel = it
+        }
+        if (productModel.price != 0L) {
+            val detailProductFragment = DetailProductFragment()
+            val bundle = Bundle()
+            bundle.putSerializable(DETAIL_PRODUCT, productModel)
+            detailProductFragment.arguments = bundle
+            addFragment(
+                detailProductFragment,
+                R.id.actUser_frameLayout,
+                DetailProductFragment::class.java.simpleName
+            )
+            (activity as UserActivity).hideKeyboard()
+        } else {
+            Toast.makeText(context, "Not found product!!!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun dismissProgress() {
@@ -67,7 +130,8 @@ class UserHomeFragment : BaseFragment() {
                         if (productModel != null) {
                             listProduct.add(productModel)
                         }
-
+                        listProductSearch.add(productModel!!)
+                        autoSearch()
                         userProductAdapter =
                             UserProductAdapter(listProduct.toList()) { index, _ ->
                                 val detailProductFragment = DetailProductFragment()
@@ -94,7 +158,7 @@ class UserHomeFragment : BaseFragment() {
 
     private fun setupRecyclerView(
         typeProduct: String,
-        listProduct: List<ProductModel>,
+        listProduct: ArrayList<ProductModel>,
         userProductAdapter: UserProductAdapter
     ) {
         val linearLayoutManager =
@@ -144,4 +208,9 @@ class UserHomeFragment : BaseFragment() {
         dismissProgress()
     }
 
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.frgUserHome_imgSearch -> moveToDetailProduct()
+        }
+    }
 }

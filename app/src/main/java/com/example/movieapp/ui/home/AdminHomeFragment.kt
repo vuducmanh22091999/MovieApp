@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -140,11 +141,13 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
                                 )
                             }, { index, _ ->
                                 openDialogDelete(typeProduct, listProduct[index].id!!)
-                                listProductAdapter.notifyDataSetChanged()
+                                listProductAdapter.notifyItemRemoved(index)
+                                Log.d("snapshotTest", listProduct.size.toString())
                             })
                         setupRecyclerView(typeProduct, listProduct, listProductAdapter)
                     }
-                }
+                } else
+                    hideRecyclerView(typeProduct)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -154,14 +157,34 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
-    private fun setupRecyclerView(typeProduct: String, listProduct: List<ProductModel>, listProductAdapter: ListProductAdapter) {
+    private fun hideRecyclerView(typeProduct: String) {
+        when (typeProduct) {
+            ADIDAS ->
+                frgHome_rcvAdidas.visibility = View.GONE
+            NIKE ->
+                frgHome_rcvNike.visibility = View.GONE
+            CONVERSE ->
+                frgHome_rcvConverse.visibility = View.GONE
+            PUMA ->
+                frgHome_rcvPuma.visibility = View.GONE
+            JORDAN ->
+                frgHome_rcvJordan.visibility = View.GONE
+        }
+    }
+
+    private fun setupRecyclerView(
+        typeProduct: String,
+        listProduct: List<ProductModel>,
+        listProductAdapter: ListProductAdapter
+    ) {
         val linearLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        when(typeProduct) {
+        when (typeProduct) {
             ADIDAS -> {
                 listProductAdidas.clear()
                 listProductAdidas.addAll(listProduct)
                 frgHome_rcvAdidas.setHasFixedSize(true)
+                frgHome_rcvAdidas.visibility = View.VISIBLE
                 frgHome_rcvAdidas.layoutManager = linearLayoutManager
                 frgHome_rcvAdidas.adapter = listProductAdapter
             }
@@ -169,6 +192,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
                 listProductNike.clear()
                 listProductNike.addAll(listProduct)
                 frgHome_rcvNike.setHasFixedSize(true)
+                frgHome_rcvNike.visibility = View.VISIBLE
                 frgHome_rcvNike.layoutManager = linearLayoutManager
                 frgHome_rcvNike.adapter = listProductAdapter
             }
@@ -176,6 +200,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
                 listProductConverse.clear()
                 listProductConverse.addAll(listProduct)
                 frgHome_rcvConverse.setHasFixedSize(true)
+                frgHome_rcvConverse.visibility = View.VISIBLE
                 frgHome_rcvConverse.layoutManager = linearLayoutManager
                 frgHome_rcvConverse.adapter = listProductAdapter
             }
@@ -183,6 +208,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
                 listProductPuma.clear()
                 listProductPuma.addAll(listProduct)
                 frgHome_rcvPuma.setHasFixedSize(true)
+                frgHome_rcvPuma.visibility = View.VISIBLE
                 frgHome_rcvPuma.layoutManager = linearLayoutManager
                 frgHome_rcvPuma.adapter = listProductAdapter
             }
@@ -190,6 +216,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
                 listProductJordan.clear()
                 listProductJordan.addAll(listProduct)
                 frgHome_rcvJordan.setHasFixedSize(true)
+                frgHome_rcvJordan.visibility = View.VISIBLE
                 frgHome_rcvJordan.layoutManager = linearLayoutManager
                 frgHome_rcvJordan.adapter = listProductAdapter
             }

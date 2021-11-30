@@ -51,9 +51,9 @@ class EditProductFragment : BaseFragment(), View.OnClickListener {
         database = FirebaseDatabase.getInstance().reference.child(PRODUCT)
         storage = FirebaseStorage.getInstance().getReference("Images")
         progress = ProgressDialog(context)
+        initListener()
         handleBottom()
         hideKeyboardWhenClickOutside()
-        initListener()
         getInfoFromHomeScreen()
     }
 
@@ -63,7 +63,7 @@ class EditProductFragment : BaseFragment(), View.OnClickListener {
             frgEditProduct_layout.setOnTouchListener { v, event ->
                 val imm =
                     context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                imm.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
                 true
             }
         }
@@ -100,6 +100,7 @@ class EditProductFragment : BaseFragment(), View.OnClickListener {
         productModel = arguments?.getSerializable(PRODUCT_MODEL) as ProductModel
         frgEditProduct_etNameProduct.setText(productModel.name)
         frgEditProduct_etPriceProduct.setText(productModel.price.toString())
+        frgEditProduct_etContentProduct.setText(productModel.contentProduct)
         getProductImage()
         listImageViewPagerAdapter = ListImageViewPagerAdapter(
             childFragmentManager,
@@ -160,16 +161,19 @@ class EditProductFragment : BaseFragment(), View.OnClickListener {
     private fun initListener() {
         frgEditProduct_tvUpdate.setOnClickListener(this)
         frgEditProduct_imgAddImages.setOnClickListener(this)
+        frgEditProduct_imgBack.setOnClickListener(this)
     }
 
     private fun insertProduct() {
         val name = frgEditProduct_etNameProduct.text.toString()
-        val price = frgEditProduct_etPriceProduct.text.toString().toInt()
+        val price = frgEditProduct_etPriceProduct.text.toString().trim().toLong()
+        val content = frgEditProduct_etContentProduct.text.toString()
 
         productModel.apply {
             this.type = productModel.type
             this.id = productModel.id
             this.name = name
+            this.contentProduct = content
             this.price = price
             this.listSize = productModel.listSize
         }
@@ -334,6 +338,10 @@ class EditProductFragment : BaseFragment(), View.OnClickListener {
         when (v.id) {
             R.id.frgEditProduct_tvUpdate -> updateProduct()
             R.id.frgEditProduct_imgAddImages -> openGallery()
+            R.id.frgEditProduct_imgBack -> {
+                (activity as MainActivity).onBackPressed()
+                (activity as MainActivity).hideKeyboard()
+            }
         }
     }
 }

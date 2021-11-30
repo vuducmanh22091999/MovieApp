@@ -7,15 +7,21 @@
     android:background="@color/color_main"
     tools:context=".ui.selection_type.SelectionActivity">
 
-    <Button
-        android:id="@+id/actSelection_btnAdmin"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/actSelection_tvAdmin"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_200sdp"
         android:text="@string/title_admin"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        android:textAlignment="center"
+        android:padding="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_200sdp"
+        android:layout_marginHorizontal="@dimen/_32sdp"
+        android:background="@drawable/shape_radius_add_to_cart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/actSelection_tvPickType"
@@ -27,17 +33,22 @@
         android:padding="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/actSelection_btnUser"
-        app:layout_constraintTop_toBottomOf="@id/actSelection_btnAdmin" />
+        app:layout_constraintBottom_toTopOf="@id/actSelection_tvUser"
+        app:layout_constraintTop_toBottomOf="@id/actSelection_tvAdmin" />
 
-    <Button
-        android:id="@+id/actSelection_btnUser"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/actSelection_tvUser"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/title_user"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        android:textAlignment="center"
+        android:padding="@dimen/_8sdp"
+        android:layout_marginHorizontal="@dimen/_32sdp"
+        android:background="@drawable/shape_radius_add_to_cart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/actSelection_tvPickType" />
-
+        app:layout_constraintTop_toBottomOf="@id/actSelection_tvPickType"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,28 +36,29 @@ class MainActivity : BaseActivity() {
                     if (currentFragment === adminHomeFragment)
                         fragmentManager.beginTransaction().show(adminHomeFragment).commit()
                     else
-                        fragmentManager.beginTransaction().hide(currentFragment).show(adminHomeFragment)
+                        fragmentManager.beginTransaction().hide(currentFragment)
+                            .show(adminHomeFragment)
                             .commit()
                     currentFragment = adminHomeFragment
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.cartFragment -> {
-                        if (currentFragment === adminCartFragment)
-                            fragmentManager.beginTransaction().show(adminCartFragment).commit()
-                        else
-                            fragmentManager.beginTransaction().hide(currentFragment)
-                                .show(adminCartFragment).commit()
-                        currentFragment = adminCartFragment
-                        return@setOnNavigationItemSelectedListener true
+                    if (currentFragment === adminCartFragment)
+                        fragmentManager.beginTransaction().show(adminCartFragment).commit()
+                    else
+                        fragmentManager.beginTransaction().hide(currentFragment)
+                            .show(adminCartFragment).commit()
+                    currentFragment = adminCartFragment
+                    return@setOnNavigationItemSelectedListener true
                 }
                 R.id.accountFragment -> {
-                        if (currentFragment === accountAdminFragment)
-                            fragmentManager.beginTransaction().show(accountAdminFragment).commit()
-                        else
-                            fragmentManager.beginTransaction().hide(currentFragment)
-                                .show(accountAdminFragment).commit()
-                        currentFragment = accountAdminFragment
-                        return@setOnNavigationItemSelectedListener true
+                    if (currentFragment === accountAdminFragment)
+                        fragmentManager.beginTransaction().show(accountAdminFragment).commit()
+                    else
+                        fragmentManager.beginTransaction().hide(currentFragment)
+                            .show(accountAdminFragment).commit()
+                    currentFragment = accountAdminFragment
+                    return@setOnNavigationItemSelectedListener true
                 }
             }
             true

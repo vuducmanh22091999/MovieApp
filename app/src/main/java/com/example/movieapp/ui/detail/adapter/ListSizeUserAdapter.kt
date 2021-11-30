@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_size.view.*
 
 class ListSizeUserAdapter(
     private val listSize: List<SizeProductModel>,
-    private var pickSize: (Int, Int) -> Unit
+    private var pickSize: (Int, Long) -> Unit
 ) : RecyclerView.Adapter<ListSizeUserAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindDataViewHolder(sizeProductModel: SizeProductModel) {
