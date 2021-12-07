@@ -13,6 +13,7 @@ import com.example.movieapp.data.local.AppPreferences
 import com.example.movieapp.data.model.account.AccountModel
 import com.example.movieapp.ui.edit.EditProfileAdminFragment
 import com.example.movieapp.ui.login.LoginActivity
+import com.example.movieapp.ui.revenue.AdminRevenueFragment
 import com.example.movieapp.utils.*
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -117,6 +118,12 @@ class AccountAdminFragment : BaseFragment(), View.OnClickListener {
     private fun initListener() {
         frgAccountAdmin_tvLogout.setOnClickListener(this)
         frgAccountAdmin_imgEdit.setOnClickListener(this)
+        frgAccountAdmin_tvTitleRevenue.setOnClickListener(this)
+    }
+
+    private fun moveToRevenue() {
+        val revenueFragment = AdminRevenueFragment()
+        addFragment(revenueFragment, R.id.frameLayout, AdminRevenueFragment::class.java.simpleName)
     }
 
     private fun logOut() {
@@ -145,6 +152,7 @@ class AccountAdminFragment : BaseFragment(), View.OnClickListener {
         when (v.id) {
             R.id.frgAccountAdmin_tvLogout -> logOut()
             R.id.frgAccountAdmin_imgEdit -> moveEditScreen()
+            R.id.frgAccountAdmin_tvTitleRevenue -> moveToRevenue()
         }
     }
 }

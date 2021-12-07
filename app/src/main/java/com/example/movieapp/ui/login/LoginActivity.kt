@@ -72,10 +72,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         actLogin_tvBackToLogin.setOnClickListener(this)
         actLogin_tvForgotPassword.setOnClickListener(this)
         actLogin_tvResetPassword.setOnClickListener(this)
+        actLogin_tvBackToLoginResetPassword.setOnClickListener(this)
     }
 
     private fun forgotPassword() {
         actLogin_tvResetPassword.visibility = View.VISIBLE
+        actLogin_tvBackToLoginResetPassword.visibility = View.VISIBLE
+        actLogin_tvBackToLoginResetPassword.isEnabled = true
         actLogin_etPassword.visibility = View.GONE
         actLogin_tvLogin.visibility = View.GONE
         actLogin_tvHaveAccount.visibility = View.GONE
@@ -216,6 +219,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         actLogin_tvRegister.isEnabled = false
         actLogin_tvBackToLogin.visibility = View.GONE
         actLogin_tvBackToLogin.isEnabled = false
+        actLogin_tvBackToLoginResetPassword.visibility = View.GONE
+        actLogin_tvBackToLoginResetPassword.isEnabled = false
+        actLogin_etPassword.visibility = View.VISIBLE
+        actLogin_tvResetPassword.visibility = View.GONE
+        actLogin_tvResetPassword.isEnabled = false
         actLogin_tvForgotPassword.visibility = View.VISIBLE
     }
 
@@ -227,6 +235,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             R.id.actLogin_tvBackToLogin -> backToLogin()
             R.id.actLogin_tvForgotPassword -> forgotPassword()
             R.id.actLogin_tvResetPassword -> resetPassword()
+            R.id.actLogin_tvBackToLoginResetPassword -> backToLogin()
         }
     }
 

@@ -136,6 +136,7 @@ class EditProfileUserFragment : BaseFragment(), View.OnClickListener {
             accountModel.userName = frgEditProfileUser_etNameUser.text.toString()
             accountModel.phoneNumber = frgEditProfileUser_etPhoneUser.text.toString()
             accountModel.email = auth.currentUser!!.email.toString()
+            accountModel.id = auth.currentUser!!.uid
             if (uri != null) {
                 val fileReference: StorageReference = storage.child(
                     System.currentTimeMillis()

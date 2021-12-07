@@ -15,27 +15,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/frgOrderHistory_tvNotification"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/frgOrderHistory_tabLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/title_no_order_history"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_16sdp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:tabSelectedTextColor="@color/black"
+        app:tabMode="scrollable"
+        app:tabBackground="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgOrderHistory_imgBack"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/frgOrderHistory_rcvList"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/frgOrderHistory_viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="@dimen/_8sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frgOrderHistory_imgBack"/>
+        app:layout_constraintTop_toBottomOf="@id/frgOrderHistory_tabLayout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

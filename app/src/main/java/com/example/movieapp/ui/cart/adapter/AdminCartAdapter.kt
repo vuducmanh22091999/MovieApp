@@ -4,19 +4,22 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import androidx.recyclerview.widget.AsyncDifferConfig
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.model.product.CartProductModel
 import com.example.movieapp.utils.formatStringLong
 import kotlinx.android.synthetic.main.item_admin_cart_product.view.*
+import java.util.concurrent.Executors
 
 class AdminCartAdapter(
-    private val listProduct: List<CartProductModel>,
-    private val userName: String
-) :
-    RecyclerView.Adapter<AdminCartAdapter.ViewHolder>() {
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private val onClick: (Int, String) -> Unit
+) : ListAdapter<CartProductModel, AdminCartAdapter.DataViewHolder>(AsyncDifferConfig.Builder(BaseDiffAdapter())
+        .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor()).build()) {
+    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bindDataViewHolder(cartProductModel: CartProductModel) {
             itemView.context?.let {
@@ -32,19 +35,33 @@ class AdminCartAdapter(
                 "Size: ${cartProductModel.productModel?.listSize?.get(0)?.size.toString()}"
             itemView.itemCartProductAdmin_tvTitleNameProduct.text =
                 cartProductModel.productModel?.name
-            itemView.itemCartProductAdmin_tvOrderUserName.text = userName
+            itemView.itemCartProductAdmin_tvOrderUserName.text = cartProductModel.userName
+            when {
+                cartProductModel.isNewOrder ->
+                    itemView.itemCartProductAdmin_tvOrderStatus.text = cartProductModel.orderStatus
+                cartProductModel.isOrderConfirm ->
+                    itemView.itemCartProductAdmin_tvOrderStatus.text = cartProductModel.orderStatus
+                cartProductModel.isOrderDelivering ->
+                    itemView.itemCartProductAdmin_tvOrderStatus.text = cartProductModel.orderStatus
+                cartProductModel.isOrderCompleted ->
+                    itemView.itemCartProductAdmin_tvOrderStatus.text = cartProductModel.orderStatus
+                cartProductModel.isOrderCanceled ->
+                    itemView.itemCartProductAdmin_tvOrderStatus.text = cartProductModel.orderStatus
+            }
+
+            itemView.setOnClickListener {
+                onClick(absoluteAdapterPosition, cartProductModel.orderStatus.toString())
+            }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.item_admin_cart_product, parent, false)
-        return ViewHolder(view)
+        return DataViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindDataViewHolder(listProduct[position])
+    override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
+        holder.bindDataViewHolder(currentList[position])
     }
-
-    override fun getItemCount(): Int = listProduct.size
 }

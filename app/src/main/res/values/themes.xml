@@ -16,5 +16,8 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="mySpinnerItemStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="backgroundTint">@color/white</item>
+    </style>
 
 </resources>

@@ -8,11 +8,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
+import com.example.movieapp.data.model.product.CartProductModel
 import com.example.movieapp.data.model.product.ProductModel
 import com.example.movieapp.ui.add.AddProductFragment
+import com.example.movieapp.ui.cart.adapter.AdminCartAdapter
 import com.example.movieapp.ui.edit.EditProductFragment
 import com.example.movieapp.ui.home.adapter.ListProductAdapter
 import com.example.movieapp.utils.*
@@ -22,11 +25,15 @@ import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.dialog_question_delete.*
 import kotlinx.android.synthetic.main.dialog_question_delete.dialogQuestionDelete_tvCancel
 import kotlinx.android.synthetic.main.dialog_question_update.*
+import kotlinx.android.synthetic.main.fragment_admin_cart.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.ArrayList
 
 class AdminHomeFragment : BaseFragment(), View.OnClickListener {
     private lateinit var database: DatabaseReference
+    private lateinit var databaseUser: DatabaseReference
+    private lateinit var databaseOrderSuccess: DatabaseReference
+    private lateinit var databaseNewOrder: DatabaseReference
     private var listProductAdidas = ArrayList<ProductModel>()
     private var listProductNike = ArrayList<ProductModel>()
     private var listProductConverse = ArrayList<ProductModel>()
@@ -34,8 +41,10 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
     private var listProductJordan = ArrayList<ProductModel>()
     private lateinit var listProductAdapter: ListProductAdapter
     private lateinit var dialog: Dialog
-    private lateinit var storage: StorageReference
     private lateinit var progress: ProgressDialog
+    private val listIdUser = arrayListOf<String>()
+    private val listProductOrderSuccess = ArrayList<CartProductModel>()
+    private val listProductNewOrder = ArrayList<CartProductModel>()
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_home
@@ -43,10 +52,31 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
 
     override fun doViewCreated() {
         database = FirebaseDatabase.getInstance().reference.child(PRODUCT)
-        storage = FirebaseStorage.getInstance().getReference("Images")
+        databaseUser = FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(USER)
+        databaseOrderSuccess = FirebaseDatabase.getInstance().reference.child(ORDER_SUCCESS)
+        databaseNewOrder = FirebaseDatabase.getInstance().reference.child(NEW_ORDER)
         progress = ProgressDialog(context)
         initListener()
+        getDataUser()
         setDataForList()
+    }
+
+    private fun getDataUser() {
+        databaseUser.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (value in snapshot.children) {
+                        listIdUser.add(value.key.toString())
+                    }
+                    getListProductOrderSuccess()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
     }
 
     private fun showProgress() {
@@ -109,8 +139,46 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
         dialog.show()
     }
 
+    private fun getListProductOrderSuccess() {
+        listIdUser.forEach { idUser ->
+            databaseOrderSuccess.child(idUser).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        for (value in snapshot.children) {
+                            val cartProductModel = value.getValue(CartProductModel::class.java)
+                            if (cartProductModel != null) {
+                                if (cartProductModel.isOrderSuccess) {
+                                    listProductOrderSuccess.add(cartProductModel)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
+        }
+    }
+
     private fun deleteProduct(nameProduct: String, idProduct: Long) {
-        database.child(nameProduct).child(idProduct.toString()).removeValue()
+        val listTest = ArrayList<CartProductModel>()
+        listProductOrderSuccess.find {
+            it.productModel?.id == idProduct
+        }?.let {
+            listTest.clear()
+            listTest.add(it)
+        }
+
+        if (listTest.isNotEmpty()) {
+            listTest.forEach {
+                if (it.productModel?.id == idProduct)
+                    Toast.makeText(context, "Can't delete product!!!", Toast.LENGTH_SHORT).show() }
+        } else
+            Toast.makeText(context, "Delete!!!", Toast.LENGTH_SHORT).show()
+//                database.child(nameProduct).child(idProduct.toString()).removeValue()
     }
 
     private fun setDataForList() {
@@ -141,8 +209,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
                                 )
                             }, { index, _ ->
                                 openDialogDelete(typeProduct, listProduct[index].id!!)
-                                listProductAdapter.notifyItemRemoved(index)
-                                Log.d("snapshotTest", listProduct.size.toString())
+                                listProductAdapter.notifyItemChanged(index)
                             })
                         setupRecyclerView(typeProduct, listProduct, listProductAdapter)
                     }

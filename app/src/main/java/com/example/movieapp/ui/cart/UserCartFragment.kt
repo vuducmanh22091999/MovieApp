@@ -8,7 +8,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -20,25 +19,18 @@ import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.product.CartProductModel
 import com.example.movieapp.data.model.product.ProductModel
 import com.example.movieapp.ui.cart.adapter.UserCartAdapter
-import com.example.movieapp.ui.confirm_order.ConfirmOrderFragment
 import com.example.movieapp.ui.login.LoginActivity
 import com.example.movieapp.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.stripe.android.paymentsheet.PaymentSheet
-import com.stripe.android.paymentsheet.PaymentSheetResult
 import kotlinx.android.synthetic.main.dialog_question_delete.*
 import kotlinx.android.synthetic.main.dialog_question_login.*
 import kotlinx.android.synthetic.main.fragment_user_cart.*
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import java.io.IOException
 
 class UserCartFragment : BaseFragment(), View.OnClickListener {
     private lateinit var database: DatabaseReference
     private lateinit var databaseOrderSuccess: DatabaseReference
+    private lateinit var databaseNewOrder: DatabaseReference
     private lateinit var databaseProduct: DatabaseReference
     private lateinit var userCartAdapter: UserCartAdapter
     private lateinit var dialog: Dialog
@@ -49,28 +41,18 @@ class UserCartFragment : BaseFragment(), View.OnClickListener {
     private var listCartProduct = ArrayList<CartProductModel>()
     private val listProduct = ArrayList<ProductModel>()
 
-    lateinit var paymentSheet: PaymentSheet
-    lateinit var customerConfig: PaymentSheet.CustomerConfiguration
-    lateinit var paymentIntentClientSecret: String
-
     override fun getLayoutID(): Int {
         return R.layout.fragment_user_cart
-    }
-
-    companion object {
-        private const val TAG = "CheckoutActivity"
-        private const val BACKEND_URL = "http://10.0.2.2:4242"
     }
 
     override fun doViewCreated() {
         database = FirebaseDatabase.getInstance().reference.child(USER_CART)
         databaseProduct = FirebaseDatabase.getInstance().reference.child(PRODUCT)
         databaseOrderSuccess = FirebaseDatabase.getInstance().reference.child(ORDER_SUCCESS)
+        databaseNewOrder = FirebaseDatabase.getInstance().reference.child(NEW_ORDER)
         auth = FirebaseAuth.getInstance()
         idUser = auth.currentUser?.uid.toString()
         progress = ProgressDialog(context)
-        paymentSheet = PaymentSheet(requireActivity(), ::onPaymentSheetResult)
-        fetchPaymentIntent()
         initListener()
         checkCart()
         listCartProduct()
@@ -253,15 +235,6 @@ class UserCartFragment : BaseFragment(), View.OnClickListener {
         dialog.show()
     }
 
-    private fun moveToConfirmOrder() {
-        val confirmOrderFragment = ConfirmOrderFragment()
-        addFragment(
-            confirmOrderFragment,
-            R.id.actUser_frameLayout,
-            ConfirmOrderFragment::class.java.simpleName
-        )
-    }
-
     private fun clickToOrder() {
         if (auth.currentUser?.uid?.isNotEmpty() == true) {
             var error = ""
@@ -288,9 +261,9 @@ class UserCartFragment : BaseFragment(), View.OnClickListener {
                         productModel.listSize.firstOrNull { sizeProductModel ->
                             sizeProductModel.size == cartProductModel.size
                         }?.let {
-                            it.amountSize -= cartProductModel.amountUserOrder
+//                            it.amountSize -= cartProductModel.amountUserOrder
                             setDatabase(productModel.id!!, productModel)
-                            setDatabaseOrderSuccess(cartProductModel)
+                            setDatabaseNewOrder(cartProductModel)
                         }
                     }
                 }
@@ -298,77 +271,6 @@ class UserCartFragment : BaseFragment(), View.OnClickListener {
                 Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
         } else
             moveToLogin()
-    }
-
-    private fun payment() {
-        presentPaymentSheet()
-    }
-
-    private fun presentPaymentSheet() {
-        paymentSheet.presentWithPaymentIntent(
-            paymentIntentClientSecret,
-            PaymentSheet.Configuration(
-                merchantDisplayName = "My merchant name",
-                customer = customerConfig,
-                // Set `allowsDelayedPaymentMethods` to true if your business
-                // can handle payment methods that complete payment after a delay, like SEPA Debit and Sofort.
-                allowsDelayedPaymentMethods = true
-            )
-        )
-    }
-
-    private fun fetchPaymentIntent() {
-        val url = "$BACKEND_URL/create-payment-intent"
-
-        val shoppingCartContent = """
-            {
-                "items": [
-                    {"id":"xl-tshirt"}
-                ]
-            }
-        """
-
-        val mediaType = "application/json; charset=utf-8".toMediaType()
-
-        val body = shoppingCartContent.toRequestBody(mediaType)
-        val request = Request.Builder()
-            .url(url)
-            .post(body)
-            .build()
-
-        OkHttpClient()
-            .newCall(request)
-            .enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-//                    showAlert("Failed to load data", "Error: $e")
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    if (!response.isSuccessful) {
-//                        showAlert("Failed to load page", "Error: $response")
-                    } else {
-                        val responseData = response.body?.string()
-                        val responseJson = responseData?.let { JSONObject(it) } ?: JSONObject()
-                        paymentIntentClientSecret = responseJson.getString("clientSecret")
-//                        runOnUiThread { payButton.isEnabled = true }
-                        Log.i(TAG, "Retrieved PaymentIntent")
-                    }
-                }
-            })
-    }
-
-    private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
-        when (paymentSheetResult) {
-            is PaymentSheetResult.Canceled -> {
-                Log.d("payment", "Canceled")
-            }
-            is PaymentSheetResult.Failed -> {
-                Log.d("payment", "Failed")
-            }
-            is PaymentSheetResult.Completed -> {
-                Log.d("payment", "Completed")
-            }
-        }
     }
 
     private fun setDatabase(key: Long, productModel: ProductModel) {
@@ -386,10 +288,23 @@ class UserCartFragment : BaseFragment(), View.OnClickListener {
             }
     }
 
-    private fun setDatabaseOrderSuccess(cartProductModel: CartProductModel) {
+    private fun setDatabaseNewOrder(cartProductModel: CartProductModel) {
         val key = System.currentTimeMillis()
         cartProductModel.isOrderSuccess = true
-        databaseOrderSuccess.child(idUser).child(key.toString()).setValue(cartProductModel)
+        cartProductModel.isNewOrder = true
+        cartProductModel.orderStatus = getString(R.string.title_new_order)
+        cartProductModel.idCart = key
+        databaseNewOrder.child(idUser).child(key.toString()).setValue(cartProductModel).addOnCompleteListener {
+            dismissProgress()
+            listCartProduct.clear()
+            Toast.makeText(context, "Order success!!!", Toast.LENGTH_SHORT).show()
+            frgUserCart_rcvListCart.visibility = View.GONE
+            frgUserCart_tvValueTotal.visibility = View.GONE
+            frgUserCart_tvNotification.visibility = View.VISIBLE
+            frgUserCart_tvTotal.visibility = View.GONE
+            frgUserCart_tvOrder.visibility = View.GONE
+            database.child(idUser).removeValue()
+        }
     }
 
     private fun showProgress() {

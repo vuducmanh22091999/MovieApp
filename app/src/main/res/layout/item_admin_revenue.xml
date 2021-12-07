@@ -8,7 +8,7 @@
     android:layout_marginStart="@dimen/_8sdp">
 
     <ImageView
-        android:id="@+id/itemCartProductAdmin_imgAvatar"
+        android:id="@+id/itemAdminRevenue_imgAvatar"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
         android:src="@drawable/img_deadpool"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/itemCartProductAdmin_tvOrderUserName"
+        android:id="@+id/itemAdminRevenue_tvOrderUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -27,11 +27,11 @@
         android:text="@string/title_content_language_movie"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toEndOf="@id/itemCartProductAdmin_imgAvatar"
-        app:layout_constraintTop_toTopOf="@+id/itemCartProductAdmin_imgAvatar" />
+        app:layout_constraintStart_toEndOf="@id/itemAdminRevenue_imgAvatar"
+        app:layout_constraintTop_toTopOf="@+id/itemAdminRevenue_imgAvatar" />
 
     <TextView
-        android:id="@+id/itemCartProductAdmin_tvOrderStatus"
+        android:id="@+id/itemAdminRevenue_tvOrderDateCompleted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -42,51 +42,51 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/itemCartProductAdmin_imgAvatar" />
+        app:layout_constraintTop_toTopOf="@+id/itemAdminRevenue_imgAvatar" />
 
     <TextView
-        android:id="@+id/itemCartProductAdmin_tvTitleNameProduct"
+        android:id="@+id/itemAdminRevenue_tvTitleNameProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_name_movie"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="@id/itemCartProductAdmin_tvOrderUserName"
-        app:layout_constraintTop_toBottomOf="@id/itemCartProductAdmin_tvOrderUserName" />
+        app:layout_constraintStart_toStartOf="@id/itemAdminRevenue_tvOrderUserName"
+        app:layout_constraintTop_toBottomOf="@id/itemAdminRevenue_tvOrderUserName" />
 
     <TextView
-        android:id="@+id/itemCartProductAdmin_tvAmountUserOrder"
+        android:id="@+id/itemAdminRevenue_tvAmountUserOrder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
         android:text="@string/title_content_language_movie"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="@+id/itemCartProductAdmin_tvTitleNameProduct"
-        app:layout_constraintTop_toBottomOf="@+id/itemCartProductAdmin_tvTitleNameProduct" />
+        app:layout_constraintStart_toStartOf="@+id/itemAdminRevenue_tvTitleNameProduct"
+        app:layout_constraintTop_toBottomOf="@+id/itemAdminRevenue_tvTitleNameProduct" />
 
     <TextView
-        android:id="@+id/itemCartProductAdmin_tvPrice"
+        android:id="@+id/itemAdminRevenue_tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_content_language_movie"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="@+id/itemCartProductAdmin_tvAmountUserOrder"
-        app:layout_constraintTop_toBottomOf="@+id/itemCartProductAdmin_tvAmountUserOrder" />
+        app:layout_constraintStart_toStartOf="@+id/itemAdminRevenue_tvAmountUserOrder"
+        app:layout_constraintTop_toBottomOf="@+id/itemAdminRevenue_tvAmountUserOrder" />
 
     <TextView
-        android:id="@+id/itemCartProductAdmin_tvSize"
+        android:id="@+id/itemAdminRevenue_tvSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_content_language_movie"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintStart_toStartOf="@+id/itemCartProductAdmin_tvTitleNameProduct"
-        app:layout_constraintTop_toBottomOf="@+id/itemCartProductAdmin_tvTitleNameProduct" />
+        app:layout_constraintStart_toStartOf="@+id/itemAdminRevenue_tvTitleNameProduct"
+        app:layout_constraintTop_toBottomOf="@+id/itemAdminRevenue_tvTitleNameProduct" />
 
     <View
-        android:id="@+id/itemCartProductAdmin_view"
+        android:id="@+id/itemAdminRevenue_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:layout_marginTop="@dimen/_8sdp"
@@ -95,6 +95,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/itemCartProductAdmin_imgAvatar" />
+        app:layout_constraintTop_toBottomOf="@id/itemAdminRevenue_imgAvatar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

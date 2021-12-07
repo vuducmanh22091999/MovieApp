@@ -1,10 +1,12 @@
 package com.example.movieapp.ui.order_history
 
 import android.view.View
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.product.CartProductModel
+import com.example.movieapp.ui.cart.adapter.UserViewPagerAdapter
 import com.example.movieapp.ui.main.UserActivity
 import com.example.movieapp.ui.order_history.adapter.OrderHistoryAdapter
 import com.example.movieapp.utils.ORDER_SUCCESS
@@ -20,6 +22,8 @@ class OrderHistoryFragment: BaseFragment(), View.OnClickListener {
     private lateinit var auth: FirebaseAuth
     val listProductOrderSuccess = ArrayList<CartProductModel>()
 
+    private lateinit var userViewPagerAdapter: UserViewPagerAdapter
+
     override fun getLayoutID(): Int {
         return R.layout.fragment_order_history
     }
@@ -30,7 +34,11 @@ class OrderHistoryFragment: BaseFragment(), View.OnClickListener {
         idUser = auth.currentUser?.uid.toString()
         handleBottom()
         initListener()
-        getData()
+//        getData()
+        userViewPagerAdapter = UserViewPagerAdapter(childFragmentManager,
+        FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+        frgOrderHistory_viewPager.adapter = userViewPagerAdapter
+        frgOrderHistory_tabLayout.setupWithViewPager(frgOrderHistory_viewPager)
     }
 
     private fun initListener() {
@@ -41,26 +49,25 @@ class OrderHistoryFragment: BaseFragment(), View.OnClickListener {
         (activity as UserActivity).hideBottom()
     }
 
-    private fun getData() {
-        databaseOrderSuccess.child(idUser).get().addOnCompleteListener {
-            for (value in it.result.children) {
-                val cartProductModel = value.getValue(CartProductModel::class.java)
-                if (cartProductModel != null) {
-                    if (cartProductModel.isOrderSuccess) {
-                        listProductOrderSuccess.add(cartProductModel)
-                    }
-                    frgOrderHistory_tvNotification.visibility = View.GONE
-                    orderHistoryAdapter =
-                        OrderHistoryAdapter(listProductOrderSuccess.toList())
-                    val linearLayoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    frgOrderHistory_rcvList.setHasFixedSize(true)
-                    frgOrderHistory_rcvList.layoutManager = linearLayoutManager
-                    frgOrderHistory_rcvList.adapter = orderHistoryAdapter
-                }
-            }
-        }
-    }
+//    private fun getData() {
+//        databaseOrderSuccess.child(idUser).get().addOnCompleteListener {
+//            for (value in it.result.children) {
+//                val cartProductModel = value.getValue(CartProductModel::class.java)
+//                if (cartProductModel != null) {
+//                    if (cartProductModel.isOrderSuccess) {
+//                        listProductOrderSuccess.add(cartProductModel)
+//                    }
+//                    orderHistoryAdapter =
+//                        OrderHistoryAdapter(listProductOrderSuccess.toList())
+//                    val linearLayoutManager =
+//                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//                    frgOrderHistory_rcvList.setHasFixedSize(true)
+//                    frgOrderHistory_rcvList.layoutManager = linearLayoutManager
+//                    frgOrderHistory_rcvList.adapter = orderHistoryAdapter
+//                }
+//            }
+//        }
+//    }
 
     override fun onClick(v: View) {
         when(v.id) {

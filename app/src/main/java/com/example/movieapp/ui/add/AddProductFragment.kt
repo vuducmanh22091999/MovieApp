@@ -109,7 +109,7 @@ class AddProductFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun setUpRecyclerView() {
-        listSizeAdapter = ListSizeAdapter(listSize.toList()) { index, amountSize ->
+        listSizeAdapter = ListSizeAdapter(listSize.toList(), { index, amountSize ->
             listSize[index].isSelected = !listSize[index].isSelected
             if (listSize[index].isSelected) {
                 listSize[index].amountSize = amountSize
@@ -120,7 +120,8 @@ class AddProductFragment : BaseFragment(), View.OnClickListener {
                 productModel.listSize.remove(listSize[index])
                 listSizeAdapter.notifyItemChanged(index)
             }
-        }
+        }, { string, index ->
+        })
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         frgAdd_rcvSize.setHasFixedSize(true)
         frgAdd_rcvSize.layoutManager = linearLayoutManager
@@ -369,7 +370,7 @@ class AddProductFragment : BaseFragment(), View.OnClickListener {
             R.id.frgAdd_imgAddImages -> showPictureDialog()
             R.id.frgAdd_imgBack -> {
                 (activity as MainActivity).onBackPressed()
-                (activity as MainActivity).hideKeyboard()
+//                (activity as MainActivity).hideKeyboard()
             }
         }
     }

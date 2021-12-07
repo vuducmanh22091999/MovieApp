@@ -153,10 +153,24 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
         android:padding="@dimen/_8sdp"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:enabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/actLogin_tvRegister"/>
+
+    <TextView
+        android:id="@+id/actLogin_tvBackToLoginResetPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_back_to_login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:padding="@dimen/_8sdp"
+        android:visibility="gone"
+        android:enabled="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/actLogin_tvResetPassword"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

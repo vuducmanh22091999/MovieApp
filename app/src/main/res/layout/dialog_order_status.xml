@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_16sdp"
+    android:background="@null"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialogOrderStatus_tvOrderStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:text="@string/title_pick_order_status"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/_14sdp" />
+
+    <RadioGroup
+        android:id="@+id/dialogOrderStatus_radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp">
+        <RadioButton
+            android:id="@+id/dialogOrderStatus_rbOrderConfirmation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_confirm_order"
+            android:textSize="@dimen/_14sdp"/>
+
+        <RadioButton
+            android:id="@+id/dialogOrderStatus_rbOrderDelivered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_order_delivered"
+            android:textSize="@dimen/_14sdp"/>
+
+        <RadioButton
+            android:id="@+id/dialogOrderStatus_rbOrderCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_order_completed"
+            android:textSize="@dimen/_14sdp"/>
+
+        <RadioButton
+            android:id="@+id/dialogOrderStatus_rbOrderCanceled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_order_cancel"
+            android:textSize="@dimen/_14sdp"/>
+    </RadioGroup>
+
+    <View
+        android:id="@+id/dialogOrderStatus_vHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@android:color/darker_gray" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/dialogOrderStatus_tvCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/_12sdp"
+            android:text="@string/title_no"
+            android:textAlignment="center"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_12sdp" />
+
+        <View
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/dialogOrderStatus_tvYes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/_12sdp"
+            android:text="@string/title_yes"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/_12sdp" />
+        <View
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/dialogOrderStatus_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginBottom="@dimen/_8sdp"/>
+
+</LinearLayout>

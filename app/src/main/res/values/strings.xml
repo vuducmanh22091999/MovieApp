@@ -40,6 +40,7 @@
     <string name="title_email">email@gmail.com</string>
     <string name="title_about">About</string>
     <string name="title_order_history">Order history</string>
+    <string name="title_revenue">Revenue</string>
     <string name="title_help">Help</string>
     <string name="title_trailer">Trailer</string>
     <string name="title_cast">Cast</string>
@@ -112,6 +113,8 @@
     <string name="title_total">Total</string>
     <string name="title_order">Order</string>
     <string name="title_notification">Don\'t have product in cart</string>
+    <string name="title_no_result">No result</string>
+    <string name="title_blank" />
     <string name="title_amount_0">Amount: 0</string>
     <string name="title_back_to_login"><u>Back to Login</u></string>
     <string name="title_pick_type">Or?</string>
@@ -124,4 +127,18 @@
     <string name="title_search_product">Input name product for search…</string>
     <string name="title_add_address">Add address</string>
     <string name="key_google_map">AIzaSyAJGuXBxn2FCFM6bkZd6xokjpTCuFbbkDw</string>
+    <string name="title_pick_order_status">Pick order status…</string>
+    <string name="title_new_order">New order</string>
+    <string name="title_order_confirm">Order confirm</string>
+    <string name="title_order_delivered">order is delivering</string>
+    <string name="title_order_completed">Order completed</string>
+    <string name="title_order_cancel">Order is canceled</string>
+
+    <string-array name="listStatus">
+        <item>Order confirmation</item>
+        <item>Order are being delivered</item>
+        <item>Order completed</item>
+        <item>Order is canceled</item>
+    </string-array>
+
 </resources>

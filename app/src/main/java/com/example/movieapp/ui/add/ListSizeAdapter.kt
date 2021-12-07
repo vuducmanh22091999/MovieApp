@@ -16,7 +16,8 @@ import kotlinx.android.synthetic.main.item_size.view.*
 
 class ListSizeAdapter(
     private val listSize: List<SizeProductModel>,
-    private var pickSize: (Int, Long) -> Unit
+    private var pickSize: (Int, Long) -> Unit,
+    private var onChange: (String, Int) -> Unit
 ) : RecyclerView.Adapter<ListSizeAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
@@ -60,7 +61,11 @@ class ListSizeAdapter(
 //                                    Toast.LENGTH_SHORT
 //                                ).show()
 //                            else ->
+                            if (!TextUtils.isEmpty(s)) {
                                 sizeProductModel.amountSize = s.toString().toLong()
+                                onChange(s.toString(), absoluteAdapterPosition)
+                            }
+
 //                        }
                     }
 

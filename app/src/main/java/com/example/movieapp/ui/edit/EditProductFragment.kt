@@ -111,7 +111,7 @@ class EditProductFragment : BaseFragment(), View.OnClickListener {
         frgEditProduct_circleIndicator.setViewPager(frgEditProduct_viewpager)
 
         setDataForListSize()
-        listSizeAdapter = ListSizeAdapter(listSize.toList()) { index, amountSize ->
+        listSizeAdapter = ListSizeAdapter(listSize.toList(), { index, amountSize ->
             listSize[index].isSelected = !listSize[index].isSelected
             listSize[index].amountSize = amountSize
             if (listSize[index].isSelected) {
@@ -126,7 +126,12 @@ class EditProductFragment : BaseFragment(), View.OnClickListener {
                     checkPosition(index)
                 }
             }
-        }
+        }, { string, index ->
+            productModel.listSize.forEach {
+                if (it.size == listSize[index].size)
+                    it.amountSize = string.toLong()
+            }
+        })
 
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         frgEditProduct_rcvSize.setHasFixedSize(true)
@@ -340,7 +345,7 @@ class EditProductFragment : BaseFragment(), View.OnClickListener {
             R.id.frgEditProduct_imgAddImages -> openGallery()
             R.id.frgEditProduct_imgBack -> {
                 (activity as MainActivity).onBackPressed()
-                (activity as MainActivity).hideKeyboard()
+//                (activity as MainActivity).hideKeyboard()
             }
         }
     }

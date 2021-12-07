@@ -26,6 +26,7 @@
         <entry key="..\:/MovieApp/app/src/main/res/layout/activity_user.xml" value="0.24818840579710144" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_edit_product.xml" value="0.2" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_input_address.xml" value="0.25416666666666665" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_order_status.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_question_delete.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_question_login.xml" value="0.12360688956433637" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/dialog_question_update.xml" value="0.25416666666666665" />
@@ -34,6 +35,7 @@
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_add_product.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_admin_account.xml" value="0.2513586956521739" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_admin_cart.xml" value="0.24048913043478262" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_admin_revenue.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_confirm_order.xml" value="0.264" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_detail_cast.xml" value="0.12360688956433637" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_detail_product.xml" value="0.25416666666666665" />
@@ -44,12 +46,18 @@
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_edit_profile_user.xml" value="0.12360688956433637" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_image.xml" value="0.25416666666666665" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_new_order.xml" value="0.25416666666666665" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_order_canceled.xml" value="0.25416666666666665" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_order_completed.xml" value="0.25416666666666665" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_order_confirm.xml" value="0.25416666666666665" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_order_delivering.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_order_history.xml" value="0.22644927536231885" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_search_movie.xml" value="0.264" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_user_account.xml" value="0.24818840579710144" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_user_cart.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/fragment_user_home.xml" value="0.24818840579710144" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_admin_cart_product.xml" value="0.24909420289855072" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/item_admin_revenue.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_cart_product.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_cast.xml" value="0.12360688956433637" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_confirm_order_cart.xml" value="0.25416666666666665" />
@@ -63,6 +71,7 @@
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_top_rate_movie.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_user_cart.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/layout/item_user_cart_product.xml" value="0.24909420289855072" />
+        <entry key="..\:/MovieApp/app/src/main/res/layout/spinner_style.xml" value="0.25416666666666665" />
         <entry key="..\:/MovieApp/app/src/main/res/menu/navigation.xml" value="0.19907407407407407" />
         <entry key="..\:/MovieApp/app/src/main/res/xml/file_paths.xml" value="0.24728260869565216" />
       </map>

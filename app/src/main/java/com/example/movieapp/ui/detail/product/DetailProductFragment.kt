@@ -3,6 +3,8 @@ package com.example.movieapp.ui.detail.product
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
+import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -19,11 +21,14 @@ import com.example.movieapp.ui.main.UserActivity
 import com.example.movieapp.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_detail_product.*
+import kotlinx.android.synthetic.main.fragment_user_account.*
 
 class DetailProductFragment : BaseFragment(), View.OnClickListener {
     private var detailProductModel = ProductModel()
     private lateinit var database: DatabaseReference
+    private lateinit var databaseReference: DatabaseReference
     private lateinit var listImageViewPagerAdapter: ListImageViewPagerAdapter
     private var productImages: ArrayList<ProductImage> = arrayListOf()
     private var idUser = ""
@@ -33,6 +38,7 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
     private var listSize = ArrayList<SizeProductModel>()
     private var listSizePicked = ArrayList<SizeProductModel>()
     private val listCartProduct = ArrayList<CartProductModel>()
+    private var userName = ""
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_detail_product
@@ -40,11 +46,13 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
 
     override fun doViewCreated() {
         database = FirebaseDatabase.getInstance().reference.child(USER_CART)
+        databaseReference = FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(USER)
         auth = FirebaseAuth.getInstance()
         idUser = auth.currentUser?.uid.toString()
         progress = ProgressDialog(context)
         initListener()
         hideKeyboardWhenClickOutside()
+        getInfoUserFromFirebase()
         handleBottom()
         getInfoFromUserHome()
         getListCart()
@@ -90,6 +98,15 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
 
     private fun setUpRecyclerView(listSize: List<SizeProductModel>) {
         listSizeUserAdapter = ListSizeUserAdapter(listSize.toList()) { index, _ ->
+            if (listSize[index].amountSize == 0L) {
+                frgDetailProduct_tvAddToCart.isEnabled = false
+                frgDetailProduct_etAmountOrder.isEnabled = false
+                frgDetailProduct_tvAddToCart.setBackgroundResource(R.drawable.shape_radius_disable_add_to_cart)
+            } else {
+                frgDetailProduct_tvAddToCart.isEnabled = true
+                frgDetailProduct_etAmountOrder.isEnabled = true
+                frgDetailProduct_tvAddToCart.setBackgroundResource(R.drawable.shape_radius_add_to_cart)
+            }
             checkPosition(index)
         }
 
@@ -217,20 +234,38 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
             addToCart()
     }
 
+    private fun getInfoUserFromFirebase() {
+        auth.currentUser?.uid?.let {
+            databaseReference.child(it).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    userName = snapshot.child("userName").value.toString()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
+        }
+    }
+
     private fun insertCart(key: Long, amountUserOrder: Long) {
         showProgress()
         val totalCart = detailProductModel.price * amountUserOrder
         val cartProductModel = CartProductModel(
             key,
             idUser,
+            userName,
             amountUserOrder,
             listSizePicked[0].size,
+            "",
             ProductModel(
                 type = detailProductModel.type,
                 id = detailProductModel.id,
                 urlAvatar = detailProductModel.urlAvatar,
                 name = detailProductModel.name,
                 price = detailProductModel.price,
+                contentProduct = detailProductModel.contentProduct,
                 listImage = detailProductModel.listImage,
                 listSize = listSizePicked
             ),
