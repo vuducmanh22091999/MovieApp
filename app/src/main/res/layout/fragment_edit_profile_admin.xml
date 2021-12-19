@@ -4,8 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_main"
+    android:id="@+id/frgEditProfileAdmin_layout"
+    android:focusableInTouchMode="true"
     android:clickable="true"
     android:focusable="true">
+
+    <ImageView
+        android:id="@+id/frgEditProfileAdmin_imgBack"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:src="@drawable/ic_back"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/frgEditProfileAdmin_imgSave"
@@ -14,6 +25,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:src="@drawable/ic_save"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,6 +59,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:hint="@string/title_input_your_name"
+        android:lines="1"
         android:paddingVertical="@dimen/_8sdp"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -78,6 +91,7 @@
         android:background="@android:color/transparent"
         android:hint="@string/title_input_phone_number"
         android:inputType="phone"
+        android:lines="1"
         android:paddingVertical="@dimen/_8sdp"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -86,5 +100,20 @@
         app:layout_constraintStart_toStartOf="@+id/frgEditProfileAdmin_etEmailUser"
         app:layout_constraintTop_toBottomOf="@+id/frgEditProfileAdmin_etEmailUser" />
 
+    <TextView
+        android:id="@+id/frgEditProfileAdmin_tvUpdateInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@drawable/shape_radius_log_out"
+        android:padding="@dimen/_8sdp"
+        android:text="@string/title_update_information"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frgEditProfileAdmin_etPhoneUser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

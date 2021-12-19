@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_8sdp"
+    android:layout_marginVertical="@dimen/_8sdp">
+
+    <ImageView
+        android:id="@+id/itemCartProductUser_imgAvatar"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:src="@drawable/img_deadpool"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/itemCartProductUser_tvTitleNameProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/title_name_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintStart_toEndOf="@id/itemCartProductUser_imgAvatar"
+        app:layout_constraintTop_toTopOf="@+id/itemCartProductUser_imgAvatar" />
+
+    <TextView
+        android:id="@+id/itemCartProductUser_tvAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/title_content_language_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/itemCartProductUser_tvTitleNameProduct"
+        app:layout_constraintTop_toBottomOf="@+id/itemCartProductUser_tvTitleNameProduct" />
+
+    <TextView
+        android:id="@+id/itemCartProductUser_tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/title_content_language_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@+id/itemCartProductUser_tvAmount"
+        app:layout_constraintTop_toBottomOf="@+id/itemCartProductUser_tvAmount" />
+
+    <TextView
+        android:id="@+id/itemCartProductUser_tvSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/title_content_language_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@+id/itemCartProductUser_tvPrice"
+        app:layout_constraintTop_toBottomOf="@+id/itemCartProductUser_tvPrice" />
+
+    <ImageView
+        android:id="@+id/itemCartProductUser_imgMinus"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:src="@drawable/ic_minus"
+        android:padding="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintEnd_toStartOf="@id/itemCartProductUser_tvAmountOrder"
+        app:layout_constraintTop_toTopOf="@id/itemCartProductUser_tvAmountOrder"
+        app:layout_constraintBottom_toBottomOf="@id/itemCartProductUser_tvAmountOrder"/>
+
+    <TextView
+        android:id="@+id/itemCartProductUser_tvAmountOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_0"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintEnd_toStartOf="@id/itemCartProductUser_imgPlus"
+        app:layout_constraintTop_toTopOf="@id/itemCartProductUser_imgPlus"
+        app:layout_constraintBottom_toBottomOf="@id/itemCartProductUser_imgPlus"/>
+
+    <ImageView
+        android:id="@+id/itemCartProductUser_imgPlus"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:src="@drawable/ic_plus"
+        android:padding="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/itemCartProductUser_tvPrice"
+        app:layout_constraintBottom_toBottomOf="@id/itemCartProductUser_tvPrice"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

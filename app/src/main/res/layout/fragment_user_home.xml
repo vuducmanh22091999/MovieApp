@@ -1,129 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/frgUserHome_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
     android:background="@color/color_main">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/frgUserHome_tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_categories"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <AutoCompleteTextView
+        android:id="@+id/frgUserHome_autoNameProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_16sdp">
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:background="@drawable/shape_radius_search"
+        android:padding="@dimen/_8sdp"
+        android:hint="@string/title_search_product"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvTitle"/>
 
-        <TextView
-            android:id="@+id/frgUserHome_tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/frgUserHome_imgSearch"
+        android:layout_width="@dimen/_16sdp"
+        android:layout_height="@dimen/_16sdp"
+        android:src="@drawable/ic_search"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintTop_toTopOf="@id/frgUserHome_autoNameProduct"
+        app:layout_constraintBottom_toBottomOf="@id/frgUserHome_autoNameProduct"
+        app:layout_constraintEnd_toEndOf="@id/frgUserHome_autoNameProduct"/>
 
-        <TextView
-            android:id="@+id/frgUserHome_tvAdidas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:text="@string/title_adidas"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvTitle" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgUserHome_autoNameProduct">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/frgUserHome_rcvAdidas"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvAdidas" />
+            android:orientation="vertical"
+            android:layout_marginHorizontal="@dimen/_16sdp">
 
-        <TextView
-            android:id="@+id/frgUserHome_tvNike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:text="@string/title_nike"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgUserHome_rcvAdidas" />
+            <TextView
+                android:id="@+id/frgUserHome_tvAdidas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/title_adidas"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/frgUserHome_rcvNike"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvNike" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/frgUserHome_rcvAdidas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvAdidas" />
 
-        <TextView
-            android:id="@+id/frgUserHome_tvConverse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:text="@string/title_converse"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgUserHome_rcvNike" />
+            <TextView
+                android:id="@+id/frgUserHome_tvNike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/title_nike"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frgUserHome_rcvAdidas" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/frgUserHome_rcvConverse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvConverse" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/frgUserHome_rcvNike"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvNike" />
 
-        <TextView
-            android:id="@+id/frgUserHome_tvPuma"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:text="@string/title_puma"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgUserHome_rcvConverse" />
+            <TextView
+                android:id="@+id/frgUserHome_tvConverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/title_converse"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frgUserHome_rcvNike" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/frgUserHome_rcvPuma"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvPuma" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/frgUserHome_rcvConverse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvConverse" />
 
-        <TextView
-            android:id="@+id/frgUserHome_tvJordan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:text="@string/title_jordan"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgUserHome_rcvPuma" />
+            <TextView
+                android:id="@+id/frgUserHome_tvPuma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/title_puma"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frgUserHome_rcvConverse" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/frgUserHome_rcvJordan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvJordan" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/frgUserHome_rcvPuma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvPuma" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/frgUserHome_tvJordan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/title_jordan"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frgUserHome_rcvPuma" />
 
-</ScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/frgUserHome_rcvJordan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frgUserHome_tvJordan" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

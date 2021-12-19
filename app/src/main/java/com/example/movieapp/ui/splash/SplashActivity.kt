@@ -8,6 +8,7 @@ import com.example.movieapp.data.local.AppPreferences
 import com.example.movieapp.ui.login.LoginActivity
 import com.example.movieapp.ui.main.MainActivity
 import com.example.movieapp.ui.main.UserActivity
+import com.example.movieapp.ui.selection_type.SelectionActivity
 import com.example.movieapp.utils.SPLASH_DISPLAY_LENGTH
 
 class SplashActivity : BaseActivity() {
@@ -22,7 +23,7 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun openNewScreen() {
-        if (appPreferences.getIsLogin() == true) {
+        if (appPreferences.getIsLogin()) {
             if (appPreferences.getLoginEmail()?.contains("admin") == true) {
                 Handler().postDelayed({
                     val intentNewScreen = Intent(this@SplashActivity, MainActivity::class.java)
@@ -39,7 +40,7 @@ class SplashActivity : BaseActivity() {
 
         } else {
             Handler().postDelayed({
-                val intentNewScreen = Intent(this@SplashActivity, LoginActivity::class.java)
+                val intentNewScreen = Intent(this@SplashActivity, SelectionActivity::class.java)
                 startActivity(intentNewScreen)
                 finish()
             }, SPLASH_DISPLAY_LENGTH)

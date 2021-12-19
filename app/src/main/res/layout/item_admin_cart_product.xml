@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/_8sdp"
+    android:layout_marginStart="@dimen/_8sdp">
+
+    <ImageView
+        android:id="@+id/itemCartProductAdmin_imgAvatar"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:src="@drawable/img_deadpool"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/itemCartProductAdmin_tvOrderUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/title_content_language_movie"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toEndOf="@id/itemCartProductAdmin_imgAvatar"
+        app:layout_constraintTop_toTopOf="@+id/itemCartProductAdmin_imgAvatar" />
+
+    <TextView
+        android:id="@+id/itemCartProductAdmin_tvOrderStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/title_new_order"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemCartProductAdmin_imgAvatar" />
+
+    <TextView
+        android:id="@+id/itemCartProductAdmin_tvTitleNameProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:text="@string/title_name_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@id/itemCartProductAdmin_tvOrderUserName"
+        app:layout_constraintTop_toBottomOf="@id/itemCartProductAdmin_tvOrderUserName" />
+
+    <TextView
+        android:id="@+id/itemCartProductAdmin_tvAmountUserOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/title_content_language_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@+id/itemCartProductAdmin_tvTitleNameProduct"
+        app:layout_constraintTop_toBottomOf="@+id/itemCartProductAdmin_tvTitleNameProduct" />
+
+    <TextView
+        android:id="@+id/itemCartProductAdmin_tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_content_language_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@+id/itemCartProductAdmin_tvAmountUserOrder"
+        app:layout_constraintTop_toBottomOf="@+id/itemCartProductAdmin_tvAmountUserOrder" />
+
+    <TextView
+        android:id="@+id/itemCartProductAdmin_tvSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_content_language_movie"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@+id/itemCartProductAdmin_tvTitleNameProduct"
+        app:layout_constraintTop_toBottomOf="@+id/itemCartProductAdmin_tvTitleNameProduct" />
+
+    <View
+        android:id="@+id/itemCartProductAdmin_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/itemCartProductAdmin_imgAvatar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

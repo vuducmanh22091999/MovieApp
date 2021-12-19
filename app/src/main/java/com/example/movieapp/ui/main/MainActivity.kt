@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseActivity
 import com.example.movieapp.ui.account.AccountAdminFragment
-import com.example.movieapp.ui.favorite.FavoriteFragment
+import com.example.movieapp.ui.cart.AdminCartFragment
 import com.example.movieapp.ui.home.AdminHomeFragment
-import com.example.movieapp.ui.search.SearchMovieFragment
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_question_login.*
 
@@ -16,8 +16,7 @@ class MainActivity : BaseActivity() {
     private var fragment = Fragment()
     private lateinit var currentFragment: Fragment
     private lateinit var adminHomeFragment: AdminHomeFragment
-    private lateinit var searchFragment: SearchMovieFragment
-    private lateinit var favoriteFragment: FavoriteFragment
+    private lateinit var adminCartFragment: AdminCartFragment
     private lateinit var accountAdminFragment: AccountAdminFragment
     private var fragmentManager = supportFragmentManager
 
@@ -37,38 +36,30 @@ class MainActivity : BaseActivity() {
                     if (currentFragment === adminHomeFragment)
                         fragmentManager.beginTransaction().show(adminHomeFragment).commit()
                     else
-                        fragmentManager.beginTransaction().hide(currentFragment).show(adminHomeFragment)
+                        fragmentManager.beginTransaction().hide(currentFragment)
+                            .show(adminHomeFragment)
                             .commit()
                     currentFragment = adminHomeFragment
                     return@setOnNavigationItemSelectedListener true
                 }
-//                R.id.favouritesFragment -> {
-//                        if (currentFragment === favoriteFragment)
-//                            fragmentManager.beginTransaction().show(favoriteFragment).commit()
-//                        else
-//                            fragmentManager.beginTransaction().hide(currentFragment)
-//                                .show(favoriteFragment).commit()
-//                        currentFragment = favoriteFragment
-//                        return@setOnNavigationItemSelectedListener true
-//                }
-                R.id.accountFragment -> {
-                        if (currentFragment === accountAdminFragment)
-                            fragmentManager.beginTransaction().show(accountAdminFragment).commit()
-                        else
-                            fragmentManager.beginTransaction().hide(currentFragment)
-                                .show(accountAdminFragment).commit()
-                        currentFragment = accountAdminFragment
-                        return@setOnNavigationItemSelectedListener true
+                R.id.cartFragment -> {
+                    if (currentFragment === adminCartFragment)
+                        fragmentManager.beginTransaction().show(adminCartFragment).commit()
+                    else
+                        fragmentManager.beginTransaction().hide(currentFragment)
+                            .show(adminCartFragment).commit()
+                    currentFragment = adminCartFragment
+                    return@setOnNavigationItemSelectedListener true
                 }
-//                R.id.searchFragment -> {
-//                    if (currentFragment === searchFragment)
-//                        fragmentManager.beginTransaction().show(searchFragment).commit()
-//                    else
-//                        fragmentManager.beginTransaction().hide(currentFragment)
-//                            .show(searchFragment).commit()
-//                    currentFragment = searchFragment
-//                    return@setOnNavigationItemSelectedListener true
-//                }
+                R.id.accountFragment -> {
+                    if (currentFragment === accountAdminFragment)
+                        fragmentManager.beginTransaction().show(accountAdminFragment).commit()
+                    else
+                        fragmentManager.beginTransaction().hide(currentFragment)
+                            .show(accountAdminFragment).commit()
+                    currentFragment = accountAdminFragment
+                    return@setOnNavigationItemSelectedListener true
+                }
             }
             true
         }
@@ -76,9 +67,8 @@ class MainActivity : BaseActivity() {
 
     private fun setupFragment() {
         adminHomeFragment = AdminHomeFragment()
-        searchFragment = SearchMovieFragment()
+        adminCartFragment = AdminCartFragment()
         accountAdminFragment = AccountAdminFragment()
-        favoriteFragment = FavoriteFragment()
 
         fragmentManager.beginTransaction()
             .add(R.id.frameLayout, adminHomeFragment, fragment::class.java.simpleName)
@@ -90,14 +80,9 @@ class MainActivity : BaseActivity() {
         fragmentManager.beginTransaction().hide(accountAdminFragment).commit()
 
         fragmentManager.beginTransaction()
-            .add(R.id.frameLayout, searchFragment, fragment::class.java.simpleName)
+            .add(R.id.frameLayout, adminCartFragment, fragment::class.java.simpleName)
             .commit()
-        fragmentManager.beginTransaction().hide(searchFragment).commit()
-
-        fragmentManager.beginTransaction()
-            .add(R.id.frameLayout, favoriteFragment, fragment::class.java.simpleName)
-            .commit()
-        fragmentManager.beginTransaction().hide(favoriteFragment).commit()
+        fragmentManager.beginTransaction().hide(adminCartFragment).commit()
 
         currentFragment = adminHomeFragment
     }
@@ -114,7 +99,6 @@ class MainActivity : BaseActivity() {
         } else {
             val menuItem = bottomNavigation.menu.getItem(0)
             if (bottomNavigation.selectedItemId != menuItem.itemId) {
-
                 if (currentFragment === adminHomeFragment)
                     fragmentManager.beginTransaction().show(adminHomeFragment).commit()
                 else {
@@ -123,8 +107,9 @@ class MainActivity : BaseActivity() {
                     currentFragment = adminHomeFragment
                 }
                 bottomNavigation.selectedItemId = menuItem.itemId
-            } else
-                super.onBackPressed()
+            }
+//            else
+//                super.onBackPressed()
         }
     }
 }

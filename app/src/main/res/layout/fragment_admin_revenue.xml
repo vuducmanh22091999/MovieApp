@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_main">
+
+    <ImageView
+        android:id="@+id/frgAdminRevenue_imgBack"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:src="@drawable/ic_back"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Spinner
+        android:id="@+id/frgAdminRevenue_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgAdminRevenue_imgBack"/>
+
+    <TextView
+        android:id="@+id/frgAdminRevenue_tvNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_notification"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/frgAdminRevenue_rcvListCart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/frgAdminRevenue_tvTotal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgAdminRevenue_spinner" />
+
+    <TextView
+        android:id="@+id/frgAdminRevenue_tvTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:text="@string/title_total"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgAdminRevenue_rcvListCart" />
+
+    <TextView
+        android:id="@+id/frgAdminRevenue_tvValueTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:text="@string/title_0"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="@id/frgAdminRevenue_tvTotal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/frgAdminRevenue_tvTotal" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

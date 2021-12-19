@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/color_main">
+
+    <TextView
+        android:id="@+id/frgConfirmOrder_tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="@string/title_confirm_order"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/frgConfirmOrder_tvUserNameOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgConfirmOrder_tvHeader" />
+
+    <TextView
+        android:id="@+id/frgConfirmOrder_tvUserPhoneOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgConfirmOrder_tvUserNameOrder" />
+
+    <TextView
+        android:id="@+id/frgConfirmOrder_tvUserAddressOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:text="@string/title_add_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgConfirmOrder_tvUserPhoneOrder" />
+
+    <ImageView
+        android:id="@+id/frgConfirmOrder_imgAddAddress"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:src="@drawable/ic_plus"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@id/frgConfirmOrder_tvUserAddressOrder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/frgConfirmOrder_tvUserAddressOrder" />
+
+    <View
+        android:id="@+id/frgConfirmOrder_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@color/grey700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgConfirmOrder_tvUserAddressOrder" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/frgConfirmOrder_rcvListOrder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintBottom_toTopOf="@+id/frgConfirmOrder_tvTotal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frgConfirmOrder_view" />
+
+    <TextView
+        android:id="@+id/frgConfirmOrder_tvTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:text="@string/title_total"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintBottom_toTopOf="@+id/frgConfirmOrder_tvOrder"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/frgConfirmOrder_tvValueTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:text="@string/title_0"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="@id/frgConfirmOrder_tvTotal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/frgConfirmOrder_tvTotal" />
+
+    <TextView
+        android:id="@+id/frgConfirmOrder_tvOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@drawable/shape_radius_add_to_cart"
+        android:padding="@dimen/_8sdp"
+        android:text="@string/title_order"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

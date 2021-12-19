@@ -10,8 +10,10 @@ import com.example.movieapp.BuildConfig
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.local.AppPreferences
+import com.example.movieapp.data.model.account.AccountModel
 import com.example.movieapp.ui.edit.EditProfileAdminFragment
 import com.example.movieapp.ui.login.LoginActivity
+import com.example.movieapp.ui.revenue.AdminRevenueFragment
 import com.example.movieapp.utils.*
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -44,13 +46,16 @@ class AccountAdminFragment : BaseFragment(), View.OnClickListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     urlAvatar = Uri.parse(snapshot.child("urlAvatar").value.toString())
                     if (snapshot.exists() && snapshot.childrenCount > 0) {
+                        val accountModel = snapshot.getValue(AccountModel::class.java)
                         frgAccountAdmin_tvEmailUser.text = auth.currentUser!!.email.toString()
-                        if (snapshot.child("urlAvatar").value.toString() == "null")
+//                        if (accountModel?.urlAvatar == "null")
                             frgAccountAdmin_imgAvatar.setImageResource(R.drawable.ic_account)
-                        else
-                            Picasso.get().load(urlAvatar).into(frgAccountAdmin_imgAvatar)
-                        frgAccountAdmin_tvNameUser.text = snapshot.child("userName").value.toString()
-                        frgAccountAdmin_tvPhoneUser.text = snapshot.child("phoneNumber").value.toString()
+//                        else
+//                            Picasso.get().load(accountModel?.urlAvatar).into(frgAccountAdmin_imgAvatar)
+//                        frgAccountAdmin_tvNameUser.text = snapshot.child("userName").value.toString()
+                        frgAccountAdmin_tvNameUser.text = accountModel?.userName
+//                        frgAccountAdmin_tvPhoneUser.text = snapshot.child("phoneNumber").value.toString()
+                        frgAccountAdmin_tvPhoneUser.text = accountModel?.phoneNumber
                     }
                 }
 
@@ -113,10 +118,17 @@ class AccountAdminFragment : BaseFragment(), View.OnClickListener {
     private fun initListener() {
         frgAccountAdmin_tvLogout.setOnClickListener(this)
         frgAccountAdmin_imgEdit.setOnClickListener(this)
+        frgAccountAdmin_tvTitleRevenue.setOnClickListener(this)
+    }
+
+    private fun moveToRevenue() {
+        val revenueFragment = AdminRevenueFragment()
+        addFragment(revenueFragment, R.id.frameLayout, AdminRevenueFragment::class.java.simpleName)
     }
 
     private fun logOut() {
-        val intent = Intent(activity, LoginActivity::class.java)
+        val intent = Intent(requireActivity(), LoginActivity::class.java)
+        intent.putExtra("hideRegister", true)
         auth.signOut()
         appPreferences.setIsLogin(false)
         appPreferences.setLoginEmail("")
@@ -140,6 +152,7 @@ class AccountAdminFragment : BaseFragment(), View.OnClickListener {
         when (v.id) {
             R.id.frgAccountAdmin_tvLogout -> logOut()
             R.id.frgAccountAdmin_imgEdit -> moveEditScreen()
+            R.id.frgAccountAdmin_tvTitleRevenue -> moveToRevenue()
         }
     }
 }

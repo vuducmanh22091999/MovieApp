@@ -114,8 +114,9 @@ class UserActivity : BaseActivity() {
                     currentFragment = userHomeFragment
                 }
                 actUser_bottomNavigation.selectedItemId = menuItem.itemId
-            } else
-                super.onBackPressed()
+            }
+//            else
+//                super.onBackPressed()
         }
     }
 

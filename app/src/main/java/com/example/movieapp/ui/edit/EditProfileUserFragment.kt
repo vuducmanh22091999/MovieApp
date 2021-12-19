@@ -1,40 +1,41 @@
 package com.example.movieapp.ui.edit
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
-import com.example.movieapp.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.io.IOException
 import kotlin.collections.HashMap
 import android.webkit.MimeTypeMap
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
+import com.example.movieapp.data.model.account.AccountModel
 import com.example.movieapp.ui.main.UserActivity
 import com.example.movieapp.utils.*
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.storage.*
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_add_product.*
+import kotlinx.android.synthetic.main.fragment_edit_profile_admin.*
 import kotlinx.android.synthetic.main.fragment_edit_profile_user.*
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -54,8 +55,7 @@ class EditProfileUserFragment : BaseFragment(), View.OnClickListener {
     private var typeAccount = ""
     private lateinit var progress: ProgressDialog
     lateinit var currentPhotoPath: String
-    private val REQUEST_CAMERA_PERMISSIONS = 20
-    private val REQUEST_GALLERY_PERMISSIONS = 200
+    private val accountModel = AccountModel()
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_edit_profile_user
@@ -69,8 +69,21 @@ class EditProfileUserFragment : BaseFragment(), View.OnClickListener {
         storage = FirebaseStorage.getInstance().getReference("Images")
         progress = ProgressDialog(context)
         handleBottom()
+        hideKeyboardWhenClickOutside()
         getInfoFromAccountScreen()
         initListener()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun hideKeyboardWhenClickOutside() {
+        repeat(2) {
+            frgEditProfileUser_layout.setOnTouchListener { v, event ->
+                val imm =
+                    context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                true
+            }
+        }
     }
 
     private fun showProgress() {
@@ -92,6 +105,8 @@ class EditProfileUserFragment : BaseFragment(), View.OnClickListener {
     private fun initListener() {
         frgEditProfileUser_imgSave.setOnClickListener(this)
         frgEditProfileUser_tvChangeYourAvatar.setOnClickListener(this)
+        frgEditProfileUser_tvUpdateInfo.setOnClickListener(this)
+        frgEditProfileUser_imgBack.setOnClickListener(this)
     }
 
     private fun handleBottom() {
@@ -111,48 +126,57 @@ class EditProfileUserFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun saveProfile() {
-        showProgress()
-        val uploadTask: UploadTask
-        infoUser["userName"] = frgEditProfileUser_etNameUser.text.toString()
-        infoUser["phoneNumber"] = frgEditProfileUser_etPhoneUser.text.toString()
-        if (uri != null) {
-            val fileReference: StorageReference = storage.child(
-                System.currentTimeMillis()
-                    .toString() + "." + getFileExtension(uri!!)
-            )
-            uploadTask = fileReference.putFile(uri!!)
-            uploadTask.addOnSuccessListener {
-                val urlTask = uploadTask.continueWithTask { task ->
-                    if (!task.isSuccessful) {
-                        throw task.exception!!
-                    }
-                    fileReference.downloadUrl
-                }.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        infoUser["urlAvatar"] = task.result.toString()
-                        auth.currentUser?.uid?.let {
-                            databaseReference.child(it).updateChildren(infoUser)
-                                .addOnCompleteListener {
-                                    if ((activity is MainActivity)) {
+        if (frgEditProfileUser_etPhoneUser.text.toString().length > 10)
+            Toast.makeText(context, "Phone number < 10 character. Please!!!", Toast.LENGTH_SHORT).show()
+        else if (frgEditProfileUser_etPhoneUser.text.toString().length <= 9)
+            Toast.makeText(context, "Phone number = 10 character. Please!!!", Toast.LENGTH_SHORT).show()
+        else {
+            val uploadTask: UploadTask
+            showProgress()
+            accountModel.userName = frgEditProfileUser_etNameUser.text.toString()
+            accountModel.phoneNumber = frgEditProfileUser_etPhoneUser.text.toString()
+            accountModel.email = auth.currentUser!!.email.toString()
+            accountModel.id = auth.currentUser!!.uid
+            if (uri != null) {
+                val fileReference: StorageReference = storage.child(
+                    System.currentTimeMillis()
+                        .toString() + "." + getFileExtension(uri!!)
+                )
+                uploadTask = fileReference.putFile(uri!!)
+                uploadTask.addOnSuccessListener {
+                    val urlTask = uploadTask.continueWithTask { task ->
+                        if (!task.isSuccessful) {
+                            throw task.exception!!
+                        }
+                        fileReference.downloadUrl
+                    }.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            accountModel.urlAvatar = task.result.toString()
+                            auth.currentUser?.uid?.let {
+                                databaseReference.child(it).setValue(accountModel)
+                                    .addOnSuccessListener {
                                         dismissProgress()
+                                        (activity as UserActivity).hideKeyboard()
+                                        if (activity is UserActivity) {
+                                            (activity as UserActivity).onBackPressed()
+                                        }
                                     }
-                                    back()
-                                }
+                            }
                         }
                     }
                 }
-            }
-        } else {
-            infoUser["urlAvatar"] = urlAvatar
-            auth.currentUser?.uid?.let {
-                databaseReference.child(it).updateChildren(infoUser)
-                    .addOnCompleteListener {
-                        if ((activity is MainActivity)) {
+            } else {
+                infoUser["urlAvatar"] = urlAvatar
+                accountModel.urlAvatar = urlAvatar
+                auth.currentUser?.uid?.let {
+                    databaseReference.child(it).setValue(accountModel)
+                        .addOnCompleteListener {
                             dismissProgress()
-                            (activity as MainActivity).hideKeyboard()
+                            (activity as UserActivity).hideKeyboard()
+                            if (activity is UserActivity)
+                                (activity as UserActivity).onBackPressed()
                         }
-                        back()
-                    }
+                }
             }
         }
     }
@@ -215,14 +239,14 @@ class EditProfileUserFragment : BaseFragment(), View.OnClickListener {
 
     private fun openCamera() {
         if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    android.Manifest.permission.CAMERA
-                )
-                == PackageManager.PERMISSION_GRANTED
-            ) {
-                startCamera()
-            } else
-                requestCameraPermission()
+                requireContext(),
+                android.Manifest.permission.CAMERA
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            startCamera()
+        } else
+            requestCameraPermission()
     }
 
     private fun startCamera() {
@@ -306,8 +330,9 @@ class EditProfileUserFragment : BaseFragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.frgEditProfileUser_imgSave -> saveProfile()
+            R.id.frgEditProfileUser_tvUpdateInfo -> saveProfile()
             R.id.frgEditProfileUser_tvChangeYourAvatar -> showPictureDialog()
+            R.id.frgEditProfileUser_imgBack -> (activity as UserActivity).onBackPressed()
         }
     }
 }
