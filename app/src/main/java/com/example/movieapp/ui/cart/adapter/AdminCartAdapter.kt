@@ -15,10 +15,10 @@ import com.example.movieapp.utils.formatStringLong
 import kotlinx.android.synthetic.main.item_admin_cart_product.view.*
 import java.util.concurrent.Executors
 
-class AdminCartAdapter(
-    private val onClick: (Int, String) -> Unit
-) : ListAdapter<CartProductModel, AdminCartAdapter.DataViewHolder>(AsyncDifferConfig.Builder(BaseDiffAdapter())
-        .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor()).build()) {
+class AdminCartAdapter : ListAdapter<CartProductModel, AdminCartAdapter.DataViewHolder>(
+    AsyncDifferConfig.Builder<CartProductModel>(BaseDiffAdapter())
+        .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor()).build()
+) {
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bindDataViewHolder(cartProductModel: CartProductModel) {
@@ -35,23 +35,6 @@ class AdminCartAdapter(
                 "Size: ${cartProductModel.productModel?.listSize?.get(0)?.size.toString()}"
             itemView.itemCartProductAdmin_tvTitleNameProduct.text =
                 cartProductModel.productModel?.name
-            itemView.itemCartProductAdmin_tvOrderUserName.text = cartProductModel.userName
-            when {
-                cartProductModel.isNewOrder ->
-                    itemView.itemCartProductAdmin_tvOrderStatus.text = cartProductModel.orderStatus
-                cartProductModel.isOrderConfirm ->
-                    itemView.itemCartProductAdmin_tvOrderStatus.text = cartProductModel.orderStatus
-                cartProductModel.isOrderDelivering ->
-                    itemView.itemCartProductAdmin_tvOrderStatus.text = cartProductModel.orderStatus
-                cartProductModel.isOrderCompleted ->
-                    itemView.itemCartProductAdmin_tvOrderStatus.text = cartProductModel.orderStatus
-                cartProductModel.isOrderCanceled ->
-                    itemView.itemCartProductAdmin_tvOrderStatus.text = cartProductModel.orderStatus
-            }
-
-            itemView.setOnClickListener {
-                onClick(absoluteAdapterPosition, cartProductModel.orderStatus.toString())
-            }
         }
     }
 

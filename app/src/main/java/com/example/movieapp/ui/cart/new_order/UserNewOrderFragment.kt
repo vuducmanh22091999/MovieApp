@@ -1,14 +1,13 @@
 package com.example.movieapp.ui.cart.new_order
 
 import android.app.AlertDialog
-import android.content.DialogInterface
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
-import com.example.movieapp.data.model.product.CartProductModel
-import com.example.movieapp.ui.order_history.adapter.OrderHistoryAdapter
+import com.example.movieapp.data.model.product.StatusCartModel
+import com.example.movieapp.ui.order_history.adapter.CartHistoryAdapter
 import com.example.movieapp.utils.NEW_ORDER
+import com.example.movieapp.utils.ORDER
 import com.example.movieapp.utils.ORDER_CANCELED
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -19,10 +18,11 @@ class UserNewOrderFragment : BaseFragment() {
     var idUser = ""
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseNewOrder: DatabaseReference
-    private lateinit var orderHistoryAdapter: OrderHistoryAdapter
+    private lateinit var cartHistoryAdapter: CartHistoryAdapter
     private lateinit var databaseOrderCanceled: DatabaseReference
-    val listProductNewOrder = ArrayList<CartProductModel>()
-    var indexSelectedStatus = 0
+    private lateinit var databaseOrder: DatabaseReference
+    private val listProductNewOrder = ArrayList<StatusCartModel>()
+    private var indexSelectedStatus = 0
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_new_order
@@ -32,17 +32,18 @@ class UserNewOrderFragment : BaseFragment() {
         auth = FirebaseAuth.getInstance()
         idUser = auth.currentUser?.uid.toString()
         databaseNewOrder = FirebaseDatabase.getInstance().reference.child(NEW_ORDER)
+        databaseOrder = FirebaseDatabase.getInstance().reference.child(ORDER)
         databaseOrderCanceled = FirebaseDatabase.getInstance().reference.child(ORDER_CANCELED)
 
         getDataNewOrder()
     }
 
     private fun initAdapter() {
-        orderHistoryAdapter =
-            OrderHistoryAdapter { index, _ ->
+        cartHistoryAdapter =
+            CartHistoryAdapter { index, _ ->
                 openDialogPickOrderStatus(listProductNewOrder[index], index)
             }
-        orderHistoryAdapter.submitList(listProductNewOrder)
+        cartHistoryAdapter.submitList(listProductNewOrder)
         val linearLayoutManager =
             LinearLayoutManager(
                 context,
@@ -51,19 +52,33 @@ class UserNewOrderFragment : BaseFragment() {
             )
         frgNewOrder_rcvCart.setHasFixedSize(true)
         frgNewOrder_rcvCart.layoutManager = linearLayoutManager
-        frgNewOrder_rcvCart.adapter = orderHistoryAdapter
+        frgNewOrder_rcvCart.adapter = cartHistoryAdapter
+    }
+
+    private fun checkIdOrder(statusCartModel: StatusCartModel) {
+        val model = listProductNewOrder.firstOrNull {
+            it.idOrder == statusCartModel.idOrder
+        }
+        if (model != null)
+            model.status = statusCartModel.status
+//            listProductNewOrder.remove(statusCartModel)
+        else
+            listProductNewOrder.add(statusCartModel)
     }
 
     private fun getDataNewOrder() {
         listProductNewOrder.clear()
-        databaseNewOrder.child(idUser).addValueEventListener(object : ValueEventListener {
+        databaseOrder.child(idUser).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 view?.apply {
                     if (snapshot.exists()) {
-                        for (value in snapshot.children) {
-                            val cartProductModel = value.getValue(CartProductModel::class.java)
-                            if (cartProductModel != null) {
-                                listProductNewOrder.add(cartProductModel)
+                        snapshot.children.forEach {
+                            it.children.forEach { value ->
+                                val statusCartModel =
+                                    value.getValue(StatusCartModel::class.java)
+                                if (statusCartModel != null && statusCartModel.status == 0) {
+                                    checkIdOrder(statusCartModel)
+                                }
                             }
                         }
                         showHideCart()
@@ -79,28 +94,25 @@ class UserNewOrderFragment : BaseFragment() {
         })
     }
 
-    private fun openDialogPickOrderStatus(cartProductModel: CartProductModel, index: Int) {
+    private fun openDialogPickOrderStatus(statusCartModel: StatusCartModel, index: Int) {
         val listStatus = arrayOf(
             "Cancel order"
         )
         val builder = AlertDialog.Builder(context)
         builder.setTitle(R.string.title_pick_order_status)
-        builder.setSingleChoiceItems(listStatus, -1, DialogInterface.OnClickListener { _, which ->
+        builder.setSingleChoiceItems(listStatus, -1) { _, which ->
             indexSelectedStatus = which
-        })
+        }
 
         builder.setPositiveButton("Ok") { dialog, _ ->
             when (indexSelectedStatus) {
                 0 -> {
-                    cartProductModel.isOrderCanceled = true
-                    cartProductModel.isOrderConfirm = false
-                    cartProductModel.isOrderDelivering = false
-                    cartProductModel.isOrderCompleted = false
-                    cartProductModel.isNewOrder = false
-                    cartProductModel.orderStatus = getString(R.string.title_order_cancel)
-                    setDatabaseOrderCanceled(cartProductModel)
+                    statusCartModel.status = 4
+                    statusCartModel.valueStatus = getString(R.string.title_order_cancel)
+                    setDatabaseOrderCanceled(statusCartModel)
                     listProductNewOrder.removeAt(index)
-                    orderHistoryAdapter.notifyItemRemoved(index)
+                    cartHistoryAdapter.notifyItemRemoved(index)
+                    cartHistoryAdapter.submitList(listProductNewOrder)
                 }
             }
             showHideCart()
@@ -113,13 +125,9 @@ class UserNewOrderFragment : BaseFragment() {
         builder.show()
     }
 
-    private fun setDatabaseOrderCanceled(cartProductModel: CartProductModel) {
-        databaseOrderCanceled.child(cartProductModel.idUser!!)
-            .child(cartProductModel.idCart.toString())
-            .setValue(cartProductModel)
-//        databaseNewOrder.child(cartProductModel.idUser)
-//            .child(cartProductModel.idCart.toString())
-//            .removeValue()
+    private fun setDatabaseOrderCanceled(statusCartModel: StatusCartModel) {
+        databaseOrder.child(statusCartModel.listProduct[0].idUser.toString())
+            .child(statusCartModel.idOrder.toString()).child("0").setValue(statusCartModel)
     }
 
     private fun showHideCart() {

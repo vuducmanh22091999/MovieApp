@@ -29,9 +29,11 @@ class AdminNewOrderFragment : BaseFragment() {
     private lateinit var databaseNewOrder: DatabaseReference
     private lateinit var databaseOrderConfirm: DatabaseReference
     private lateinit var databaseOrderCanceled: DatabaseReference
+    private lateinit var databaseTest: DatabaseReference
     private lateinit var adminCartAdapter: AdminCartAdapter
     private var indexSelectedStatus = -1
     val listNewOrder = ArrayList<CartProductModel>()
+    val listTestNewOrder = ArrayList<CartProductModel>()
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_new_order
@@ -42,11 +44,12 @@ class AdminNewOrderFragment : BaseFragment() {
         databaseNewOrder = FirebaseDatabase.getInstance().reference.child(NEW_ORDER)
         databaseOrderConfirm = FirebaseDatabase.getInstance().reference.child(ORDER_CONFIRM)
         databaseOrderCanceled = FirebaseDatabase.getInstance().reference.child(ORDER_CANCELED)
+        databaseTest = FirebaseDatabase.getInstance().reference.child("test")
         getDataUser()
     }
 
     private fun showHideCart() {
-        if (listNewOrder.isEmpty()) {
+        if (listTestNewOrder.isEmpty()) {
             frgNewOrder_tvNotification.setText(R.string.title_notification)
         } else {
             frgNewOrder_tvNotification.setText(R.string.title_blank)
@@ -55,10 +58,9 @@ class AdminNewOrderFragment : BaseFragment() {
 
     private fun initAdapter() {
         adminCartAdapter =
-            AdminCartAdapter { index, _ ->
-                openDialogPickOrderStatus(listNewOrder[index], index)
-            }
-        adminCartAdapter.submitList(listNewOrder)
+            AdminCartAdapter ()
+//        adminCartAdapter.submitList(listNewOrder)
+        adminCartAdapter.submitList(listTestNewOrder)
         val linearLayoutManager =
             LinearLayoutManager(
                 context,
@@ -83,8 +85,40 @@ class AdminNewOrderFragment : BaseFragment() {
                 for (value in it.children) {
                     listIdUser.add(value.key.toString())
                 }
-                getDataNewOrder()
+//                getDataNewOrder()
+                getDatabaseTest()
             }
+        }
+    }
+
+    private fun getDatabaseTest() {
+        listTestNewOrder.clear()
+        listIdUser.forEach {
+            databaseTest.child(it).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    view?.apply {
+                        if (snapshot.exists()) {
+                                snapshot.children.forEach { value ->
+                                    value.children.forEach { test ->
+                                        val cartProductModel = test.getValue(CartProductModel::class.java)
+                                        if (cartProductModel != null) {
+//                                            if (cartProductModel.isNewOrder) {
+                                                listTestNewOrder.add(cartProductModel)
+//                                            }
+                                        }
+                                    }
+                                }
+                            showHideCart()
+                            initAdapter()
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
         }
     }
 
@@ -98,9 +132,7 @@ class AdminNewOrderFragment : BaseFragment() {
                             for (value in snapshot.children) {
                                 val cartProductModel = value.getValue(CartProductModel::class.java)
                                 if (cartProductModel != null) {
-                                    if (cartProductModel.isNewOrder) {
                                         listNewOrder.add(cartProductModel)
-                                    }
                                 }
                             }
                             showHideCart()
@@ -131,23 +163,11 @@ class AdminNewOrderFragment : BaseFragment() {
         builder.setPositiveButton("Ok") { dialog, _ ->
             when (indexSelectedStatus) {
                 0 -> {
-                    cartProductModel.isOrderConfirm = true
-                    cartProductModel.isOrderDelivering = false
-                    cartProductModel.isOrderCompleted = false
-                    cartProductModel.isOrderCanceled = false
-                    cartProductModel.isNewOrder = false
-                    cartProductModel.orderStatus = getString(R.string.title_order_confirm)
                     setDatabaseOrderConfirm(cartProductModel)
                     listNewOrder.removeAt(index)
                     adminCartAdapter.notifyItemRemoved(index)
                 }
                 1 -> {
-                    cartProductModel.isOrderCanceled = true
-                    cartProductModel.isOrderConfirm = false
-                    cartProductModel.isOrderDelivering = false
-                    cartProductModel.isOrderCompleted = false
-                    cartProductModel.isNewOrder = false
-                    cartProductModel.orderStatus = getString(R.string.title_order_cancel)
                     setDatabaseOrderCanceled(cartProductModel)
                     listNewOrder.removeAt(index)
                     adminCartAdapter.notifyItemRemoved(index)

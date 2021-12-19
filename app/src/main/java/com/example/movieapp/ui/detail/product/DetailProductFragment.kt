@@ -258,7 +258,6 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
             userName,
             amountUserOrder,
             listSizePicked[0].size,
-            "",
             ProductModel(
                 type = detailProductModel.type,
                 id = detailProductModel.id,
@@ -269,7 +268,6 @@ class DetailProductFragment : BaseFragment(), View.OnClickListener {
                 listImage = detailProductModel.listImage,
                 listSize = listSizePicked
             ),
-            isAddSuccess = true,
             totalPrice = totalCart
         )
         setDatabase(key, cartProductModel)

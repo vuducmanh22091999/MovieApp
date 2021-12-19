@@ -49,9 +49,7 @@ class AdminOrderConfirmFragment : BaseFragment() {
 
     private fun initAdapter() {
         adminCartAdapter =
-            AdminCartAdapter { index, _ ->
-                openDialogPickOrderStatus(listOrderConfirm[index], index)
-            }
+            AdminCartAdapter ()
         adminCartAdapter.submitList(listOrderConfirm)
         val linearLayoutManager =
             LinearLayoutManager(
@@ -85,9 +83,8 @@ class AdminOrderConfirmFragment : BaseFragment() {
                             for (value in snapshot.children) {
                                 val cartProductModel = value.getValue(CartProductModel::class.java)
                                 if (cartProductModel != null) {
-                                    if (cartProductModel.isOrderConfirm) {
                                         listOrderConfirm.add(cartProductModel)
-                                    }
+
                                 }
                             }
                             showHideCart()
@@ -124,12 +121,6 @@ class AdminOrderConfirmFragment : BaseFragment() {
 
         builder.setPositiveButton("Ok") { dialog, _ ->
             if (indexSelectedStatus == 0) {
-                cartProductModel.isOrderDelivering = true
-                cartProductModel.isOrderConfirm = false
-                cartProductModel.isOrderCompleted = false
-                cartProductModel.isOrderCanceled = false
-                cartProductModel.isNewOrder = false
-                cartProductModel.orderStatus = getString(R.string.title_order_delivered)
                 setDatabaseOrderConfirm(cartProductModel)
                 listOrderConfirm.removeAt(index)
                 adminCartAdapter.notifyItemRemoved(index)

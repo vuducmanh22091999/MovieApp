@@ -38,6 +38,7 @@ class AddProductFragment : BaseFragment(), View.OnClickListener {
     private val REQUEST_CODE_IMAGE = 1
     private var uri: Uri? = null
     private lateinit var database: DatabaseReference
+    private lateinit var database1: DatabaseReference
     private lateinit var storage: StorageReference
     private lateinit var progress: ProgressDialog
     private lateinit var listImageViewPagerAdapter: ListImageViewPagerAdapter
@@ -55,6 +56,7 @@ class AddProductFragment : BaseFragment(), View.OnClickListener {
     override fun doViewCreated() {
         database = FirebaseDatabase.getInstance().reference.child(PRODUCT)
         storage = FirebaseStorage.getInstance().getReference("Images")
+        database1 = FirebaseDatabase.getInstance().reference.child("NhaCungCap")
         progress = ProgressDialog(context)
         initListener()
         hideKeyboardWhenClickOutside()
@@ -189,6 +191,7 @@ class AddProductFragment : BaseFragment(), View.OnClickListener {
 
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_IMAGE && resultCode == Activity.RESULT_OK) {
@@ -282,6 +285,8 @@ class AddProductFragment : BaseFragment(), View.OnClickListener {
             }
         }
     }
+
+
 
     private fun insertProduct() {
         productImages.forEach { image ->

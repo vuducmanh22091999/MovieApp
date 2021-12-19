@@ -55,7 +55,7 @@ class AdminOrderCompletedFragment : BaseFragment() {
 
     private fun initAdapter() {
         adminCartAdapter =
-            AdminCartAdapter { _, _ -> }
+            AdminCartAdapter ()
         adminCartAdapter.submitList(listOrderCompleted)
         val linearLayoutManager =
             LinearLayoutManager(
@@ -133,9 +133,8 @@ class AdminOrderCompletedFragment : BaseFragment() {
                             for (value in snapshot.children) {
                                 val cartProductModel = value.getValue(CartProductModel::class.java)
                                 if (cartProductModel != null) {
-                                    if (cartProductModel.isOrderCompleted) {
                                         listOrderCompleted.add(cartProductModel)
-                                    }
+
                                 }
                             }
                             showHideCart()
@@ -158,7 +157,7 @@ class AdminOrderCompletedFragment : BaseFragment() {
         databaseOrderCompleted.child(cartProductModel.idUser!!).child(key.toString())
             .setValue(cartProductModel)
         updateProduct()
-        if (cartProductModel.isOrderCompleted)
+//        if (cartProductModel.isOrderCompleted)
             databaseOrderDelivering.child(cartProductModel.idUser)
                 .child(cartProductModel.idCart.toString())
                 .removeValue()

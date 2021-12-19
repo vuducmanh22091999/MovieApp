@@ -16,8 +16,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
+import com.example.movieapp.data.model.account.AccountModel
 import com.example.movieapp.data.model.product.CartProductModel
 import com.example.movieapp.data.model.product.ProductModel
+import com.example.movieapp.data.model.product.StatusCartModel
 import com.example.movieapp.ui.cart.adapter.UserCartAdapter
 import com.example.movieapp.ui.login.LoginActivity
 import com.example.movieapp.utils.*
@@ -29,17 +31,22 @@ import kotlinx.android.synthetic.main.fragment_user_cart.*
 
 class UserCartFragment : BaseFragment(), View.OnClickListener {
     private lateinit var database: DatabaseReference
+    private lateinit var databaseUser: DatabaseReference
     private lateinit var databaseOrderSuccess: DatabaseReference
     private lateinit var databaseNewOrder: DatabaseReference
     private lateinit var databaseProduct: DatabaseReference
+    private lateinit var databaseOrder: DatabaseReference
     private lateinit var userCartAdapter: UserCartAdapter
+    private lateinit var database1: DatabaseReference
     private lateinit var dialog: Dialog
     private var total = 0L
     private var idUser = ""
     private lateinit var auth: FirebaseAuth
     private lateinit var progress: ProgressDialog
     private var listCartProduct = ArrayList<CartProductModel>()
+    private var listOrder = ArrayList<StatusCartModel>()
     private val listProduct = ArrayList<ProductModel>()
+    private var userName = ""
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_user_cart
@@ -47,13 +54,17 @@ class UserCartFragment : BaseFragment(), View.OnClickListener {
 
     override fun doViewCreated() {
         database = FirebaseDatabase.getInstance().reference.child(USER_CART)
+        database1 = FirebaseDatabase.getInstance().reference.child("NhaCungCap")
         databaseProduct = FirebaseDatabase.getInstance().reference.child(PRODUCT)
         databaseOrderSuccess = FirebaseDatabase.getInstance().reference.child(ORDER_SUCCESS)
         databaseNewOrder = FirebaseDatabase.getInstance().reference.child(NEW_ORDER)
+        databaseOrder = FirebaseDatabase.getInstance().reference.child(ORDER)
+        databaseUser = FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(USER)
         auth = FirebaseAuth.getInstance()
         idUser = auth.currentUser?.uid.toString()
         progress = ProgressDialog(context)
         initListener()
+        getInfoUserFromFirebase()
         checkCart()
         listCartProduct()
         getDataProduct()
@@ -89,6 +100,23 @@ class UserCartFragment : BaseFragment(), View.OnClickListener {
 
     private fun initListener() {
         frgUserCart_tvOrder.setOnClickListener(this)
+    }
+
+    private fun getInfoUserFromFirebase() {
+        auth.currentUser?.uid?.let {
+            databaseUser.child(it).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var accountModel = AccountModel()
+                    if (snapshot.exists())
+                        accountModel = snapshot.getValue(AccountModel::class.java)!!
+                    userName = accountModel.userName
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+        }
     }
 
     private fun checkCart() {
@@ -212,6 +240,10 @@ class UserCartFragment : BaseFragment(), View.OnClickListener {
                 .setValue(cartProductModel)
     }
 
+    private fun create() {
+        database1.setValue("ID", 2)
+    }
+
     private fun moveToLogin() {
         dialog = context?.let { Dialog(it) }!!
         dialog.setContentView(R.layout.dialog_question_login)
@@ -262,16 +294,19 @@ class UserCartFragment : BaseFragment(), View.OnClickListener {
                             sizeProductModel.size == cartProductModel.size
                         }?.let {
 //                            it.amountSize -= cartProductModel.amountUserOrder
-                            setDatabase(productModel.id!!, productModel)
-                            setDatabaseNewOrder(cartProductModel)
+//                            setDatabase(productModel.id!!, productModel)
+//                            setDatabaseNewOrder(cartProductModel)
                         }
                     }
                 }
+                setDatabaseNewOrder()
             } else
                 Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
         } else
             moveToLogin()
     }
+
+
 
     private fun setDatabase(key: Long, productModel: ProductModel) {
         databaseProduct.child(productModel.type!!).child(key.toString()).setValue(productModel)
@@ -288,23 +323,31 @@ class UserCartFragment : BaseFragment(), View.OnClickListener {
             }
     }
 
-    private fun setDatabaseNewOrder(cartProductModel: CartProductModel) {
-        val key = System.currentTimeMillis()
-        cartProductModel.isOrderSuccess = true
-        cartProductModel.isNewOrder = true
-        cartProductModel.orderStatus = getString(R.string.title_new_order)
-        cartProductModel.idCart = key
-        databaseNewOrder.child(idUser).child(key.toString()).setValue(cartProductModel).addOnCompleteListener {
-            dismissProgress()
-            listCartProduct.clear()
-            Toast.makeText(context, "Order success!!!", Toast.LENGTH_SHORT).show()
-            frgUserCart_rcvListCart.visibility = View.GONE
-            frgUserCart_tvValueTotal.visibility = View.GONE
-            frgUserCart_tvNotification.visibility = View.VISIBLE
-            frgUserCart_tvTotal.visibility = View.GONE
-            frgUserCart_tvOrder.visibility = View.GONE
-            database.child(idUser).removeValue()
-        }
+    private fun setDatabaseNewOrder() {
+        create()
+//        val key = System.currentTimeMillis()
+//        listOrder.add(
+//            StatusCartModel(
+//                idOrder = key,
+//                userName = userName,
+//                status = 0,
+//                valueStatus = "New order",
+//                listProduct = listCartProduct
+//            )
+//        )
+//
+//        databaseOrder.child(idUser).child(key.toString()).setValue(listOrder).addOnSuccessListener {
+//            dismissProgress()
+//            listOrder.clear()
+//            listCartProduct.clear()
+//            Toast.makeText(context, "Order success!!!", Toast.LENGTH_SHORT).show()
+//            frgUserCart_rcvListCart.visibility = View.GONE
+//            frgUserCart_tvValueTotal.visibility = View.GONE
+//            frgUserCart_tvNotification.visibility = View.VISIBLE
+//            frgUserCart_tvTotal.visibility = View.GONE
+//            frgUserCart_tvOrder.visibility = View.GONE
+//            database.child(idUser).removeValue()
+//        }
     }
 
     private fun showProgress() {
@@ -320,7 +363,8 @@ class UserCartFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.frgUserCart_tvOrder -> {
-                clickToOrder()
+//                clickToOrder()
+                create()
             }
         }
     }

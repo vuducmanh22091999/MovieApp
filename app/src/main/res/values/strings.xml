@@ -130,7 +130,7 @@
     <string name="title_pick_order_status">Pick order status…</string>
     <string name="title_new_order">New order</string>
     <string name="title_order_confirm">Order confirm</string>
-    <string name="title_order_delivered">order is delivering</string>
+    <string name="title_order_delivered">Order is delivering</string>
     <string name="title_order_completed">Order completed</string>
     <string name="title_order_cancel">Order is canceled</string>
 

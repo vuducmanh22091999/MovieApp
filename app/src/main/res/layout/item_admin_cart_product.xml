@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/_8sdp"
     android:layout_marginVertical="@dimen/_8sdp"
     android:layout_marginStart="@dimen/_8sdp">
 
@@ -25,6 +24,7 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:text="@string/title_content_language_movie"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintStart_toEndOf="@id/itemCartProductAdmin_imgAvatar"
@@ -41,6 +41,7 @@
         android:text="@string/title_new_order"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/itemCartProductAdmin_imgAvatar" />
 
@@ -48,6 +49,8 @@
         android:id="@+id/itemCartProductAdmin_tvTitleNameProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_8sdp"
         android:text="@string/title_name_movie"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"

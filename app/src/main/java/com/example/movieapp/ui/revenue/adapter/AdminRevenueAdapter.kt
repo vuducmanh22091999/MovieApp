@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.model.product.CartProductModel
+import com.example.movieapp.data.model.product.StatusCartModel
 import com.example.movieapp.ui.cart.adapter.BaseDiffAdapter
+import com.example.movieapp.ui.cart.adapter.StatusCartAdapter
 import com.example.movieapp.utils.formatStringLong
 import kotlinx.android.synthetic.main.item_admin_cart_product.view.*
 import kotlinx.android.synthetic.main.item_admin_cart_product.view.itemCartProductAdmin_tvAmountUserOrder
@@ -21,32 +23,33 @@ import kotlinx.android.synthetic.main.item_admin_cart_product.view.itemCartProdu
 import kotlinx.android.synthetic.main.item_admin_revenue.view.*
 import java.util.concurrent.Executors
 
-class AdminRevenueAdapter : ListAdapter<CartProductModel, AdminRevenueAdapter.DataViewHolder>(
-    AsyncDifferConfig.Builder(BaseDiffAdapter())
+class AdminRevenueAdapter : ListAdapter<StatusCartModel, AdminRevenueAdapter.DataViewHolder>(
+    AsyncDifferConfig.Builder<StatusCartModel>(BaseDiffAdapter())
         .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor()).build()
 ) {
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
-        fun bindDataViewHolder(cartProductModel: CartProductModel) {
+        fun bindDataViewHolder(statusCartModel: StatusCartModel) {
             itemView.context?.let {
-                Glide.with(itemView.context).load(cartProductModel.productModel?.urlAvatar)
+                Glide.with(itemView.context).load(statusCartModel.listProduct[0].productModel?.urlAvatar)
                     .placeholder(R.drawable.img_placeholder)
                     .into(itemView.itemAdminRevenue_imgAvatar)
             }
+            statusCartModel.listProduct[0].amountUserOrder
             itemView.itemAdminRevenue_tvAmountUserOrder.text =
-                "Amount user order: ${cartProductModel.amountUserOrder}"
+                "Amount user order: ${statusCartModel.listProduct[0].amountUserOrder}"
             itemView.itemAdminRevenue_tvPrice.text =
-                "Total: ${formatStringLong(cartProductModel.totalPrice)}$"
+                "Total: ${formatStringLong(statusCartModel.listProduct[0].totalPrice)}$"
             itemView.itemAdminRevenue_tvSize.text =
-                "Size: ${cartProductModel.productModel?.listSize?.get(0)?.size.toString()}"
+                "Size: ${statusCartModel.listProduct[0].productModel?.listSize?.get(0)?.size.toString()}"
             itemView.itemAdminRevenue_tvTitleNameProduct.text =
-                cartProductModel.productModel?.name
-            itemView.itemAdminRevenue_tvOrderUserName.text = cartProductModel.userName
-            itemView.itemAdminRevenue_tvOrderDateCompleted.text = cartProductModel.orderDateCompleted
+                statusCartModel.listProduct[0].productModel?.name
+            itemView.itemAdminRevenue_tvOrderUserName.text = statusCartModel.userName
+            itemView.itemAdminRevenue_tvOrderDateCompleted.text = statusCartModel.completedDate
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminRevenueAdapter.DataViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.item_admin_revenue, parent, false)
         return DataViewHolder(view)

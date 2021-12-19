@@ -37,7 +37,7 @@ class AdminOrderCanceledFragment : BaseFragment() {
 
     private fun initAdapter() {
         adminCartAdapter =
-            AdminCartAdapter { _, _ -> }
+            AdminCartAdapter ()
         adminCartAdapter.submitList(listOrderCanceled)
         val linearLayoutManager =
             LinearLayoutManager(
@@ -71,9 +71,7 @@ class AdminOrderCanceledFragment : BaseFragment() {
                             for (value in snapshot.children) {
                                 val cartProductModel = value.getValue(CartProductModel::class.java)
                                 if (cartProductModel != null) {
-                                    if (cartProductModel.isOrderCanceled) {
                                         listOrderCanceled.add(cartProductModel)
-                                    }
                                 }
                             }
                             showHideCart()

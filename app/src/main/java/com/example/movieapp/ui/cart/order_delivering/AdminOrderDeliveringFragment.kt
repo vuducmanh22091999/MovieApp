@@ -68,9 +68,7 @@ class AdminOrderDeliveringFragment : BaseFragment() {
 
     private fun initAdapter() {
         adminCartAdapter =
-            AdminCartAdapter { index, _ ->
-                openDialogPickOrderStatus(listOrderDelivering[index], index)
-            }
+            AdminCartAdapter ()
         adminCartAdapter.submitList(listOrderDelivering)
         val linearLayoutManager =
             LinearLayoutManager(
@@ -105,9 +103,8 @@ class AdminOrderDeliveringFragment : BaseFragment() {
                                 for (value in snapshot.children) {
                                     val cartProductModel = value.getValue(CartProductModel::class.java)
                                     if (cartProductModel != null) {
-                                        if (cartProductModel.isOrderDelivering) {
                                             listOrderDelivering.add(cartProductModel)
-                                        }
+
                                     }
                                 }
                                 showHideCart()
@@ -197,13 +194,7 @@ class AdminOrderDeliveringFragment : BaseFragment() {
 
         builder.setPositiveButton("Ok") { dialog, _ ->
             if (indexSelectedStatus == 0) {
-                cartProductModel.isOrderCompleted = true
-                cartProductModel.isOrderConfirm = false
-                cartProductModel.isOrderDelivering = false
-                cartProductModel.isOrderCanceled = false
                 cartProductModel.orderDateCompleted = currentDate
-                cartProductModel.isNewOrder = false
-                cartProductModel.orderStatus = getString(R.string.title_order_completed)
                 setDatabaseOrderDelivering(cartProductModel)
                 listOrderDelivering.removeAt(index)
                 adminCartAdapter.notifyItemRemoved(index)

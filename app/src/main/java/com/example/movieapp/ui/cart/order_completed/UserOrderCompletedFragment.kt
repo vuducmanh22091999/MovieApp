@@ -4,14 +4,11 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
-import com.example.movieapp.data.model.product.CartProductModel
-import com.example.movieapp.ui.order_history.adapter.OrderHistoryAdapter
-import com.example.movieapp.utils.NEW_ORDER
-import com.example.movieapp.utils.ORDER_COMPLETED
+import com.example.movieapp.data.model.product.StatusCartModel
+import com.example.movieapp.ui.order_history.adapter.CartHistoryAdapter
+import com.example.movieapp.utils.ORDER
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_new_order.*
-import kotlinx.android.synthetic.main.fragment_order_canceled.*
 import kotlinx.android.synthetic.main.fragment_order_completed.*
 import java.util.ArrayList
 
@@ -19,8 +16,8 @@ class UserOrderCompletedFragment: BaseFragment() {
     var idUser = ""
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseOrderCompleted: DatabaseReference
-    private lateinit var orderHistoryAdapter: OrderHistoryAdapter
-    val listProductOrderCompleted = ArrayList<CartProductModel>()
+    private lateinit var cartHistoryAdapter: CartHistoryAdapter
+    val listProductOrderCompleted = ArrayList<StatusCartModel>()
 
     override fun getLayoutID(): Int {
         return R.layout.fragment_order_completed
@@ -29,20 +26,20 @@ class UserOrderCompletedFragment: BaseFragment() {
     override fun doViewCreated() {
         auth = FirebaseAuth.getInstance()
         idUser = auth.currentUser?.uid.toString()
-        databaseOrderCompleted = FirebaseDatabase.getInstance().reference.child(ORDER_COMPLETED)
+        databaseOrderCompleted = FirebaseDatabase.getInstance().reference.child(ORDER)
 
         getDataOrderCompleted()
     }
 
     private fun initAdapter() {
-        orderHistoryAdapter =
-            OrderHistoryAdapter {_,_ ->}
-        orderHistoryAdapter.submitList(listProductOrderCompleted)
+        cartHistoryAdapter =
+            CartHistoryAdapter {_,_ ->}
+        cartHistoryAdapter.submitList(listProductOrderCompleted)
         val linearLayoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         frgOrderCompleted_rcvCart.setHasFixedSize(true)
         frgOrderCompleted_rcvCart.layoutManager = linearLayoutManager
-        frgOrderCompleted_rcvCart.adapter = orderHistoryAdapter
+        frgOrderCompleted_rcvCart.adapter = cartHistoryAdapter
     }
 
     private fun getDataOrderCompleted() {
@@ -51,15 +48,19 @@ class UserOrderCompletedFragment: BaseFragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 view?.apply {
                     if (snapshot.exists()) {
-                        for (value in snapshot.children) {
-                            val cartProductModel = value.getValue(CartProductModel::class.java)
-                            if (cartProductModel != null) {
-                                frgOrderCompleted_tvNotification.visibility = View.GONE
-                                listProductOrderCompleted.add(cartProductModel)
+                        snapshot.children.forEach {
+                            it.children.forEach { value ->
+                                val statusCartModel =
+                                    value.getValue(StatusCartModel::class.java)
+                                if (statusCartModel != null && statusCartModel.status == 3) {
+                                    frgOrderCompleted_tvNotification.visibility = View.GONE
+                                    listProductOrderCompleted.add(statusCartModel)
+                                }
                             }
                         }
                         showHideCart()
                         initAdapter()
+//                        orderHistoryAdapter.submitList(listProductNewOrder)
                     }
                 }
             }
@@ -69,9 +70,6 @@ class UserOrderCompletedFragment: BaseFragment() {
             }
 
         })
-        databaseOrderCompleted.child(idUser).get().addOnCompleteListener {
-
-        }
     }
 
     private fun showHideCart() {

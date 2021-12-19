@@ -10,17 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.data.model.product.CartProductModel
+import com.example.movieapp.data.model.product.StatusCartModel
 import com.example.movieapp.ui.cart.adapter.AdminCartAdapter
 import com.example.movieapp.ui.cart.adapter.BaseDiffAdapter
 import com.example.movieapp.utils.formatStringLong
 import kotlinx.android.synthetic.main.item_order_history.view.*
 import java.util.concurrent.Executors
 
-class OrderHistoryAdapter(
-    private val onClick: (Int, String) -> Unit
-) :
+class OrderHistoryAdapter :
     ListAdapter<CartProductModel, OrderHistoryAdapter.DataViewHolder>(
-        AsyncDifferConfig.Builder(BaseDiffAdapter())
+        AsyncDifferConfig.Builder<CartProductModel>(BaseDiffAdapter())
         .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor()).build()) {
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
@@ -38,9 +37,6 @@ class OrderHistoryAdapter(
                 "Total: ${formatStringLong(cartProductModel.totalPrice)}$"
             itemView.itemOrderHistory_tvSize.text =
                 "Size: ${cartProductModel.productModel?.listSize?.get(0)?.size.toString()}"
-            itemView.setOnClickListener {
-                onClick(absoluteAdapterPosition, cartProductModel.orderStatus.toString())
-            }
         }
     }
 

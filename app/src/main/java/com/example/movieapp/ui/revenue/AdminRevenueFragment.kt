@@ -1,7 +1,6 @@
 package com.example.movieapp.ui.revenue
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -9,12 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.product.CartProductModel
+import com.example.movieapp.data.model.product.StatusCartModel
 import com.example.movieapp.ui.main.MainActivity
 import com.example.movieapp.ui.revenue.adapter.AdminRevenueAdapter
-import com.example.movieapp.utils.ACCOUNT
-import com.example.movieapp.utils.ORDER_COMPLETED
-import com.example.movieapp.utils.USER
-import com.example.movieapp.utils.formatStringLong
+import com.example.movieapp.utils.*
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_admin_revenue.*
 import java.util.ArrayList
@@ -24,7 +21,7 @@ class AdminRevenueFragment : BaseFragment(), View.OnClickListener {
     private lateinit var databaseUser: DatabaseReference
     private val listIdUser = arrayListOf<String>()
     private lateinit var adminRevenueAdapter: AdminRevenueAdapter
-    val listOrderCompleted = ArrayList<CartProductModel>()
+    val listOrderCompleted = ArrayList<StatusCartModel>()
     private var totalRevenue = 0L
     val listMonth = arrayListOf<String>()
 
@@ -33,7 +30,7 @@ class AdminRevenueFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun doViewCreated() {
-        databaseOrderCompleted = FirebaseDatabase.getInstance().reference.child(ORDER_COMPLETED)
+        databaseOrderCompleted = FirebaseDatabase.getInstance().reference.child(ORDER)
         databaseUser = FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(USER)
 
         initListener()
@@ -71,7 +68,7 @@ class AdminRevenueFragment : BaseFragment(), View.OnClickListener {
 
     private fun showHideCart() {
         if (listOrderCompleted.isEmpty()) {
-            frgAdminRevenue_tvNotification.setText(R.string.title_notification)
+            frgAdminRevenue_tvNotification.setText(R.string.title_no_result)
         } else {
             frgAdminRevenue_tvNotification.setText(R.string.title_blank)
         }
@@ -85,12 +82,13 @@ class AdminRevenueFragment : BaseFragment(), View.OnClickListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     view?.apply {
                         if (snapshot.exists()) {
-                            for (value in snapshot.children) {
-                                val cartProductModel = value.getValue(CartProductModel::class.java)
-                                if (cartProductModel != null) {
-                                    if (cartProductModel.isOrderCompleted) {
-                                        totalRevenue += cartProductModel.totalPrice
-                                        listOrderCompleted.add(cartProductModel)
+                            snapshot.children.forEach {
+                                it.children.forEach { value ->
+                                    val statusCartModel =
+                                        value.getValue(StatusCartModel::class.java)
+                                    if (statusCartModel != null && statusCartModel.status == 3) {
+                                        totalRevenue += statusCartModel.listProduct[0].totalPrice
+                                        listOrderCompleted.add(statusCartModel)
                                     }
                                 }
                             }
@@ -111,16 +109,6 @@ class AdminRevenueFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun getCompletedDate() {
-//        listCompletedDate.clear()
-//        listOrderCompleted.forEach { cartProductModel ->
-//            val month = cartProductModel.orderDateCompleted.split("/")[1]
-//            val year = cartProductModel.orderDateCompleted.split("/")[2]
-//            cartProductModel.orderDateCompleted.split("/")
-//            if (!listCompletedDate.contains(cartProductModel.orderDateCompleted))
-//              listCompletedDate.add(cartProductModel.orderDateCompleted)
-////            if (!listCompletedDate.contains("$month/$year"))
-////                listCompletedDate.add("$month/$year")
-//        }
         listMonth.add("Pick month...")
         for (month in 1..12)
             listMonth.add("${month}/2021")
@@ -144,14 +132,14 @@ class AdminRevenueFragment : BaseFragment(), View.OnClickListener {
                     position: Int,
                     id: Long
                 ) {
-                    val listTemp = ArrayList<CartProductModel>()
+                    val listTemp = ArrayList<StatusCartModel>()
                     totalRevenue = 0L
-                    listOrderCompleted.forEach { cartProductModel ->
-                        val month = cartProductModel.orderDateCompleted.split("/")[1]
-                        val year = cartProductModel.orderDateCompleted.split("/")[2]
+                    listOrderCompleted.forEach { statusCartModel ->
+                        val month = statusCartModel.completedDate.split("/")[1]
+                        val year = statusCartModel.completedDate.split("/")[2]
                         if (listMonth[position] == "$month/$year") {
-                            totalRevenue += cartProductModel.totalPrice
-                            listTemp.add(cartProductModel)
+                            totalRevenue += statusCartModel.listProduct[0].totalPrice
+                            listTemp.add(statusCartModel)
                         }
                     }
                     frgAdminRevenue_tvValueTotal.text = "${formatStringLong(totalRevenue)}$"

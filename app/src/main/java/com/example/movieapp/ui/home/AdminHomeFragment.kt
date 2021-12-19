@@ -14,6 +14,7 @@ import com.example.movieapp.R
 import com.example.movieapp.base.BaseFragment
 import com.example.movieapp.data.model.product.CartProductModel
 import com.example.movieapp.data.model.product.ProductModel
+import com.example.movieapp.data.model.product.StatusCartModel
 import com.example.movieapp.ui.add.AddProductFragment
 import com.example.movieapp.ui.cart.adapter.AdminCartAdapter
 import com.example.movieapp.ui.edit.EditProductFragment
@@ -43,7 +44,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
     private lateinit var dialog: Dialog
     private lateinit var progress: ProgressDialog
     private val listIdUser = arrayListOf<String>()
-    private val listProductOrderSuccess = ArrayList<CartProductModel>()
+    private val listProductOrderSuccess = ArrayList<StatusCartModel>()
     private val listProductNewOrder = ArrayList<CartProductModel>()
 
     override fun getLayoutID(): Int {
@@ -53,7 +54,7 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
     override fun doViewCreated() {
         database = FirebaseDatabase.getInstance().reference.child(PRODUCT)
         databaseUser = FirebaseDatabase.getInstance().reference.child(ACCOUNT).child(USER)
-        databaseOrderSuccess = FirebaseDatabase.getInstance().reference.child(ORDER_SUCCESS)
+        databaseOrderSuccess = FirebaseDatabase.getInstance().reference.child(ORDER)
         databaseNewOrder = FirebaseDatabase.getInstance().reference.child(NEW_ORDER)
         progress = ProgressDialog(context)
         initListener()
@@ -143,12 +144,16 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
         listIdUser.forEach { idUser ->
             databaseOrderSuccess.child(idUser).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        for (value in snapshot.children) {
-                            val cartProductModel = value.getValue(CartProductModel::class.java)
-                            if (cartProductModel != null) {
-                                if (cartProductModel.isOrderSuccess) {
-                                    listProductOrderSuccess.add(cartProductModel)
+                    view?.apply {
+                        if (snapshot.exists()) {
+                            snapshot.children.forEach {
+                                it.children.forEach { value ->
+                                    val statusCartModel =
+                                        value.getValue(StatusCartModel::class.java)
+                                    if (statusCartModel != null) {
+                                        listProductOrderSuccess.add(statusCartModel)
+
+                                    }
                                 }
                             }
                         }
@@ -164,9 +169,9 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun deleteProduct(nameProduct: String, idProduct: Long) {
-        val listTest = ArrayList<CartProductModel>()
+        val listTest = ArrayList<StatusCartModel>()
         listProductOrderSuccess.find {
-            it.productModel?.id == idProduct
+            it.listProduct[0].productModel?.id == idProduct
         }?.let {
             listTest.clear()
             listTest.add(it)
@@ -174,11 +179,12 @@ class AdminHomeFragment : BaseFragment(), View.OnClickListener {
 
         if (listTest.isNotEmpty()) {
             listTest.forEach {
-                if (it.productModel?.id == idProduct)
-                    Toast.makeText(context, "Can't delete product!!!", Toast.LENGTH_SHORT).show() }
+                if (it.listProduct[0].productModel?.id == idProduct)
+                    Toast.makeText(context, "Can't delete product!!!", Toast.LENGTH_SHORT).show()
+            }
         } else
             Toast.makeText(context, "Delete!!!", Toast.LENGTH_SHORT).show()
-//                database.child(nameProduct).child(idProduct.toString()).removeValue()
+                database.child(nameProduct).child(idProduct.toString()).removeValue()
     }
 
     private fun setDataForList() {
